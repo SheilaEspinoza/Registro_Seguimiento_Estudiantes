@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Oculta el sidebar - body tiene la clase sb-sidenav-toggled */
+body.sb-sidenav-toggled #layoutSidenav_nav {
+  margin-left: -250px;
+  transition: margin-left 0.3s ease;
+}
+/*Sidebar visible cuando no apalsto boton hamburguesa*/
+#layoutSidenav_nav {
+  width: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+body.sb-sidenav-toggled #layoutSidenav_nav {
+  margin-left: -250px;
+}
+
+#layoutSidenav_nav {
+  background-color: #f8f9fa;
+  height: 100vh;
+  position: fixed;
+}
+
+#layoutSidenav_content {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+body.sb-sidenav-toggled #layoutSidenav_content {
+  margin-left: 0;
+}
