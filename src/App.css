@@ -70,3 +70,8 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
 body.sb-sidenav-toggled #layoutSidenav_content {
   margin-left: 0;
 }
+
+/*Inicio - card*/
+.card-title{
+  align-items: center;
+}
