@@ -14,7 +14,7 @@ function App() {
         <div id="layoutSidenav">
           <Sidebar />
           <div id="layoutSidenav_content">
-            <main className="main-content"> {/* ← AQUÍ AÑADIMOS LA CLASE */}
+            <main className="main-content">
               <div className="container-fluid px-4">
                 <Routes>
                   <Route path="/" element={<Inicio />} />
