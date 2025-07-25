@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import CalendarioInicio from "../components/CalendarioInicio";
+import '../App.css';
+
 
 const Inicio = () => {
   const [saludo, setSaludo] = useState("");
@@ -33,7 +36,7 @@ const Inicio = () => {
       return "/img/dia.jpg";
     } 
     else if (hora >= 12 && hora < 18){
-      return "/img/tarde.jpg";
+      return "/img/dia.jpg";
     }
     else {
       return "/img/noche.jpg";
@@ -43,7 +46,11 @@ const Inicio = () => {
   const formatoHora = horaActual.toLocaleTimeString("es-EC", {
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
+    hour12: false, //formato 24h
+    /*
+    Formato 12 h
+    hour: "2-digit",
+    minute: "2-digit",*/
   });
 
   const formatoFecha = horaActual.toLocaleDateString("es-EC", {
@@ -54,22 +61,34 @@ const Inicio = () => {
   });
 
   return (
-    <div className="card mb-3" style={{ maxWidth: "1000px" }}>
+  <>
+    <div className="card mb-3 bienvenida-card">
       <div className="row g-0">
         <div className="col-md-4">
-            <img src={obtenerImagen()} className="card-img" alt="Imagen_segunDia" />
+          <img src={obtenerImagen()} className="card-img" alt="Imagen_hora" />
         </div>
-        <div className="col-md-8">
-          <div className="card-body">
-            <h5 className="card-title">Sistema de Gestión de Estudiantes</h5>
-            <p className="card-text">{saludo}</p>
-            <p className="card-text"><strong>Hora actual:</strong> {formatoHora}</p>
-            <p className="card-text"><strong>Fecha:</strong> {formatoFecha}</p>
+
+        <div className="col-md-8 d-flex flex-column justify-content-between">
+          <div className="card-body d-flex justify-content-between align-items-start">
+            <div>
+              <h3 className="card-title">Sistema de Gestión de Estudiantes</h3>
+              <p className="card-text">{saludo}</p>
+            </div>
+
+            <div className="text-end">
+              <h1><p className="hora-grande">{formatoHora}</p></h1>
+              <p className="card-text">{formatoFecha}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div className="calendario-pequeno">
+      <CalendarioInicio />
+    </div>
+  </>
   );
-};
+}
 
 export default Inicio;

@@ -1,19 +1,26 @@
 function Header() {
   const toggleSidebar = () => {
-    document.body.classList.toggle('sb-sidenav-toggled');
+    document.body.classList.toggle("sb-sidenav-toggled");
   };
   /*Cada vez que hago clic en el boton hamburguesa, si el <body> ya tiene la clase sb-sidenav-toggled, 
   se la quita, caso contrario agg. */
 
-  return (
-    <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark"> {/* Boton Hamburguesa */}
-      <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" onClick={toggleSidebar}>
-        <i className="fas fa-bars"></i>
+ return (
+    <nav className="navbar navbar-dark bg-dark fixed-top shadow" style={{ zIndex: 9999 }}>
+      {/* Menu(fijo) */}
+      <span className="navbar-brand ms-3">Nombre App</span>
+
+      {/* Botón hamburguesa */}
+      <button
+        className="btn btn-link btn-sm toggle-btn"
+        onClick={toggleSidebar}
+      >
+        <i className="fas fa-bars text-white"></i>
       </button>
-      <a className="navbar-brand ps-3" href="/">Menú</a>
     </nav>
   );
 }
+
 /*sb-topnav navbar navbar-expand navbar-dark bg-dark = barra negra 
 fas fa-bars = botoncito con 3 rayitas*/
 

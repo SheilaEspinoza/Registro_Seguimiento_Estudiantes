@@ -1,4 +1,4 @@
-
+import '../App.css';
 const Estudiantes = () => {
   return <h1>Página de Estudiantes</h1>;
 };

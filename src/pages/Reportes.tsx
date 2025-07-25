@@ -1,3 +1,4 @@
+import '../App.css';
 const Reportes = () => {
   return <h1>Página de Reportes</h1>;
 };

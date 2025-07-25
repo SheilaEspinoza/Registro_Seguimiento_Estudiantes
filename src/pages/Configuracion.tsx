@@ -1,3 +1,4 @@
+import '../App.css';
 const Configuracion = () => {
   return <h1>Página de Configuración</h1>;
 };
