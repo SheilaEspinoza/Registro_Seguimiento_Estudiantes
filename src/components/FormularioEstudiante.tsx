@@ -11,6 +11,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [cedula, setCedula] = useState("");
+  const [correo, setCorreo] = useState("");
 
   const [ciudad, setCiudad] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -26,6 +27,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
     setNombre("");
     setApellido("");
     setCedula("");
+    setCorreo("");
 
     setCiudad("");
     setDireccion("");
@@ -69,6 +71,10 @@ function FormularioEstudiante({ onAgregar }: Props) {
       {activeTab === "personales" && (
           <>
             <div className="mb-3">
+              <label className="form-label">Cédula</label>
+              <input className="form-control" value={cedula} onChange={(e) => setCedula(e.target.value)} />
+            </div>
+            <div className="mb-3">
               <label className="form-label">Nombres</label>
               <input className="form-control" value={nombre} onChange={(e) => setNombre(e.target.value)} />
             </div>
@@ -77,8 +83,8 @@ function FormularioEstudiante({ onAgregar }: Props) {
               <input className="form-control" value={apellido} onChange={(e) => setApellido(e.target.value)} />
             </div>
             <div className="mb-3">
-              <label className="form-label">Cédula</label>
-              <input className="form-control" value={cedula} onChange={(e) => setCedula(e.target.value)} />
+              <label className="form-label">Correo</label>
+              <input className="form-control" value={correo} onChange={(e) => setCorreo(e.target.value)} />
             </div>
           </>
         )}

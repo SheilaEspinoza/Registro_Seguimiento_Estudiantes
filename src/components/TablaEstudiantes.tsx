@@ -10,10 +10,9 @@ function TablaEstudiantes({ estudiantes }: Props) {
       <table className="table table-striped table-bordered">
         <thead className="table-light">
           <tr>
+            <th>Cédula</th>
             <th>Nombres</th>
             <th>Apellidos</th>
-            <th>Cédula</th>
-
             <th>Carrera</th>
             <th>Nivel</th>
           </tr>
