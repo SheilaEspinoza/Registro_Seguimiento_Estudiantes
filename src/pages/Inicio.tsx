@@ -17,7 +17,7 @@ const Inicio = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const actualizarSaludo = (hora) => {
+  const actualizarSaludo = (hora: Date) => {
     const horaDelDia = hora.getHours();
     if (horaDelDia >= 0 && horaDelDia < 12) {
       setSaludo("¡Buenos días!");
