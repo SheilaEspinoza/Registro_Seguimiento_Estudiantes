@@ -22,7 +22,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAgregar({ nombre, carrera, nivel });
+    onAgregar({ nombre, apellido, cedula, carrera, nivel });
     setNombre("");
     setApellido("");
     setCedula("");
@@ -69,11 +69,11 @@ function FormularioEstudiante({ onAgregar }: Props) {
       {activeTab === "personales" && (
           <>
             <div className="mb-3">
-              <label className="form-label">Nombre</label>
+              <label className="form-label">Nombres</label>
               <input className="form-control" value={nombre} onChange={(e) => setNombre(e.target.value)} />
             </div>
             <div className="mb-3">
-              <label className="form-label">Apellido</label>
+              <label className="form-label">Apellidos</label>
               <input className="form-control" value={apellido} onChange={(e) => setApellido(e.target.value)} />
             </div>
             <div className="mb-3">
