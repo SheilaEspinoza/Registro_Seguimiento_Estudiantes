@@ -7,8 +7,6 @@ interface Props {
 
 function FormularioEstudiante({ onAgregar }: Props) {
   const [activeTab, setActiveTab] = useState("personales");
- 
-
 
   const [foto, setFoto] = useState<File | null>(null);
   const [nombre, setNombre] = useState("");
@@ -17,15 +15,13 @@ function FormularioEstudiante({ onAgregar }: Props) {
   const [correo, setCorreo] = useState("");
 
   const [ciudad, setCiudad] = useState("");
+  const [pais, setPais] = useState(""); 
   const [direccion, setDireccion] = useState("");
   const [telf, setTelf] = useState("");
-  
-
 
   const [carrera, setCarrera] = useState("");
   const [nivel, setNivel] = useState(1);
 
-  //campos para limpiar - se llama en boton limpiar
   const limpiarCampos = () => {
     setNombre("");
     setApellido("");
@@ -33,6 +29,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
     setCorreo("");
     setFoto(null);
     setCiudad("");
+    setPais(""); 
     setDireccion("");
     setTelf("");
     setCarrera("");
@@ -47,24 +44,14 @@ function FormularioEstudiante({ onAgregar }: Props) {
       cedula,
       correo,
       ciudad,
+      pais, 
       direccion,
       telf,
       carrera,
       nivel,
       foto,
     });
-    setFoto(null);
-    setNombre("");
-    setApellido("");
-    setCedula("");
-    setCorreo("");
-
-    setCiudad("");
-    setDireccion("");
-    setTelf("");
-
-    setCarrera("");
-    setNivel(1);
+    limpiarCampos();
   };
 
   return (
@@ -160,9 +147,14 @@ function FormularioEstudiante({ onAgregar }: Props) {
         {activeTab === "ubicacion" && (
           <div className="row">
             <div className="col-md-6 mb-3">
+              <label className="form-label">País</label>
+              <input className="form-control form-control-sm" value={pais} onChange={(e) => setPais(e.target.value)} />
+            </div>
+            <div className="col-md-6 mb-3">
               <label className="form-label">Ciudad</label>
               <input className="form-control form-control-sm" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
             </div>
+          
             <div className="col-md-6 mb-3">
               <label className="form-label">Dirección</label>
               <input className="form-control form-control-sm" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
@@ -172,7 +164,6 @@ function FormularioEstudiante({ onAgregar }: Props) {
               <input className="form-control form-control-sm" value={telf} onChange={(e) => setTelf(e.target.value)} />
             </div>
 
-            {/*Botones para enviar, limpiar */}
             <div className="d-flex justify-content-between">
               <button
                 type="submit"
@@ -192,3 +183,4 @@ function FormularioEstudiante({ onAgregar }: Props) {
 }
 
 export default FormularioEstudiante;
+

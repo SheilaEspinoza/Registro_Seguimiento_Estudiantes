@@ -9,4 +9,5 @@ export type Estudiante = {
   carrera: string;
   nivel: number;
   foto: File | null;
+  pais:string;
 };
