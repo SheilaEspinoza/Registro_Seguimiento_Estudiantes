@@ -33,6 +33,22 @@ const Reportes = () => {
           <Bar dataKey="promedio" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
+      <h1>Reportes de Estudiantes</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Carrera</th>
+            <th>Promedio</th>
+          </tr>
+          <p> emily y brocoli juntos</p>
+        </thead>
+        <tbody>
+          {/* Aquí puedes agregar filas simuladas o dejarlo vacío */}
+        </tbody>
+
+      </table>
     </div>
   );
 };
