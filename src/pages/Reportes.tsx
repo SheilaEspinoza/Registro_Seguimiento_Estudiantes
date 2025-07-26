@@ -30,7 +30,7 @@ const Reportes = () => {
           <XAxis dataKey="nombre" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="promedio" fill="#8884d8" />
+          <Bar dataKey="promedio" fill="#3b161eff" />
         </BarChart>
       </ResponsiveContainer>
     </div>
