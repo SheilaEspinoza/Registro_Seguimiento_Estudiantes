@@ -42,7 +42,6 @@ const Reportes = () => {
             <th>Carrera</th>
             <th>Promedio</th>
           </tr>
-          <p> emily y brocoli juntos</p>
         </thead>
         <tbody>
           {/* Aquí puedes agregar filas simuladas o dejarlo vacío */}
