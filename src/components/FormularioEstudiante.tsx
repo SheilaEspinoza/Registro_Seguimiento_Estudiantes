@@ -7,7 +7,9 @@ interface Props {
 
 function FormularioEstudiante({ onAgregar }: Props) {
   const [activeTab, setActiveTab] = useState("personales");
-  
+ 
+
+
   const [foto, setFoto] = useState<File | null>(null);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -17,28 +19,40 @@ function FormularioEstudiante({ onAgregar }: Props) {
   const [ciudad, setCiudad] = useState("");
   const [direccion, setDireccion] = useState("");
   const [telf, setTelf] = useState("");
-
   
+
+
   const [carrera, setCarrera] = useState("");
   const [nivel, setNivel] = useState(1);
 
   //campos para limpiar - se llama en boton limpiar
   const limpiarCampos = () => {
-  setNombre("");
-  setApellido("");
-  setCedula("");
-  setCorreo("");
-  setFoto(null);
-  setCiudad("");
-  setDireccion("");
-  setTelf("");
-  setCarrera("");
-  setNivel(1);
-};
+    setNombre("");
+    setApellido("");
+    setCedula("");
+    setCorreo("");
+    setFoto(null);
+    setCiudad("");
+    setDireccion("");
+    setTelf("");
+    setCarrera("");
+    setNivel(1);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAgregar({ nombre, apellido, cedula, carrera, nivel });
+    onAgregar({
+      nombre,
+      apellido,
+      cedula,
+      correo,
+      ciudad,
+      direccion,
+      telf,
+      carrera,
+      nivel,
+      foto,
+    });
     setFoto(null);
     setNombre("");
     setApellido("");
@@ -75,7 +89,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
             Datos académicos
           </button>
         </li>
-        
+
         <li className="nav-item">
           <button
             className={`nav-link ${activeTab === "ubicacion" ? "active" : ""}`}
@@ -87,8 +101,8 @@ function FormularioEstudiante({ onAgregar }: Props) {
       </ul>
 
       <form onSubmit={handleSubmit}>
-      {activeTab === "personales" && (
-        <div className="row">
+        {activeTab === "personales" && (
+          <div className="row">
             <div className="col-md-6 mb-3">
               <label className="form-label">Foto</label>
               <input
@@ -104,7 +118,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label ">Nombres</label>
-              <input className="form-control form-control-sm" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
+              <input className="form-control form-control-sm" value={nombre} onChange={(e) => setNombre(e.target.value)} />
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label">Apellidos</label>
@@ -117,7 +131,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
           </div>
         )}
 
-         {activeTab === "academicos" && (
+        {activeTab === "academicos" && (
           <div className="row">
             <div className="col-md-6 mb-3">
               <label className="form-label">Carrera</label>
@@ -133,11 +147,11 @@ function FormularioEstudiante({ onAgregar }: Props) {
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label">Nivel</label>
-              <input 
-                type="number" 
-                className="form-control form-control-sm" 
-                value={nivel} 
-                onChange={(e) => setNivel(Number(e.target.value))} 
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                value={nivel}
+                onChange={(e) => setNivel(Number(e.target.value))}
               />
             </div>
           </div>
@@ -145,7 +159,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
 
         {activeTab === "ubicacion" && (
           <div className="row">
-           <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-3">
               <label className="form-label">Ciudad</label>
               <input className="form-control form-control-sm" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
             </div>
@@ -160,7 +174,14 @@ function FormularioEstudiante({ onAgregar }: Props) {
 
             {/*Botones para enviar, limpiar */}
             <div className="d-flex justify-content-between">
-              <button type="submit" className="btn btn-success">Agregar Registro</button>
+              <button
+                type="submit"
+                className="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Agregar Registro
+              </button>
+
               <button type="button" className="btn btn-secondary" onClick={limpiarCampos}>Limpiar</button>
             </div>
           </div>
