@@ -1,19 +1,20 @@
 import "../App.css";
 import {
+  ResponsiveContainer,
   BarChart,
-  Bar,
+  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
+  Bar,
 } from "recharts";
 
+// Example data for estudiantes
 const estudiantes = [
-  { nombre: "Juan", promedio: 8.5 },
-  { nombre: "Ana", promedio: 9.0 },
-  { nombre: "Luis", promedio: 7.8 },
-  { nombre: "María", promedio: 8.9 },
+  { nombre: "Juan", promedio: 85 },
+  { nombre: "Ana", promedio: 92 },
+  { nombre: "Luis", promedio: 78 },
+  { nombre: "Maria", promedio: 88 },
 ];
 
 const Reportes = () => {

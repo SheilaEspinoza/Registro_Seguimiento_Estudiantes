@@ -10,7 +10,9 @@ function TablaEstudiantes({ estudiantes }: Props) {
       <table className="table table-striped table-bordered">
         <thead className="table-light">
           <tr>
-            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
             <th>Carrera</th>
             <th>Nivel</th>
           </tr>
@@ -19,6 +21,8 @@ function TablaEstudiantes({ estudiantes }: Props) {
           {estudiantes.map((est, index) => (
             <tr key={index}>
               <td>{est.nombre}</td>
+              <td>{est.apellido}</td>
+              <td>{est.cedula}</td>
               <td>{est.carrera}</td>
               <td>{est.nivel}</td>
             </tr>
