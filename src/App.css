@@ -82,11 +82,14 @@ body.sb-sidenav-toggled .toggle-btn {
 }
 
 /*  COMPONENTES */
-.bienvenida-card {
-  display: block !important;
-  opacity: 1 !important;
+.bienvenida-card, .card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
 }
 
+.espaciado-superior {
+  margin-top: 30px; /* o el valor que prefieras */
+}
 .calendario-pequeno {
   transform: scale(0.8);
   transform-origin: top left;
@@ -109,4 +112,22 @@ body.sb-sidenav-toggled .toggle-btn {
 .notes-panel textarea {
   height: 80%;
   resize: none;
+}
+
+.modal-margen-superior .modal-dialog {
+  margin-top: 60px;
+}
+
+/*Recordatorios - botones*/
+.btn-primary {
+  background-color: #4a90e2;
+  border: none;
+}
+.btn-danger {
+  background-color: #e74c3c;
+  border: none;
+}
+.btn-success {
+  background-color: #2ecc71;
+  border: none;
 }
