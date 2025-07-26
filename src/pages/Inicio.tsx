@@ -3,7 +3,6 @@ import CalendarioInicio from "../components/CalendarioInicio";
 import Recordatorios from "../components/Recordatorios"; 
 import '../App.css';
 
-
 const Inicio = () => {
   const [saludo, setSaludo] = useState("");
   const [horaActual, setHoraActual] = useState(new Date());
@@ -47,11 +46,7 @@ const Inicio = () => {
   const formatoHora = horaActual.toLocaleTimeString("es-EC", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false, //formato 24h
-    /*
-    Formato 12 h
-    hour: "2-digit",
-    minute: "2-digit",*/
+    hour12: false,
   });
 
   return (
@@ -91,3 +86,4 @@ const Inicio = () => {
 }
 
 export default Inicio;
+

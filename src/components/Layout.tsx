@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Header from "./Header";
 
-/* Children = contenido dinamico - paginas del menu */
+/* Children = contenido dinámico - páginas del menú */
 function Layout({ children }: { children: ReactNode }) {
   return (
     <div>
