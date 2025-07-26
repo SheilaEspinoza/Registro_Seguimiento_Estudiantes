@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
+import type { FC } from "react";
 
-const NotesPanel = ({ isOpen, onClose }) => {
+interface NotesPanelProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const NotesPanel: FC<NotesPanelProps> = ({ isOpen, onClose }) =>  {
   const [note, setNote] = useState("");
 
   // Cargar nota desde localStorage si existe

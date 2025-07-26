@@ -58,9 +58,18 @@ const Recordatorios = () => {
                 tarea.estado === "completo" ? "bg-light text-muted text-decoration-line-through" : ""
               }`}
             >
-              <div>
-                <strong>{tarea.texto}</strong> <span className="badge bg-secondary">{tarea.prioridad}</span>
-              </div>
+            <div>
+                <strong>{tarea.texto}</strong> 
+                <span className={`badge rounded-pill ${
+                    tarea.prioridad === "alta"
+                    ? "text-bg-danger"
+                    : tarea.prioridad === "media"
+                    ? "text-bg-info"
+                    : "text-bg-success"
+                    }`}>
+                      {tarea.prioridad}
+               </span>
+            </div>
               <div>
                 <Button
                     variant={tarea.estado === "completo" ? "warning" : "primary"}
