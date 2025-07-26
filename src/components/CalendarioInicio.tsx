@@ -19,7 +19,7 @@ function CalendarioInicio() {
         />
       </div>
     </div>
-  );
+  ); 
 }
 
 export default CalendarioInicio;
