@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Modal } from "bootstrap";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import FormularioEstudiante from "../components/FormularioEstudiante";
 import TablaEstudiantes from "../components/TablaEstudiantes";
 import Estadisticas from "../components/Estadisticas";
@@ -7,32 +7,29 @@ import type { Estudiante } from "../types/Estudiante";
 
 function Estudiantes() {
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
-const [filtroCedula, setFiltroCedula] = useState("");
-  const agregarEstudiante = (nuevo: Estudiante) => {
-    setEstudiantes([...estudiantes, nuevo]);
-     
+  const [filtroCedula, setFiltroCedula] = useState("");
 
-    try {
-      const modal = document.getElementById("modalNuevoRegistro");
-      if (modal) {
-        const modalInstance = Modal.getOrCreateInstance(modal);
-        modalInstance.hide();
-      }
-    } catch (error) {
-      console.error("Error cerrando modal:", error);
-    }
+  async function fetchEstudiantes() {
+  try {
+    const resp = await axios.get("http://localhost:3001/api/estudiantes");
+    setEstudiantes(resp.data);
+  } catch (error) {
+    console.error("No pude traer la lista:", error);
+  }
+}
 
-  };
+    useEffect(() => {
+  fetchEstudiantes();
+  }, []);
 
   const total = estudiantes.length;
 
   const porCarrera: Record<string, number> = {};
   estudiantes.forEach((e) => {
-    porCarrera[e.carrera] = (porCarrera[e.carrera] || 0) + 1;
+  porCarrera[e.carrera] = (porCarrera[e.carrera] || 0) + 1;
   });
-const estudiantesFiltrados = filtroCedula
-  ? estudiantes.filter((e) => e.cedula === filtroCedula)
-  : estudiantes;
+  const estudiantesFiltrados = filtroCedula
+  ? estudiantes.filter((e) => e.cedula === filtroCedula) : estudiantes;
 
   return (
     <div className="container mt-4">
@@ -49,7 +46,7 @@ const estudiantesFiltrados = filtroCedula
           Nuevo Registro
         </button>
       </div>
-      {/* 🔍 Buscador por cédula */}
+      {/* Barra buscar por cedula */}
       <div className="input-group mb-4">
         <span className="input-group-text" id="buscar-addon">
           <i className="bi bi-search"></i>
@@ -88,7 +85,7 @@ const estudiantesFiltrados = filtroCedula
             </div>
 
             <div className="modal-body">
-              <FormularioEstudiante onAgregar={agregarEstudiante} />
+              <FormularioEstudiante onRegistroExitoso={fetchEstudiantes} />
             </div>
           </div>
         </div>

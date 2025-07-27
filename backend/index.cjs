@@ -1,17 +1,35 @@
-/*Para ejecutar - en terminal
+/*Para comprobar conexion, en termial ejecutar
 PS C:\laragon\www\react-registro-estudiantes> cd backend
 PS C:\laragon\www\react-registro-estudiantes\backend> node index.cjs
 
 debe aparecer mensaje: Servidor corriendo en http://localhost:3001
 Base de datos conectada correctamente
  */
+
 const express = require("express");
+const app = express();
 const mysql = require("mysql2");
 const cors = require("cors");
 
-const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use("/uploads", require("express").static("uploads"));
+const multer = require("multer"); //npm install multer
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // carpeta donde se guardarán las imágenes
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9) + ext;
+    cb(null, uniqueName);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Conexion a MySQL
 const db = mysql.createConnection({
@@ -30,39 +48,42 @@ db.connect((err) => {
   }
 });
 
-app.post("/create",(req,res)=>{
-    const id = req.body.id;
-    const cedula = req.body.cedula;
-    const nombre = req.body.nombre;
-    const apellido = req.body.apellido;
-    const correo = req.body.correo;
-    const carrera = req.body.carrera;
-    const nivel = req.body.nivel;
-    const pais = req.body.pais;
-    const ciudad = req.body.ciudad;
-    const direccion = req.body.direccion;
-    const telefono = req.body.telefono;
-    const foto = req.body.foto;
-    const creado_el = req.body.creado_el;
+app.post("/registro", upload.single("foto"), (req, res) => {
+     const { cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono } = req.body;
+     const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-    db.query("INSERT INTO estudiantes(id, cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto, creado_el) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", [id, cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto, creado_el],
-      (err, result)=>{
+     const sql = `INSERT INTO estudiantes 
+                (cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+     const values = [cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto];
+     console.log("BODY:", req.body);
+     console.log("FILE:", req.file);
+
+    db.query(sql, values, (err, result) => {
         if(err){
-            console.log(err);
+            console.error("Error al insertar en la base:", err);
+            return res.status(500).send("Error del servidor");
         }else{
-            res.send("Registro agregado exitosamente");
+            res.send("Estudiante registrado correctamente");
         }
-      }
-    );
-
+    });
   });
 
-// Ruta de prueba
-app.get("/api/estudiantes", (req, res) => {
-  db.query("SELECT * FROM estudiantes", (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+  /*verificar esto */
+  app.get('/api/estudiantes', async (req, res) => {
+  try {
+      db.query('SELECT * FROM estudiantes', (err, results) => {
+        if (err) {
+         console.error("Error al obtener estudiantes:", err);
+         res.status(500).json({ mensaje: "Error al obtener estudiantes" });
+        } else {
+          res.json(results);
+         }
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al obtener estudiantes" });
+  }
 });
 
 // para iniciar servidor
