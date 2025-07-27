@@ -3,11 +3,11 @@ export type Estudiante = {
   apellido: string;
   cedula: string;
   correo: string;
+  carrera: string;
+  nivel: number;
+  pais:string;
   ciudad: string;
   direccion: string;
   telf: string;
-  carrera: string;
-  nivel: number;
   foto: File | null;
-  pais:string;
 };

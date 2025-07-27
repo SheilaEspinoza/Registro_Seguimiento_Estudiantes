@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import type { Estudiante } from "../types/Estudiante";
+import axios from "axios"; //npm install axios
 
-interface Props {
-  onAgregar: (estudiante: Estudiante) => void;
-}
-
-function FormularioEstudiante({ onAgregar }: Props) {
+function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => void }) {
   const [activeTab, setActiveTab] = useState("personales");
 
   const [foto, setFoto] = useState<File | null>(null);
@@ -17,7 +13,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
   const [ciudad, setCiudad] = useState("");
   const [pais, setPais] = useState(""); 
   const [direccion, setDireccion] = useState("");
-  const [telf, setTelf] = useState("");
+  const [telefono, setTelefono] = useState("");
 
   const [carrera, setCarrera] = useState("");
   const [nivel, setNivel] = useState(1);
@@ -31,27 +27,44 @@ function FormularioEstudiante({ onAgregar }: Props) {
     setCiudad("");
     setPais(""); 
     setDireccion("");
-    setTelf("");
+    setTelefono("");
     setCarrera("");
     setNivel(1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onAgregar({
-      nombre,
-      apellido,
-      cedula,
-      correo,
-      ciudad,
-      pais, 
-      direccion,
-      telf,
-      carrera,
-      nivel,
-      foto,
-    });
-    limpiarCampos();
+
+    try{
+      const formData = new FormData();
+      formData.append("cedula", cedula);
+      formData.append("nombre", nombre);
+      formData.append("apellido", apellido);
+      
+      formData.append("correo", correo);
+      formData.append("carrera", carrera);
+      formData.append("nivel", nivel.toString());
+      
+      formData.append("pais", pais);
+      formData.append("ciudad", ciudad);
+      formData.append("direccion", direccion);
+      formData.append("telefono", telefono);
+      if (foto) formData.append("foto", foto);
+
+      await axios.post("http://localhost:3001/registro", formData,{
+        //Significa - “Enviale esta informacion al backend que esta corriendo en localhost:3001 = ruta /registro”
+        headers: {"Content-Type": "multipart/form-data",}
+      },
+    );
+
+        onRegistroExitoso(); // ¡Actualiza la tabla!
+        alert("Estudiante ha sido agregado");
+        limpiarCampos();
+
+    }catch(error){
+      console.error("Error al realizar registro en Base de datos:", error);
+      alert("Error al registrar estudiante");
+    }
   };
 
   return (
@@ -161,7 +174,7 @@ function FormularioEstudiante({ onAgregar }: Props) {
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label">Teléfono</label>
-              <input className="form-control form-control-sm" value={telf} onChange={(e) => setTelf(e.target.value)} />
+              <input className="form-control form-control-sm" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
             </div>
 
             <div className="d-flex justify-content-between">
