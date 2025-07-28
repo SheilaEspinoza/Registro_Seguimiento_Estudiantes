@@ -151,6 +151,8 @@ body.sb-sidenav-toggled .toggle-btn {
 }
 
 .tabla-estudiantes {
+  text-align:center;
+  text-wrap-mode: "wrap";
   width: 100%;
   border-color: 1px solid #bdbdbd;
   font-variant: tabular-nums;
@@ -162,10 +164,33 @@ body.sb-sidenav-toggled .toggle-btn {
   cursor: pointer;
 }
 .theadestudiantes {
-  color: white; 
+  text-align: center;
   border-color: rgb(173, 172, 172);
   font-size: 14px;
-  background-color: #e9e8e8;
+  background-color: #8a3c3c;
   text-align: center; 
+}
+
+.celda {
+  white-space: normal;    /* permite salto de línea */
+  word-wrap: break-word;  /* rompe palabras largas */
+  overflow-wrap: break-word; /* para mejor soporte */
+  padding: 8px;
+  border: 1px solid #a39a9a;
+}
+thead th{
+  font-size: 14px;
+  background-color: #991919 !important;
+  color: white  !important;
+  padding: 10px  !important;
+  text-align: center  !important;
+}
+
+/* Ajustes de ancho de columnas de correo*/
+th:nth-child(4), td:nth-child(4) {
+  width: 15%;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
