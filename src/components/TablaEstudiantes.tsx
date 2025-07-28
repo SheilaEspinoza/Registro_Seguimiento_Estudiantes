@@ -13,6 +13,7 @@ function TablaEstudiantes({ estudiantes }: Props) {
             <th>Cédula</th>
             <th>Nombres</th>
             <th>Apellidos</th>
+            <th>Correo</th>
             <th>Carrera</th>
             <th>Nivel</th>
           </tr>
@@ -23,6 +24,7 @@ function TablaEstudiantes({ estudiantes }: Props) {
               <td>{est.cedula}</td>
               <td>{est.nombre}</td>
               <td>{est.apellido}</td>
+              <td>{est.correo}</td>
               <td>{est.carrera}</td>
               <td>{est.nivel}</td>
             </tr>

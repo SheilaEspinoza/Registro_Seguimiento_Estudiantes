@@ -4,6 +4,8 @@ import FormularioEstudiante from "../components/FormularioEstudiante";
 import TablaEstudiantes from "../components/TablaEstudiantes";
 import Estadisticas from "../components/Estadisticas";
 import type { Estudiante } from "../types/Estudiante";
+import '../App.css';
+
 
 function Estudiantes() {
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
@@ -32,35 +34,41 @@ function Estudiantes() {
   ? estudiantes.filter((e) => e.cedula === filtroCedula) : estudiantes;
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-5" style={{ paddingTop: "230px" }}>
       <h1 className="mb-4">Seguimiento de Estudiantes</h1>
 
+      <div className="row align-items-center mb-4">
+       {/* Barra buscar por cedula */}
+         <div className="col-md-8">
+            <div className="input-group">
+              <span className="input-group-text" id="buscar-addon">
+                 <i className="bi bi-search"></i>
+              </span>
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Buscar por cédula..."
+                aria-label="Buscar"
+                aria-describedby="buscar-addon"
+                value={filtroCedula}
+                onChange={(e) => setFiltroCedula(e.target.value)}
+              />
+           </div>
+         </div>
+
       {/* Boton derecho para mostrar modal */}
-      <div className="d-flex justify-content-end mb-3">
+      <div className="col-md-4 text-end mt-2 mt-md-0">
         <button
           type="button"
           className="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#modalNuevoRegistro"
         >
+          <i className="bi bi-person-plus me-2"></i>
           Nuevo Registro
         </button>
       </div>
-      {/* Barra buscar por cedula */}
-      <div className="input-group mb-4">
-        <span className="input-group-text" id="buscar-addon">
-          <i className="bi bi-search"></i>
-        </span>
-        <input
-          type="search"
-          className="form-control"
-          placeholder="Buscar por cédula..."
-          aria-label="Buscar"
-          aria-describedby="buscar-addon"
-          value={filtroCedula}
-          onChange={(e) => setFiltroCedula(e.target.value)}
-        />
-      </div>
+    </div>
 
       {/* Modal abierto */}
       <div

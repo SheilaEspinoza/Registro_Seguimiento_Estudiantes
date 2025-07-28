@@ -61,6 +61,12 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
         alert("Estudiante ha sido agregado");
         limpiarCampos();
 
+        const modalElement = document.getElementById("modalNuevoRegistro");
+          if (modalElement) {
+          const modal = window.bootstrap?.Modal.getInstance(modalElement);
+          modal?.hide();
+          }
+
     }catch(error){
       console.error("Error al realizar registro en Base de datos:", error);
       alert("Error al registrar estudiante");
