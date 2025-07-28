@@ -11,17 +11,21 @@ function Estudiantes() {
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
   const [filtroCedula, setFiltroCedula] = useState("");
 
-  async function fetchEstudiantes() {
-  try {
-    const resp = await axios.get("http://localhost:3001/api/estudiantes"); 
-    setEstudiantes(resp.data); //si no presento resp - no sale tabla
-  } catch (error) {
-    console.error("No pude traer la lista:", error);
-  }
-}
+    async function fetchEstudiantes() {
+      try {
+      const resp = await axios.get("http://localhost:3001/api/estudiantes"); 
+      setEstudiantes(resp.data); //si no presento resp - no sale tabla
+      } catch (error) {
+      console.error("No pude traer la lista:", error);
+      }
+    }
 
-    useEffect(() => {
-  fetchEstudiantes();
+     const handleDelete = (cedula: string) => {
+     setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
+    };
+
+  useEffect(() => {
+    fetchEstudiantes();
   }, []);
 
   const total = estudiantes.length;
@@ -117,7 +121,10 @@ function Estudiantes() {
 
       {/*Seccion tabla con registros creados */}
       <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-       <TablaEstudiantes estudiantes={estudiantesFiltrados} />
+       <TablaEstudiantes
+          estudiantes={estudiantesFiltrados}
+          onEliminar={handleDelete}
+/>
       </div>
 
     </div>
