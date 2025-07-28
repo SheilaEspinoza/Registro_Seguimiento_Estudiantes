@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../App.css";
 //Importamos clases de recharts para crear el gráfico
 import {
   BarChart,
@@ -46,16 +47,9 @@ const estudiantes = [
   },
 ];
 
-//crea un estado para manejar la búsqueda de estudiantes y la funcion setBusqueda para actualizar el estado
-// Filtra los estudiantes según el texto de búsqueda y genera un resumen por carrera para el gráfico
 const Reportes = () => {
   const [busqueda, setBusqueda] = useState("");
 
-  // Filtrar estudiantes según el texto de búsqueda
-  //estudiantes.filter() recorre el array de estudiantes y verifica si alguno de los valores del objeto estudiante incluye el texto de búsqueda
-  //Object.values(est) obtiene todos los valores del objeto estudiante y some() verifica si al menos uno de esos valores incluye el texto de búsqueda
-  //toLowerCase() convierte el texto a minúsculas para hacer una búsqueda insensible a mayúsculas/minúsculas
-  //includes() verifica si el valor contiene el texto de búsqueda
   const estudiantesFiltrados = estudiantes.filter((est) =>
     Object.values(est).some((valor) =>
       valor.toLowerCase().includes(busqueda.toLowerCase())
@@ -79,46 +73,20 @@ const Reportes = () => {
   );
 
   return (
-    <div
-      className="p-4"
-      style={{ maxWidth: "1200px", margin: "0 auto", alignContent: "center" }}
-    >
+    <div className="entrada">
       <h1>Reporte de Estudiantes</h1>
-
       <input
+        className="busqueda-input"
         type="text"
         placeholder="Buscar por nombre, cédula, carrera..."
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
-        style={{
-          outline: "none",
-          marginTop: "10px",
-          marginBottom: "20px",
-          border: "1px solid #ccc",
-          padding: "10px",
-          width: "500px",
-          height: "40px",
-          borderRadius: "15px",
-          fontSize: "15px",
-          fontFamily: "sans-serif",
-          transition: " 0.3s ease-in-out",
-          boxShadow: "0px 4px 8px rgba(223, 214, 214, 0.8)",
-        }}
       />
       <table
-        className="table table-striped table-bordered table-hover"
-        style={{
-          flexWrap: "wrap",
-          alignContent: "space-between",
-          width: "990px",
-          marginTop: "5px",
-          backgroundClip: "padding-box",
-          border: "1px solid #afa8a8ad",
-          borderRadius: "15px",
-          backgroundColor: "#ffffffff",
-        }}
+        className="table tabla-estudiantes table-bordered"
+        style={{ width: "990px", marginTop: "20px" }}
       >
-        <thead>
+        <thead className="theadestudiantes">
           <tr>
             <th>Cédula</th>
             <th>Nombres</th>
@@ -155,7 +123,6 @@ const Reportes = () => {
           )}
         </tbody>
       </table>
-
       {/* Gráfico de barras */}
       <h2 style={{ marginTop: "40px" }}>Estudiantes por Carrera</h2>
       <ResponsiveContainer width="100%" height={300}>
