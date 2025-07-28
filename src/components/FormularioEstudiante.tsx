@@ -57,7 +57,7 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
       },
     );
 
-        onRegistroExitoso(); // ¡Actualiza la tabla!
+        onRegistroExitoso(); 
         alert("Estudiante ha sido agregado");
         limpiarCampos();
 
@@ -196,4 +196,3 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
 }
 
 export default FormularioEstudiante;
-

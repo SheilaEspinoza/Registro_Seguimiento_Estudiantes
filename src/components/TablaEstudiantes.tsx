@@ -14,7 +14,7 @@ function TablaEstudiantes({ estudiantes }: Props) {
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Carrera</th>
-            <th>Nivel actual</th>
+            <th>Nivel</th>
           </tr>
         </thead>
         <tbody>

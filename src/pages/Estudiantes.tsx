@@ -11,8 +11,8 @@ function Estudiantes() {
 
   async function fetchEstudiantes() {
   try {
-    const resp = await axios.get("http://localhost:3001/api/estudiantes");
-    setEstudiantes(resp.data);
+    const resp = await axios.get("http://localhost:3001/api/estudiantes"); 
+    setEstudiantes(resp.data); //si no presento resp - no sale tabla
   } catch (error) {
     console.error("No pude traer la lista:", error);
   }
