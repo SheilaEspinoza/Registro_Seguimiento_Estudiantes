@@ -18,7 +18,7 @@ const Header = () => {
           <button className="btn btn-link btn-sm" onClick={toggleSidebar}>
             <i className="fas fa-bars text-white"></i>
           </button>
-          <span className="navbar-brand mb-0 h1">VAMPIROS</span>
+          <span className="navbar-brand mb-0 h1">VAMPIROS🦇</span>
         </div>
 
         {/*a la derecha notas*/}
