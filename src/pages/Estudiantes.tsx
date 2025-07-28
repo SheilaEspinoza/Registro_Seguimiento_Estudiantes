@@ -34,9 +34,18 @@ function Estudiantes() {
   ? estudiantes.filter((e) => e.cedula === filtroCedula) : estudiantes;
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">Seguimiento de Estudiantes</h1>
+    <>
+      <div
+        style={{
+          margin: "0 auto",
+          padding: "20px",
+          backgroundColor: "#fff",
+          borderRadius: "10px",
+          boxShadow: "0 0 10px rgba(201, 201, 201, 0.1)",
+        }}
+      >
 
+      <h1 className="mb-4">Seguimiento de Estudiantes</h1>
       <div className="row align-items-center mb-4">
        {/* Barra buscar por cedula */}
          <div className="col-md-8">
@@ -110,7 +119,9 @@ function Estudiantes() {
       <div style={{ maxHeight: "300px", overflowY: "auto" }}>
        <TablaEstudiantes estudiantes={estudiantesFiltrados} />
       </div>
+
     </div>
+    </>
   );
 }
 
