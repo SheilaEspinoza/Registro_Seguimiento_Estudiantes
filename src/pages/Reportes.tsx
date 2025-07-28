@@ -45,6 +45,105 @@ const estudiantes = [
     carrera: "Ingeniería",
     nivel: "2",
   },
+  {
+    cedula: "1234567890",
+    nombres: "Juan",
+    apellidos: "Pérez",
+    correo: "juanp@gmail.com",
+    telefono: "0991234567",
+    ciudad: "Quito",
+    direccion: "Av. Siempre Viva 123",
+    carrera: "Ingeniería",
+    nivel: "3",
+  },
+  {
+    cedula: "0987654321",
+    nombres: "María",
+    apellidos: "Gómez",
+    correo: "maria.g@gmail.com",
+    telefono: "0987654321",
+    ciudad: "Guayaquil",
+    direccion: "Calle Falsa 456",
+    carrera: "Medicina",
+    nivel: "2",
+  },
+  {
+    cedula: "1122334455",
+    nombres: "Carlos",
+    apellidos: "Lopez",
+    correo: "clopezz@gmail.com",
+    telefono: "0998877665",
+    ciudad: "Cuenca",
+    direccion: "Calle Luna 321",
+    carrera: "Ingeniería",
+    nivel: "2",
+  },
+  {
+    cedula: "1234567890",
+    nombres: "Juan",
+    apellidos: "Pérez",
+    correo: "juanp@gmail.com",
+    telefono: "0991234567",
+    ciudad: "Quito",
+    direccion: "Av. Siempre Viva 123",
+    carrera: "Ingeniería",
+    nivel: "3",
+  },
+  {
+    cedula: "0987654321",
+    nombres: "María",
+    apellidos: "Gómez",
+    correo: "maria.g@gmail.com",
+    telefono: "0987654321",
+    ciudad: "Guayaquil",
+    direccion: "Calle Falsa 456",
+    carrera: "Medicina",
+    nivel: "2",
+  },
+  {
+    cedula: "1122334455",
+    nombres: "Carlos",
+    apellidos: "Lopez",
+    correo: "clopezz@gmail.com",
+    telefono: "0998877665",
+    ciudad: "Cuenca",
+    direccion: "Calle Luna 321",
+    carrera: "Ingeniería",
+    nivel: "2",
+  },
+  {
+    cedula: "1234567890",
+    nombres: "Juan",
+    apellidos: "Pérez",
+    correo: "juanp@gmail.com",
+    telefono: "0991234567",
+    ciudad: "Quito",
+    direccion: "Av. Siempre Viva 123",
+    carrera: "Ingeniería",
+    nivel: "3",
+  },
+  {
+    cedula: "0987654321",
+    nombres: "María",
+    apellidos: "Gómez",
+    correo: "maria.g@gmail.com",
+    telefono: "0987654321",
+    ciudad: "Guayaquil",
+    direccion: "Calle Falsa 456",
+    carrera: "Medicina",
+    nivel: "2",
+  },
+  {
+    cedula: "1122334455",
+    nombres: "Carlos",
+    apellidos: "Lopez",
+    correo: "clopezz@gmail.com",
+    telefono: "0998877665",
+    ciudad: "Cuenca",
+    direccion: "Calle Luna 321",
+    carrera: "Ingeniería",
+    nivel: "2",
+  },
 ];
 
 const Reportes = () => {
@@ -73,8 +172,32 @@ const Reportes = () => {
   );
 
   return (
-    <div className="entrada">
-      <h1>Reporte de Estudiantes</h1>
+    <div className="mb-4 ms-4 ">
+      <div>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_UCSG.svg"
+          alt="logoucsg"
+          style={{
+            marginTop: "20px",
+            width: "150px",
+            display: "flex",
+            margin: "0 auto",
+          }}
+        />
+      </div>
+      <h1
+        style={{
+          fontFamily: "sans-serif",
+          fontWeight: "bold",
+          color: "#800606ff",
+          textAlign: "center",
+          marginBottom: "20px",
+          marginTop: "20px",
+        }}
+      >
+        Reportes Estudiantiles
+      </h1>
+
       <input
         className="busqueda-input"
         type="text"
@@ -92,11 +215,12 @@ const Reportes = () => {
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Ciudad</th>
-            <th>Dirección</th>
             <th>Carrera</th>
             <th>Nivel</th>
+            <th>Pais</th>
+            <th>Ciudad</th>
+            <th>Direccion</th>
+            <th>Teléfono</th>
           </tr>
         </thead>
         <tbody>
@@ -107,22 +231,24 @@ const Reportes = () => {
                 <td>{est.nombres}</td>
                 <td>{est.apellidos}</td>
                 <td>{est.correo}</td>
-                <td>{est.telefono}</td>
-                <td>{est.ciudad}</td>
-                <td>{est.direccion}</td>
                 <td>{est.carrera}</td>
                 <td>{est.nivel}</td>
+                <td>{/* Pais column, value missing in data */}</td>
+                <td>{est.ciudad}</td>
+                <td>{est.direccion}</td>
+                <td>{est.telefono}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={9} align="center">
+              <td colSpan={10} align="center">
                 No se encontraron estudiantes.
               </td>
             </tr>
           )}
         </tbody>
       </table>
+
       {/* Gráfico de barras */}
       <h2 style={{ marginTop: "40px" }}>Estudiantes por Carrera</h2>
       <ResponsiveContainer width="100%" height={300}>

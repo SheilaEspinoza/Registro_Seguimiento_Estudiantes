@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CalendarioInicio from "../components/CalendarioInicio";
-import Recordatorios from "../components/Recordatorios"; 
-import '../App.css';
+import Recordatorios from "../components/Recordatorios";
+import "../App.css";
 
 const Inicio = () => {
   const [saludo, setSaludo] = useState("");
@@ -21,26 +21,22 @@ const Inicio = () => {
     const horaDelDia = hora.getHours();
     if (horaDelDia >= 0 && horaDelDia < 12) {
       setSaludo("¡Buenos días!");
-    } 
-    else if (horaDelDia >= 12 && horaDelDia < 18) {
+    } else if (horaDelDia >= 12 && horaDelDia < 18) {
       setSaludo("¡Buenas tardes!");
-    } 
-    else {
+    } else {
       setSaludo("¡Buenas noches!");
     }
   };
 
   const obtenerImagen = () => {
     const hora = horaActual.getHours();
-    if (hora >= 0  && hora < 12){
+    if (hora >= 0 && hora < 12) {
       return "/img/dia.jpg";
-    } 
-    else if (hora >= 12 && hora < 18){
+    } else if (hora >= 12 && hora < 18) {
+      return "/img/dia.jpg";
+    } else {
       return "/img/dia.jpg";
     }
-    else {
-      return "/img/dia.jpg";
-    } 
   };
 
   const formatoHora = horaActual.toLocaleTimeString("es-EC", {
@@ -50,40 +46,42 @@ const Inicio = () => {
   });
 
   return (
-  <>
-    <div className="card mb-3 bienvenida-card espaciado-superior">
-      <div className="row g-0">
-        <div className="col-md-4">
-          <img src={obtenerImagen()} className="card-img" alt="Imagen_hora" />
-        </div>
+    <>
+      <div className="card mb-3 bienvenida-card espaciado-superior">
+        <div className="row g-0">
+          <div className="col-md-4">
+            <img src={obtenerImagen()} className="card-img" alt="Imagen_hora" />
+          </div>
 
-        <div className="col-md-8 d-flex flex-column justify-content-between">
-          <div className="card-body d-flex justify-content-between align-items-start">
-            <div>
-              <h3 className="card-title">¡Bienvenido al Sistema de Registro de Estudiantes!</h3>
-              <p className="card-text">{saludo}</p>
-            </div>
+          <div className="col-md-8 d-flex flex-column justify-content-between">
+            <div className="card-body d-flex justify-content-between align-items-start">
+              <div>
+                <h3 className="card-title">
+                  ¡Bienvenido al Sistema de Registro de Estudiantes!
+                </h3>
+                <p className="card-text">{saludo}</p>
+              </div>
 
-            <div className="text-end">
-              <h2><p className="hora-grande">{formatoHora}</p></h2>
+              <div className="text-end">
+                <h2>
+                  <p className="hora-grande">{formatoHora}</p>
+                </h2>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="row">
-      <div className="col-md-6">
-        <CalendarioInicio />
+      <div className="row">
+        <div className="col-md-6">
+          <CalendarioInicio />
+        </div>
+        <div className="col-md-6">
+          <Recordatorios />
+        </div>
       </div>
-      <div className="col-md-6">
-        <Recordatorios />
-      </div>
-    </div>
-  </>
-);
-
-}
+    </>
+  );
+};
 
 export default Inicio;
-
