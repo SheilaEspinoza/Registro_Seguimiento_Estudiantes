@@ -206,8 +206,14 @@ const Reportes = () => {
         onChange={(e) => setBusqueda(e.target.value)}
       />
       <table
-        className="table tabla-estudiantes table-bordered"
-        style={{ width: "990px", marginTop: "20px" }}
+        className="table tabla-estudiantes table-bordered hover"
+        style={{
+          margin: "0 auto",
+          width: "990px",
+          marginTop: "20px",
+          overflowY: "auto",
+          maxHeight: "400px",
+        }}
       >
         <thead className="theadestudiantes">
           <tr>
