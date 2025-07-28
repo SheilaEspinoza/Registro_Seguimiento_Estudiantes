@@ -69,7 +69,6 @@ app.post("/registro", upload.single("foto"), (req, res) => {
     });
   });
 
-  /*verificar esto */
   app.get('/api/estudiantes', async (req, res) => {
   try {
       db.query('SELECT * FROM estudiantes', (err, results) => {
@@ -85,6 +84,24 @@ app.post("/registro", upload.single("foto"), (req, res) => {
     res.status(500).json({ mensaje: "Error al obtener estudiantes" });
   }
 });
+
+//Para eliminar registro
+app.delete("/estudiantes/:cedula", async (req, res) => {
+  const { cedula } = req.params;
+  try {
+    const result = await pool.query("DELETE FROM estudiantes WHERE cedula = $1", [cedula]);
+
+    if (result.rowCount > 0) {
+      res.status(200).json({ mensaje: "Estudiante eliminado correctamente" });
+    } else {
+      res.status(404).json({ mensaje: "Estudiante no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar:", error);
+    res.status(500).json({ error: "Error al eliminar estudiante" });
+  }
+});
+
 
 // para iniciar servidor
 app.listen(3001, () => {

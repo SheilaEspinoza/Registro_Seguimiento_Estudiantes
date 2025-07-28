@@ -47,6 +47,16 @@ const Inicio = () => {
 
   return (
     <>
+      <div
+        style={{
+          margin: "0 auto",
+          padding: "20px",
+          backgroundColor: "#fff",
+          borderRadius: "10px",
+          boxShadow: "0 0 10px rgba(201, 201, 201, 0.1)",
+        }}
+      >
+
       <div className="card mb-3 bienvenida-card espaciado-superior">
         <div className="row g-0">
           <div className="col-md-4">
@@ -80,6 +90,7 @@ const Inicio = () => {
           <Recordatorios />
         </div>
       </div>
+   </div>
     </>
   );
 };
