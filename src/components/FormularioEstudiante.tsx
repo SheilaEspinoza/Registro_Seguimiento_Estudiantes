@@ -41,7 +41,23 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
 
   const validarCampos = () => {
     const nuevosErrores: { [key: string]: string } = {};
+     // Cédula: solo números y exactamente 10 dígitos
+    if (!cedula) {
+      nuevosErrores.cedula = "La cédula es obligatoria";
+    } else if (!/^\d+$/.test(cedula)) {
+      nuevosErrores.cedula = "La cédula debe contener solo números";
+    } else if (cedula.length !== 10) {
+      nuevosErrores.cedula = "La cédula debe tener exactamente 10 dígitos";
+    }
 
+    // Teléfono: solo números y exactamente 10 dígitos
+    if (!telefono) {
+      nuevosErrores.telefono = "El teléfono es obligatorio";
+    } else if (!/^\d+$/.test(telefono)) {
+      nuevosErrores.telefono = "El teléfono debe contener solo números";
+    } else if (telefono.length !== 10) {
+      nuevosErrores.telefono = "El teléfono debe tener exactamente 10 dígitos";
+    }
     if (!cedula) {
       nuevosErrores.cedula = "La cédula es obligatoria";
     } else if (!/^\d+$/.test(cedula)) {
