@@ -74,7 +74,7 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
   };
 
   return (
-    <div className="card p-4 mb-4">
+    <div className="card p-4 mb-4" style={{ minHeight: "400px" }}>
       <h5 className="card-title">Registrar estudiante</h5>
 
       <ul className="nav nav-tabs mb-3">

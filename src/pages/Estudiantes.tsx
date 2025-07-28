@@ -34,7 +34,7 @@ function Estudiantes() {
   ? estudiantes.filter((e) => e.cedula === filtroCedula) : estudiantes;
 
   return (
-    <div className="container mt-5" style={{ paddingTop: "230px" }}>
+    <div className="container mt-5">
       <h1 className="mb-4">Seguimiento de Estudiantes</h1>
 
       <div className="row align-items-center mb-4">
@@ -56,19 +56,19 @@ function Estudiantes() {
            </div>
          </div>
 
-      {/* Boton derecho para mostrar modal */}
-      <div className="col-md-4 text-end mt-2 mt-md-0">
-        <button
+       {/* Boton derecho para mostrar modal */}
+        <div className="col-md-4 text-end mt-2 mt-md-0">
+          <button
           type="button"
           className="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#modalNuevoRegistro"
-        >
+          >
           <i className="bi bi-person-plus me-2"></i>
-          Nuevo Registro
-        </button>
-      </div>
-    </div>
+          Crear nuevo registro
+          </button>
+        </div>
+     </div>
 
       {/* Modal abierto */}
       <div
@@ -107,7 +107,9 @@ function Estudiantes() {
       </div>
 
       {/*Seccion tabla con registros creados */}
-      <TablaEstudiantes estudiantes={estudiantesFiltrados} />
+      <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+       <TablaEstudiantes estudiantes={estudiantesFiltrados} />
+      </div>
     </div>
   );
 }

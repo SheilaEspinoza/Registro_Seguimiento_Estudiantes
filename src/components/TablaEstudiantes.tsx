@@ -6,17 +6,20 @@ interface Props {
 
 function TablaEstudiantes({ estudiantes }: Props) {
   return (
-    <div className="table-responsive">
-      <table className="table table-striped table-bordered">
-        <thead className="table-light">
-          <tr>
-            <th>Cédula</th>
-            <th>Nombres</th>
-            <th>Apellidos</th>
-            <th>Correo</th>
-            <th>Carrera</th>
-            <th>Nivel</th>
-          </tr>
+    <div className="d-flex justify-content-center">
+  <table
+    className="table table-bordered"
+    style={{ tableLayout: "fixed", width: "90%" }} 
+  >
+    <thead>
+      <tr>
+        <th style={{ width: "30%" }}>Cédula</th>
+        <th style={{ width: "40%" }}>Nombre</th>
+        <th style={{ width: "40%" }}>Apellido</th>
+        <th style={{ width: "40%" }}>Carrera</th>
+        <th style={{ width: "20%" }}>Nivel</th>
+        <th style={{ width: "50%" }}>Acciones</th>
+    </tr>
         </thead>
         <tbody>
           {estudiantes.map((est, index) => (
@@ -24,7 +27,6 @@ function TablaEstudiantes({ estudiantes }: Props) {
               <td>{est.cedula}</td>
               <td>{est.nombre}</td>
               <td>{est.apellido}</td>
-              <td>{est.correo}</td>
               <td>{est.carrera}</td>
               <td>{est.nivel}</td>
             </tr>

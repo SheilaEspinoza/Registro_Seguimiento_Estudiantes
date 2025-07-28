@@ -8,6 +8,6 @@ export type Estudiante = {
   pais:string;
   ciudad: string;
   direccion: string;
-  telf: string;
+  telefono: string;
   foto: File | null;
 };
