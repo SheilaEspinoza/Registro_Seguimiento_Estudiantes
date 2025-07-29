@@ -1,39 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 
 interface Tarea {
   id: number;
   texto: string;
-  prioridad: string;
-  estado: "completo" | "incompleto";
+  prioridad: "alta" | "media" | "baja";
+  estado: "pendiente" | "completo";
 }
 
-const Recordatorios = () => {
-  const [mostrarModal, setMostrarModal] = useState(false);
-  const [tareas, setTareas] = useState<Tarea[]>([]);
+interface RecordatoriosProps {
+  recordatorios: Tarea[];
+  setRecordatorios: React.Dispatch<React.SetStateAction<Tarea[]>>;
+}
+
+  const Recordatorios: React.FC<RecordatoriosProps> = ({ recordatorios, setRecordatorios }) => {
   const [nuevaTarea, setNuevaTarea] = useState("");
-  const [prioridad, setPrioridad] = useState("media");
+  const [prioridad, setPrioridad] = useState<"alta" | "media" | "baja">("media");
+  const [mostrarModal, setMostrarModal] = useState(false);
+
+
+ useEffect(() => {
+  const tareasGuardadas = localStorage.getItem("recordatorios");
+  try {
+    const tareasParseadas = tareasGuardadas ? JSON.parse(tareasGuardadas) : [];
+    console.log("Tareas cargadas:", tareasParseadas);
+    if (Array.isArray(tareasParseadas)) {
+      setRecordatorios(tareasParseadas);
+    }
+  } catch (error) {
+    console.error("Error al cargar tareas:", error);
+  }
+}, []);
+
 
   const agregarTarea = () => {
     const nueva: Tarea = {
-      id: Date.now(),
-      texto: nuevaTarea,
-      prioridad,
-      estado: "incompleto",
+    id: Date.now(),
+    texto: nuevaTarea,
+    prioridad,
+    estado: "pendiente",
     };
-    setTareas([...tareas, nueva]);
+    setRecordatorios([...recordatorios, nueva]);
     setNuevaTarea("");
-    setPrioridad("media");
     setMostrarModal(false);
   };
-
   const eliminarTarea = (id: number) => {
-    setTareas(tareas.filter((t) => t.id !== id));
+    setRecordatorios(recordatorios.filter((t) => t.id !== id));
   };
 
   const cambiarEstado = (id: number) => {
-    setTareas(tareas.map((t) =>
-      t.id === id ? { ...t, estado: t.estado === "completo" ? "incompleto" : "completo" } : t
+    setRecordatorios(recordatorios.map((t) =>
+      t.id === id 
+    ? { 
+      ...t, estado: t.estado === "pendiente" ? "completo" : "pendiente"} : t
     ));
   };
 
@@ -41,17 +60,21 @@ const Recordatorios = () => {
     <div className="card mt-4">
       <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="mb-0">Recordatorios</h5>
-        <Button variant="success" size="sm" onClick={() => setMostrarModal(true)}
-            title={"Agregar Recordatorio"}
-            >
-            <i className="bi bi-plus-square"></i>
-            </Button>
+        <button
+          type="button"
+          className="btn btn-outline-success btn-sm"
+          onClick={() => setMostrarModal(true)}
+          title="Agregar Recordatorio"
+        >
+        <i className="bi bi-plus-square me-1"></i> Agregar
+        </button>
       </div>
+
       <div className="card-body" style={{ maxHeight: "300px", overflowY: "auto" }}>
-        {tareas.length === 0 ? (
-          <p className="text-muted">Sin tareas pendientes.</p>
+        {recordatorios.length === 0 ? (
+          <p className="text-muted">Sin recordatorios pendientes.</p>
         ) : (
-          tareas.map((tarea) => (
+          recordatorios.map((tarea) => (
             <div
               key={tarea.id}
               className={`d-flex justify-content-between align-items-center mb-2 border rounded p-2 ${
@@ -69,26 +92,38 @@ const Recordatorios = () => {
                     }`}>
                       {tarea.prioridad}
                </span>
-            </div>
-              <div>
-                <Button
-                    variant={tarea.estado === "completo" ? "warning" : "primary"}
-                    size="sm"
-                    onClick={() => cambiarEstado(tarea.id)}
-                    title={tarea.estado === "completo" ? "Marcar como incompleto" : "Marcar como hecho"}
-                >
-                    <i className={tarea.estado === "completo" ? "bi bi-arrow-left-square" : "bi bi-check-square"}></i>
-               </Button>{" "}
-               <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => eliminarTarea(tarea.id)}
-                    title="Eliminar tarea"
-               >
-                    <i className="bi bi-x-square"></i>
-               </Button>
               </div>
-            </div>
+
+              <div className="d-flex gap-2">
+                <button
+                  type="button"
+                  className="btn btn-outline-warning btn-sm"
+                  onClick={() => cambiarEstado(tarea.id)}
+                  title={
+                    tarea.estado === "completo"
+                    ? "Marcar como incompleto"
+                    : "Marcar como hecho"
+                  }
+                >
+                  <i
+                    className={
+                    tarea.estado === "completo"
+                    ? "bi bi-arrow-left-square"
+                    : "bi bi-check-square"
+                   }
+                ></i>
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-sm"
+                  onClick={() => eliminarTarea(tarea.id)}
+                  title="Eliminar tarea"
+                >
+                 <i className="bi bi-x-square"></i>
+                </button>
+             </div>
+           </div>
           ))
         )}
       </div>
@@ -117,7 +152,7 @@ const Recordatorios = () => {
                         <Form.Label>Prioridad</Form.Label>
                             <Form.Select
                                 value={prioridad}
-                                onChange={(e) => setPrioridad(e.target.value)}
+                                onChange={(e) => setPrioridad(e.target.value as "alta" | "media" | "baja")}
                             >
                                 <option value="alta">Alta</option>
                                 <option value="media">Media</option>

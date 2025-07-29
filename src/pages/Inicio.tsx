@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
+import type { Tarea } from "../types/Estudiante";
+
+
 import CalendarioInicio from "../components/CalendarioInicio";
 import Recordatorios from "../components/Recordatorios";
 import "../App.css";
 
-const Inicio = () => {
+interface InicioProps {
+  recordatorios: Tarea[];
+  setRecordatorios: React.Dispatch<React.SetStateAction<Tarea[]>>;
+}
+
+const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
   const [saludo, setSaludo] = useState("");
   const [horaActual, setHoraActual] = useState(new Date());
 
@@ -87,7 +95,10 @@ const Inicio = () => {
           <CalendarioInicio />
         </div>
         <div className="col-md-6">
-          <Recordatorios />
+          <Recordatorios
+          recordatorios={recordatorios}
+          setRecordatorios={setRecordatorios}
+        />
         </div>
       </div>
    </div>

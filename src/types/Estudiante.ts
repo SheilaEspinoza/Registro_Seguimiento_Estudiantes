@@ -10,4 +10,12 @@ export type Estudiante = {
   direccion: string;
   telefono: string;
   foto: File | null;
+
 };
+
+export interface Tarea {
+  id: number;
+  texto: string;
+  prioridad: "alta" | "media" | "baja";
+  estado: "pendiente" | "completo";
+}
