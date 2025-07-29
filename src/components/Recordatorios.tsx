@@ -18,7 +18,7 @@ interface RecordatoriosProps {
   const [prioridad, setPrioridad] = useState<"alta" | "media" | "baja">("media");
   const [mostrarModal, setMostrarModal] = useState(false);
 
-
+//localStorage - almacenamiento local del navegador
  useEffect(() => {
   const tareasGuardadas = localStorage.getItem("recordatorios");
   try {
