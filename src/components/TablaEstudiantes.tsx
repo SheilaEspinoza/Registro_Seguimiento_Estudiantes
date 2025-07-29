@@ -26,17 +26,27 @@ function TablaEstudiantes({ estudiantes, onEliminar }: Props) {
         <tbody>
           {estudiantes.map((est, index) => (
             <tr key={index}>
-              <td>{est.cedula}</td>
+              <td>
+                <div className="d-flex justify-content-center">        
+                  {est.cedula}
+                </div>
+              </td>
               <td>{est.nombre}</td>
               <td>{est.apellido}</td>
               <td>{est.carrera}</td>
-              <td>{est.nivel}</td>
               <td>
-                <Acciones
-                  estudiante={est}
-                  cedula={est.cedula}
-                  onEliminar={onEliminar}
+                <div className="d-flex justify-content-center">              
+                  {est.nivel}
+                </div>
+              </td>
+              <td>
+                <div className="d-flex justify-content-center">
+                  <Acciones
+                   estudiante={est}
+                   cedula={est.cedula}
+                   onEliminar={onEliminar}
                   />
+                </div>
               </td>
             </tr>
           ))}
