@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
+import { motion } from "framer-motion";
+
 
 interface Tarea {
   id: number;
@@ -57,7 +59,14 @@ interface RecordatoriosProps {
   };
 
   return (
-    <div className="card mt-4">
+  <div className="d-flex justify-content-center" style={{ marginTop: "24px", width: "100%" }}>
+    <motion.div
+      style={{ minHeight: "400px", width: "100%" }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div className="card">
       <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="mb-0">Recordatorios</h5>
         <button
@@ -129,44 +138,46 @@ interface RecordatoriosProps {
       </div>
 
       {/* Modal */}
-      <Modal
-  show={mostrarModal}
-  onHide={() => setMostrarModal(false)}
-  className="modal-margen-superior"
->
-  <Modal.Header closeButton>
-    <Modal.Title>Agregar Recordatorio</Modal.Title>
-       </Modal.Header>
-            <Modal.Body>
+        <Modal
+          show={mostrarModal}
+          onHide={() => setMostrarModal(false)}
+          className="modal-margen-superior"
+        >
+          <Modal.Header closeButton>
+             <Modal.Title>Agregar Recordatorio</Modal.Title>
+          </Modal.Header>
+             <Modal.Body>
                 <Form>
-                   <Form.Group>
-                       <Form.Label>Tarea</Form.Label>
-                       <Form.Control
-                       type="text"
-                       value={nuevaTarea}
-                       onChange={(e) => setNuevaTarea(e.target.value)}
-                       placeholder="Escribe una tarea"
-                        />
-                   </Form.Group>
-                       <Form.Group className="mt-3">
-                        <Form.Label>Prioridad</Form.Label>
-                            <Form.Select
-                                value={prioridad}
-                                onChange={(e) => setPrioridad(e.target.value as "alta" | "media" | "baja")}
-                            >
-                                <option value="alta">Alta</option>
-                                <option value="media">Media</option>
-                                <option value="baja">Baja</option>
-                            </Form.Select>
-                   </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Tarea</Form.Label>
+                    <Form.Control
+                    type="text"
+                    value={nuevaTarea}
+                    onChange={(e) => setNuevaTarea(e.target.value)}
+                    placeholder="Escribe una tarea"
+                  />
+                  </Form.Group>
+                  <Form.Group className="mt-3">
+                    <Form.Label>Prioridad</Form.Label>
+                        <Form.Select
+                          value={prioridad}
+                          onChange={(e) => setPrioridad(e.target.value as "alta" | "media" | "baja")}
+                        >
+                         <option value="alta">Alta</option>
+                         <option value="media">Media</option>
+                         <option value="baja">Baja</option>
+                        </Form.Select>
+                    </Form.Group>
                 </Form>
-           </Modal.Body>
-       <Modal.Footer>
-           <Button variant="secondary" onClick={() => setMostrarModal(false)}>Cancelar</Button>
-           <Button variant="primary" onClick={agregarTarea} disabled={!nuevaTarea.trim()}>Agregar</Button>
-       </Modal.Footer>
-    </Modal>
-    </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setMostrarModal(false)}>Cancelar</Button>
+              <Button variant="primary" onClick={agregarTarea} disabled={!nuevaTarea.trim()}>Agregar</Button>
+            </Modal.Footer>
+        </Modal>
+       </div>
+     </motion.div>
+ </div>
   );
 };
 

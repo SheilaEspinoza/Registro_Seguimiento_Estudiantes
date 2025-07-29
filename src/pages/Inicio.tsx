@@ -94,7 +94,7 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
         <div className="col-md-6">
           <CalendarioInicio />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-12 col-lg-6">
           <Recordatorios
           recordatorios={recordatorios}
           setRecordatorios={setRecordatorios}
