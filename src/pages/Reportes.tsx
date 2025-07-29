@@ -67,18 +67,23 @@ const estudiantes = [
 ];
 
 const Reportes = () => {
+  //Estados para la búsqueda y ordenamiento
   const [busqueda, setBusqueda] = useState<string>("");
   const [columnaOrden, setColumnaOrden] = useState<keyof Estudiante | null>(
     null
   );
+
+  // Estado para el orden ascendente/descendente
   const [ascendente, setAscendente] = useState<boolean>(true);
 
   const ordenarPor = (col: keyof Estudiante) => {
+    // Cambia la columna de ordenamiento
+    // Si la columna ya está ordenada, cambia el orden ascendente/descendente
     if (col === columnaOrden) {
-      setAscendente(!ascendente);
+      setAscendente(!ascendente); // Cambia el estado ascendente
     } else {
-      setColumnaOrden(col);
-      setAscendente(true);
+      setColumnaOrden(col); // Establece la nueva columna de ordenamiento
+      setAscendente(true); // Por defecto, ordena ascendentemente
     }
   };
 
@@ -112,6 +117,9 @@ const Reportes = () => {
     })
   );
 
+  // Estado para la vista de reportes o estadísticas
+  const [vista, setVista] = useState<"reportes" | "estadisticas">("reportes");
+
   return (
     <div
       style={{
@@ -119,7 +127,7 @@ const Reportes = () => {
         padding: "20px",
         backgroundColor: "#fff",
         borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(201, 201, 201, 0.1)",
+        boxShadow: "0 0 10px rgba(255, 255, 255, 1)",
       }}
     >
       <div>
@@ -134,6 +142,7 @@ const Reportes = () => {
               margin: "0 auto",
             }}
           />
+
           <h1
             style={{
               fontFamily: "sans-serif",
@@ -185,7 +194,7 @@ const Reportes = () => {
           className="table w-full table-auto text-left tabla-estudiantes table-bordered hover"
           style={{
             tableLayout: "fixed",
-            width: "100%",
+            minWidth: "100%",
             marginTop: "20px",
             borderCollapse: "collapse",
           }}
@@ -201,7 +210,7 @@ const Reportes = () => {
                 Nombres{" "}
                 <span
                   style={{
-                    color: columnaOrden === "nombre" ? "#000" : "#ccc",
+                    color: columnaOrden === "nombre" ? "#fff" : "#fff",
                   }}
                 >
                   {columnaOrden === "nombre" ? (ascendente ? "↑" : "↓") : "↕"}
@@ -214,7 +223,7 @@ const Reportes = () => {
                 Apellidos{" "}
                 <span
                   style={{
-                    color: columnaOrden === "apellido" ? "#000" : "#ccc",
+                    color: columnaOrden === "apellido" ? "#fff" : "#fff",
                   }}
                 >
                   {columnaOrden === "apellido" ? (ascendente ? "↑" : "↓") : "↕"}
@@ -229,7 +238,7 @@ const Reportes = () => {
                 Nivel{" "}
                 <span
                   style={{
-                    color: columnaOrden === "nivel" ? "#000" : "#ccc",
+                    color: columnaOrden === "nivel" ? "#fff" : "#fff",
                   }}
                 >
                   {columnaOrden === "nivel" ? (ascendente ? "↑" : "↓") : "↕"}
