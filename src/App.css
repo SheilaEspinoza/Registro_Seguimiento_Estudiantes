@@ -197,7 +197,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   font-weight: bold;
 }
 
-                                         /*-- CalendarioInicio-- */
+                                     /*-- Estilos para CalendarioInicio-- */
 .calendario-container {
   margin-top: 24px;
   width: 100%;
@@ -270,7 +270,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   font-size: 0.9rem;
 }
 
-                                        /* --Recordatorios.tsx*/
+                                        /* --Estilos para Recordatorios.tsx*/
 /* Contenedor principal */
 .recordatorios-contenedor {
   margin-top: 24px;
@@ -376,7 +376,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   cursor: not-allowed;
 }
 
-                                            /* -- Estadisticas.tsx -- */
+                                     /* -- Estilo para Estadisticas.tsx -- */
 .estadistica-item {
   background-color: var(--color-primary-subtle); /* Fondo suave */
   color: var(--color-text);
@@ -416,6 +416,46 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   font-weight: 600;
   font-size: 0.9rem;
   border-radius: 999px;
+}
+
+                              /*-- Estilos para TablaEstudiantes.tsx -- */
+.table-estudiantes {
+  width: 90%;
+  table-layout: fixed;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(201, 201, 201, 0.1);
+}
+
+/* encabezados */
+.table-estudiantes thead th {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Celdas normales */
+.table-estudiantes td {
+  padding: 10px;
+  text-align: center;
+  background-color: var(--color-bg-soft);
+  transition: background-color 0.3s ease;
+}
+
+/* Hover */
+.table-estudiantes tbody tr:hover td {
+  background-color: var(--color-primary-subtle);
+}
+
+.table-estudiantes th:nth-child(4),
+.table-estudiantes td:nth-child(4) {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /*Otro*/
