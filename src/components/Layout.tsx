@@ -8,7 +8,7 @@ function Layout({ children }: { children: ReactNode }) {
       <Header />
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-          <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+          <nav className="sb-sidenav accordion custom-sidenav" id="sidenavAccordion">
             <div className="sb-sidenav-menu">
               <div className="nav">
                 <a className="nav-link" href="/">Inicio</a>

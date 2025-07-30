@@ -2,6 +2,39 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   height: 100%;
 }
 
+/*Paletas*/
+:root {
+  /* Paleta en modo claro - por defecto*/
+  --color-bg: #F5F5F5;
+  --color-surface: #FFFFFF;
+
+  /* Colores base */
+  --color-primary: #291041;        /* Sidebar y botones principales */
+  --color-primary-hover: #230e37;  /* Hover */
+  --color-secondary: #f5d166;      /* Botones/acento */
+  --color-accent: #cfbec9;         /* Tarjetas/tablas */
+
+  /* Textos */
+  --color-text: #333333;
+  --color-text-inverse: #FFFFFF;
+}
+
+[data-theme="dark"] {
+  /*Paleta para modo oscuro*/
+  --color-bg: #121212;
+  --color-surface: #1E1E1E;
+
+  /* Colores base */
+  --color-primary: #746484;        /* Sidebar */
+  --color-primary-hover: #5d506a;
+  --color-secondary: #f9e19c;      /* Botones/acento */
+  --color-accent: #9f93aa;         /* Tarjetas/tablas */
+
+  /* Textos */
+  --color-text: #E0E0E0;
+  --color-text-inverse: #000000;
+}
+
 
 .logo {
   height: 6em;
@@ -44,12 +77,27 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
   transition: margin-left 0.3s ease;
 }
 
+/*Aqui empieza clases para estilos en Layout.tsx*/
 #layoutSidenav_nav {
   width: 250px;
   transition: margin-left 0.3s ease;
-  background-color: #f8f9fa;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
   height: 100vh;
   position: fixed;
+}
+
+#layoutSidenav_nav a {
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  display: block;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+
+#layoutSidenav_nav a:hover {
+  background-color: var(--color-primary-hover);
 }
 
 
@@ -58,6 +106,44 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
   flex-direction: column;
 }
 
+/*Aqui empieza clases para estilos en Header.tsx*/
+.app-header {
+  background-color: var(--color-primary); /* Morado oscuro en claro */
+  color: var(--color-text-inverse);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-header .navbar-brand {
+  color: var(--color-text-inverse);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.app-header button i {
+  color: var(--color-text-inverse);
+}
+
+.app-header button:hover i {
+  opacity: 0.7;
+}
+
+/*Aqui empiezan los estilos para Sidebar.tsx*/
+/* Para iconos */
+.custom-sidenav .sb-nav-link-icon i {
+  color: var(--color-text-inverse);
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+.custom-sidenav .nav-link:hover .sb-nav-link-icon i {
+  opacity: 0.8;
+}
+
+/*Otro*/
 .sb-topnav {
   width: 100%;
   position: fixed;

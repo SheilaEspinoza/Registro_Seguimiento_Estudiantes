@@ -6,8 +6,8 @@ function Sidebar() {
   return (
     <div id="layoutSidenav_nav">
       <nav
-        className="sb-sidenav accordion sb-sidenav-dark"
-        id="sidenavAccordion"
+         className="sb-sidenav accordion custom-sidenav"
+         id="sidenavAccordion"
       >
         <div className="sb-sidenav-menu">
           <div className="sb-sidenav-menu-heading mt-4">Menú</div>

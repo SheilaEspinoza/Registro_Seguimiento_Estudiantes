@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-dark bg-dark fixed-top shadow px-3 d-flex justify-content-between align-items-center" 
+      <nav className="navbar app-header fixed-top shadow px-3 d-flex justify-content-between align-items-center" 
       style={{ zIndex: 9999 }}
       >
         {/* a la izq amburguesa y nombre */}
