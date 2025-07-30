@@ -41,9 +41,9 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
     if (hora >= 0 && hora < 12) {
       return "/img/dia.jpg";
     } else if (hora >= 12 && hora < 18) {
-      return "/img/dia.jpg";
+      return "/img/tarde.jpg";
     } else {
-      return "/img/dia.jpg";
+      return "/img/noche.jpg";
     }
   };
 
@@ -55,15 +55,7 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
 
   return (
 
-  <div
-      style={{
-        margin: "0 auto",
-        padding: "20px",
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(255, 255, 255, 1)",
-      }}
-    >
+    <div className="expandir-components">
         <div className="card bienvenida-card espaciado-superior">
           <div className="row g-0">
            <div className="col-md-4">
@@ -98,7 +90,7 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
         />
         </div>
       </div>
-</div>
+  </div>
 
   );
 };

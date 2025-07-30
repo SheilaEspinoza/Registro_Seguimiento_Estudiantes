@@ -42,6 +42,15 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   box-sizing: border-box;
 }
 
+/* -- Para todas las paginas */
+.expandir-components {
+  margin: 0 auto;
+  padding: 10px 30px 20px 40px;
+  background-color: var(--color-bg-card);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
