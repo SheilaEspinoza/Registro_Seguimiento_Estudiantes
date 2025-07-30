@@ -10,19 +10,23 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar app-header fixed-top shadow px-3 d-flex justify-content-between align-items-center" 
-      style={{ zIndex: 9999 }}
+      <nav
+        className="navbar app-header fixed-top shadow px-3 d-flex justify-content-between align-items-center"
+        style={{ zIndex: 9999 }}
       >
         {/* a la izq amburguesa y nombre */}
         <div className="d-flex align-items-center gap-2">
           <button className="btn btn-link btn-sm" onClick={toggleSidebar}>
             <i className="fas fa-bars text-white"></i>
           </button>
-          <span className="navbar-brand mb-0 h1">VAMPIROS🦇</span>
+          <span className="navbar-brand mb-0 h1">SIAU</span>
         </div>
 
         {/*a la derecha notas*/}
-        <button className="btn btn-link btn-sm" onClick={() => setShowNotes(true)}>
+        <button
+          className="btn btn-link btn-sm"
+          onClick={() => setShowNotes(true)}
+        >
           <i className="bi bi-journals text-white fs-5"></i>
         </button>
       </nav>
@@ -31,7 +35,6 @@ const Header = () => {
     </>
   );
 };
-
 
 /*sb-topnav navbar navbar-expand navbar-dark bg-dark = barra negra 
 fas fa-bars = botoncito con 3 rayitas*/
