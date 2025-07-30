@@ -118,6 +118,7 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
       onRegistroExitoso();
       alert("Estudiante ha sido agregado");
       limpiarCampos();
+      document.getElementById("btnAbrirModal")?.focus(); // enfoca un botón externo al modal
 
       const modalElement = document.getElementById("modalNuevoRegistro");
       if (modalElement) {
@@ -289,9 +290,10 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
               </div>
 
               <div className="d-flex justify-content-between">
-                <button type="submit" className="btn btn-success">
-                  Agregar Registro
-                </button>
+               <button type="submit" className="btn btn-success" >
+  Agregar Registro
+</button>
+
 
 
                 <button type="button" className="btn btn-secondary" onClick={limpiarCampos}>
