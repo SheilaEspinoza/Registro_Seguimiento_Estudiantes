@@ -104,7 +104,17 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
 
       alert("Estudiante ha sido agregado");
       limpiarCampos();
+
       onRegistroExitoso(); // Cierra el modal desde el padre
+
+      document.getElementById("btnAbrirModal")?.focus(); // enfoca un botón externo al modal
+
+      const modalElement = document.getElementById("modalNuevoRegistro");
+      if (modalElement) {
+        const modal = window.bootstrap?.Modal.getInstance(modalElement);
+        modal?.hide();
+      }
+
     } catch (error) {
       console.error("Error al registrar:", error);
       alert("Error al registrar estudiante");
@@ -257,9 +267,18 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
               </div>
 
               <div className="d-flex justify-content-between">
+
                 <button type="submit" className="btn btn-success">
                   Agregar Registro
                 </button>
+
+               <button type="submit" className="btn btn-success" >
+  Agregar Registro
+</button>
+
+
+
+
                 <button type="button" className="btn btn-secondary" onClick={limpiarCampos}>
                   Limpiar
                 </button>
