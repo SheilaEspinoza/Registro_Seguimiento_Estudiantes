@@ -6,8 +6,8 @@ interface Props {
   cedula: string;
   onEliminar: (cedula: string) => void;
   estudiante: Estudiante;
-  onEditar: (estudiante: Estudiante) => void;   // Para abrir edición
-  onVerInfo: (estudiante: Estudiante) => void;  // Para mostrar info
+  onEditar: (estudiante: Estudiante) => void;   
+  onVerInfo: (estudiante: Estudiante) => void;  
 }
 
 const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante, onEditar, onVerInfo }) => {
@@ -20,9 +20,10 @@ const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante, onEditar, o
 
   const eliminarEstudiante = async () => {
     try {
-      const resp = await fetch(`http://localhost:3001/estudiantes/${cedula}`, {
-  method: "DELETE",
-});
+      const resp = await fetch(`http://localhost:3001/api/estudiantes/${cedula}`, {
+        method: "DELETE",
+      });
+
 
 
       if (resp.ok) {

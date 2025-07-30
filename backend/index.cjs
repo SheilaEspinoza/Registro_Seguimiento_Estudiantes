@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// Configuración de Multer para subir imágenes
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Conexión a MySQL
+
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -39,7 +39,7 @@ const db = mysql.createConnection({
   database: "registros",
 });
 
-// Verificar conexión
+
 db.connect((err) => {
   if (err) {
     console.error("Error al conectar a la base de datos:", err);
@@ -48,7 +48,7 @@ db.connect((err) => {
   }
 });
 
-// Ruta para registrar estudiante
+
 app.post("/registro", upload.single("foto"), (req, res) => {
   const { cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono } = req.body;
   const foto = req.file ? req.file.filename : null;
@@ -70,7 +70,7 @@ app.post("/registro", upload.single("foto"), (req, res) => {
   });
 });
 
-// Obtener todos los estudiantes
+
 app.get("/api/estudiantes", (req, res) => {
   db.query("SELECT * FROM estudiantes", (err, results) => {
     if (err) {
@@ -81,7 +81,7 @@ app.get("/api/estudiantes", (req, res) => {
   });
 });
 
-// Eliminar estudiante por cédula
+
 app.delete("/api/estudiantes/:cedula", (req, res) => {
   const { cedula } = req.params;
   db.query("DELETE FROM estudiantes WHERE cedula = ?", [cedula], (err, result) => {
@@ -96,7 +96,7 @@ app.delete("/api/estudiantes/:cedula", (req, res) => {
   });
 });
 
-// Actualizar estudiante
+
 app.put("/api/estudiantes/:cedula", upload.single("foto"), (req, res) => {
   const { cedula } = req.params;
   const { nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono } = req.body;

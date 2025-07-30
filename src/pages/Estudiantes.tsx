@@ -67,13 +67,13 @@ function Estudiantes() {
     setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
   };
 
-  // Abrir modal de edición con datos cargados
+  
   const handleEditar = (estudiante: Estudiante) => {
     setEstudianteEditar(estudiante);
     modalEditarInstance?.show();
   };
 
-  // Abrir modal de información
+  
   const handleVerInfo = (estudiante: Estudiante) => {
     setEstudianteInfo(estudiante);
     modalInfoInstance?.show();

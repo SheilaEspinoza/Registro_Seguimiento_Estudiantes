@@ -1,4 +1,4 @@
-// src/components/FormularioEstudiante.tsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import type { Estudiante } from "../types/Estudiante";
@@ -97,36 +97,25 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
       if (foto) formData.append("foto", foto);
       
       
-      if (modoEdicion) {
-  alert("La edición no está disponible porque el backend no tiene soporte para actualizar.");
-  // O bien simplemente no hacer nada o llamar POST igual para no romper la UI
-} else {
-  await axios.post("http://localhost:3001/registro", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  alert("Estudiante ha sido agregado");
-}
-
-
-      /*if (modoEdicion) {
-        await axios.post(`http://localhost:3001/registro`, formData, { 
-
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        alert("Estudiante actualizado correctamente");
-      } else {
-        await axios.post("http://localhost:3001/registro", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        alert("Estudiante ha sido agregado");
-      }
-*/
-      limpiarCampos();
-      onRegistroExitoso();
-    } catch (error) {
-      console.error("Error al registrar/editar:", error);
-      alert("Ocurrió un error al guardar el estudiante");
+   if (modoEdicion) {
+      
+      await axios.put(`http://localhost:3001/api/estudiantes/${cedula}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      alert("Estudiante actualizado correctamente");
+    } else {
+      await axios.post("http://localhost:3001/registro", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      alert("Estudiante ha sido agregado");
     }
+
+    limpiarCampos();
+    onRegistroExitoso();
+  } catch (error) {
+    console.error("Error al registrar/editar:", error);
+    alert("Ocurrió un error al guardar el estudiante");
+  }
   };
 
   return (
