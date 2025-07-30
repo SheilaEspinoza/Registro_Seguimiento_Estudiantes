@@ -71,31 +71,22 @@ function TablaEstudiantes({
           </tr>
         </thead>
         <tbody>
-          {estudiantes.map((est, index) => (
-            <tr key={index}>
-              <td>
-                <div className="d-flex justify-content-center">
-                  {est.cedula}
-                </div>
-              </td>
-              <td>{est.nombre}</td>
-              <td>{est.apellido}</td>
-              <td>{est.carrera}</td>
-              <td>
-                <div className="d-flex justify-content-center">{est.nivel}</div>
-              </td>
-              <td>
-                <div className="d-flex justify-content-center">
-                  <Acciones
-                    estudiante={est}
-                    cedula={est.cedula}
-                    onEliminar={onEliminar}
-                    onEditar={onEditar}
-                    onVerInfo={onVerInfo}
-                    modo={modo}
-                    permitirOrden={permitirOrden}
-                  />
-                </div>
+          {estudiantesOrdenados.map((e) => (
+            <tr key={e.cedula}>
+              <td className="text-center">{e.cedula}</td>
+              <td>{e.nombre}</td>
+              <td>{e.apellido}</td>
+              <td>{e.carrera}</td>
+              <td className="text-center">{e.nivel}</td>
+              <td className="text-center">
+                <Acciones
+                  estudiante={e}
+                  cedula={e.cedula}
+                  onEliminar={onEliminar}
+                  onEditar={onEditar}
+                  onVerInfo={onVerInfo}
+                  modo={modo}
+                />
               </td>
             </tr>
           ))}

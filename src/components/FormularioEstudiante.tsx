@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import type { Estudiante } from "../types/Estudiante";
@@ -9,7 +8,11 @@ interface Props {
   estudianteEditar?: Estudiante;
 }
 
-function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudianteEditar }: Props) {
+function FormularioEstudiante({
+  onRegistroExitoso,
+  modoEdicion = false,
+  estudianteEditar,
+}: Props) {
   const [activeTab, setActiveTab] = useState("personales");
   const [foto, setFoto] = useState<File | null>(null);
   const [nombre, setNombre] = useState("");
@@ -95,27 +98,29 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
       formData.append("direccion", direccion);
       formData.append("telefono", telefono);
       if (foto) formData.append("foto", foto);
-      
-      
-   if (modoEdicion) {
-      
-      await axios.put(`http://localhost:3001/api/estudiantes/${cedula}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("Estudiante actualizado correctamente");
-    } else {
-      await axios.post("http://localhost:3001/registro", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("Estudiante ha sido agregado");
-    }
 
-    limpiarCampos();
-    onRegistroExitoso();
-  } catch (error) {
-    console.error("Error al registrar/editar:", error);
-    alert("Ocurrió un error al guardar el estudiante");
-  }
+      if (modoEdicion) {
+        await axios.put(
+          `http://localhost:3001/api/estudiantes/${cedula}`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        alert("Estudiante actualizado correctamente");
+      } else {
+        await axios.post("http://localhost:3001/registro", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        alert("Estudiante ha sido agregado");
+      }
+
+      limpiarCampos();
+      onRegistroExitoso();
+    } catch (error) {
+      console.error("Error al registrar/editar:", error);
+      alert("Ocurrió un error al guardar el estudiante");
+    }
   };
 
   return (
@@ -124,7 +129,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
         <ul className="nav nav-tabs mb-3">
           <li className="nav-item">
             <button
-              className={`nav-link ${activeTab === "personales" ? "active" : ""}`}
+              className={`nav-link ${
+                activeTab === "personales" ? "active" : ""
+              }`}
               onClick={() => setActiveTab("personales")}
               type="button"
             >
@@ -133,7 +140,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
           </li>
           <li className="nav-item">
             <button
-              className={`nav-link ${activeTab === "academicos" ? "active" : ""}`}
+              className={`nav-link ${
+                activeTab === "academicos" ? "active" : ""
+              }`}
               onClick={() => setActiveTab("academicos")}
               type="button"
             >
@@ -142,7 +151,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
           </li>
           <li className="nav-item">
             <button
-              className={`nav-link ${activeTab === "ubicacion" ? "active" : ""}`}
+              className={`nav-link ${
+                activeTab === "ubicacion" ? "active" : ""
+              }`}
               onClick={() => setActiveTab("ubicacion")}
               type="button"
             >
@@ -170,7 +181,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
                 disabled={modoEdicion}
                 onChange={(e) => setCedula(e.target.value)}
               />
-              {errores.cedula && <div className="text-danger small">{errores.cedula}</div>}
+              {errores.cedula && (
+                <div className="text-danger small">{errores.cedula}</div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label">Nombres</label>
@@ -179,7 +192,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
-              {errores.nombre && <div className="text-danger small">{errores.nombre}</div>}
+              {errores.nombre && (
+                <div className="text-danger small">{errores.nombre}</div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label">Apellidos</label>
@@ -188,7 +203,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
                 value={apellido}
                 onChange={(e) => setApellido(e.target.value)}
               />
-              {errores.apellido && <div className="text-danger small">{errores.apellido}</div>}
+              {errores.apellido && (
+                <div className="text-danger small">{errores.apellido}</div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label">Correo</label>
@@ -224,7 +241,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
                 value={nivel}
                 onChange={(e) => setNivel(Number(e.target.value))}
               />
-              {errores.nivel && <div className="text-danger small">{errores.nivel}</div>}
+              {errores.nivel && (
+                <div className="text-danger small">{errores.nivel}</div>
+              )}
             </div>
           </div>
         )}
@@ -262,7 +281,9 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
               />
-              {errores.telefono && <div className="text-danger small">{errores.telefono}</div>}
+              {errores.telefono && (
+                <div className="text-danger small">{errores.telefono}</div>
+              )}
             </div>
           </div>
         )}
@@ -271,7 +292,11 @@ function FormularioEstudiante({ onRegistroExitoso, modoEdicion = false, estudian
           <button type="submit" className="btn btn-success">
             {modoEdicion ? "Actualizar" : "Agregar Registro"}
           </button>
-          <button type="button" className="btn btn-secondary" onClick={limpiarCampos}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={limpiarCampos}
+          >
             Limpiar
           </button>
         </div>
