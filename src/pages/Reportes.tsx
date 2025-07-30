@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
+import TablaEstudiantes from "../components/TablaEstudiantes";
 import type { Estudiante } from "../types/Estudiante";
 import {
   BarChart,
@@ -11,89 +12,36 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const estudiantes = [
-  {
-    cedula: "1234567890",
-    nombre: "Juan",
-    apellido: "Pérez",
-    correo: "juanp@gmail.com",
-    telefono: "0991234567",
-    ciudad: "Quito",
-    direccion: "Av. Siempre Viva 123",
-    carrera: "Ingeniería",
-    pais: "Ecuador",
-    foto: null,
-    nivel: "3",
-  },
-  {
-    cedula: "0987654321",
-    nombre: "María",
-    apellido: "Gómez",
-    correo: "maria.g@gmail.com",
-    telefono: "0987654321",
-    ciudad: "Guayaquil",
-    direccion: "Calle Falsa 456",
-    carrera: "Medicina",
-    nivel: "2",
-    pais: "Ecuador",
-    foto: null,
-  },
-  {
-    cedula: "1234567890",
-    nombre: "Juan",
-    apellido: "Pérez",
-    correo: "juanp@gmail.com",
-    telefono: "0991234567",
-    ciudad: "Quito",
-    direccion: "Av. Siempre Viva 123",
-    carrera: "Ingeniería",
-    pais: "Ecuador",
-    foto: null,
-    nivel: "3",
-  },
-  {
-    cedula: "0987654321",
-    nombre: "María",
-    apellido: "Gómez",
-    correo: "maria.g@gmail.com",
-    telefono: "0987654321",
-    ciudad: "Guayaquil",
-    direccion: "Calle Falsa 456",
-    carrera: "Medicina",
-    nivel: "2",
-    pais: "Ecuador",
-    foto: null,
-  },
-];
+function Reportes() {
+  // Estado para la lista de estudiantes (desde la base de datos)
+  const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
 
-const Reportes = () => {
-  //Estados para la búsqueda y ordenamiento
+  // Estados para búsqueda, ordenamiento y filtros
   const [busqueda, setBusqueda] = useState<string>("");
   const [columnaOrden, setColumnaOrden] = useState<keyof Estudiante | null>(
     null
   );
-
-  // Estado para el orden ascendente/descendente
   const [ascendente, setAscendente] = useState<boolean>(true);
+  const [filtroCedula, setFiltroCedula] = useState("");
 
-  const ordenarPor = (col: keyof Estudiante) => {
-    // Cambia la columna de ordenamiento
-    // Si la columna ya está ordenada, cambia el orden ascendente/descendente
-    if (col === columnaOrden) {
-      setAscendente(!ascendente); // Cambia el estado ascendente
-    } else {
-      setColumnaOrden(col); // Establece la nueva columna de ordenamiento
-      setAscendente(true); // Por defecto, ordena ascendentemente
-    }
-  };
+  // Cargar estudiantes desde la API al montar
+  useEffect(() => {
+    fetch("http://localhost:3001/api/estudiantes")
+      .then((res) => res.json())
+      .then((data) => setEstudiantes(data))
+      .catch((error) => console.error("Error al cargar estudiantes:", error));
+  }, []);
 
+  // Ordenar y filtrar estudiantes
   const estudiantesFiltrados = [...estudiantes]
-    .filter((est) =>
-      Object.values(est).some(
-        (valor) =>
-          valor != null &&
-          valor.toString().toLowerCase().includes(busqueda.toLowerCase())
-      )
+    .filter(
+      (est) =>
+        est.cedula.includes(filtroCedula) &&
+        Object.values(est).some(
+          (valor) =>
+            valor != null &&
+            valor.toString().toLowerCase().includes(busqueda.toLowerCase())
+        )
     )
     .sort((a, b) => {
       if (!columnaOrden) return 0;
@@ -102,6 +50,21 @@ const Reportes = () => {
       return ascendente ? valA.localeCompare(valB) : valB.localeCompare(valA);
     });
 
+  // Función para manejar el cambio de orden
+  const ordenarPor = (col: keyof Estudiante) => {
+    if (col === columnaOrden) {
+      setAscendente(!ascendente);
+    } else {
+      setColumnaOrden(col);
+      setAscendente(true);
+    }
+  };
+  const abrirModalDeCredencial = (est: Estudiante) => {
+    console.log("Ver info:", est); // temporalmente para pruebas
+    // Aquí puedes abrir un modal o navegar a otra vista
+  };
+
+  // Resumen para el gráfico
   const resumenPorCarrera = estudiantes.reduce(
     (acc: { [key: string]: number }, est) => {
       acc[est.carrera] = (acc[est.carrera] || 0) + 1;
@@ -118,174 +81,57 @@ const Reportes = () => {
   );
 
   return (
-    <div
-      style={{
-        margin: "0 auto",
-        padding: "20px",
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(255, 255, 255, 1)",
-      }}
-    >
-      <div>
-        <span>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_UCSG.svg"
-            alt="logoucsg"
-            style={{
-              marginTop: "20px",
-              width: "150px",
-              display: "flex",
-              margin: "0 auto",
-            }}
-          />
+    <div className="container mt-4">
+      <h2 className="text-center mb-4">Reporte de Estudiantes</h2>
 
-          <h1
-            style={{
-              padding: "10px",
-              fontFamily: "sans-serif",
-              fontWeight: "bold",
-              color: "#533B4D",
-              textAlign: "center",
-              marginTop: "20px",
-            }}
-          >
-            Reportes Estudiantiles
-          </h1>
-        </span>
+      {/* Inputs de búsqueda */}
+      <div className="mb-3 d-flex gap-2">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Buscar por nombre, apellido, etc."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+        />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Filtrar por cédula"
+          value={filtroCedula}
+          onChange={(e) => setFiltroCedula(e.target.value)}
+        />
       </div>
 
-      {/* Barra buscar por cédula */}
-      <div className="col-md-5 mx-auto mb-2">
-        <div className="input-group shadow-sm rounded-3">
-          <span
-            className="input-group-text bg-white border-end-0"
-            style={{ marginTop: "10px", borderRadius: "0.5rem 0 0 0.5rem" }}
-            id="buscar-addon"
-          >
-            <i className="bi bi-search text-muted"></i>
-          </span>
-          <input
-            type="search"
-            className="form-control border-start-0 busqueda-input"
-            placeholder="Buscar por nombre, cédula, carrera..."
-            aria-label="Buscar"
-            aria-describedby="buscar-addon"
-            style={{ marginTop: "10px" }}
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-          />
-        </div>
-      </div>
-
-      {/* Tabla de estudiantes */}
-      <div
-        style={{
-          maxHeight: "450px",
-          overflowY: "auto",
-          minHeight: "300px",
-          overflowX: "auto",
+      {/* Tabla con datos */}
+      <TablaEstudiantes
+        estudiantes={estudiantesFiltrados}
+        onOrdenar={true ? ordenarPor : undefined}
+        columnaOrden={columnaOrden}
+        ascendente={ascendente}
+        onEliminar={(cedula) => {
+          setEstudiantes(estudiantes.filter((e) => e.cedula !== cedula));
         }}
-      >
-        <table
-          className="table w-full table-auto text-left tabla-estudiantes table-bordered hover"
-          style={{
-            tableLayout: "fixed",
-            minWidth: "100%",
-            marginTop: "20px",
-            borderCollapse: "collapse",
-          }}
-        >
-          <thead>
-            <tr>
-              <th>Cédula</th>
-              <th
-                onClick={() => ordenarPor("nombre")}
-                style={{ cursor: "pointer" }}
-              >
-                Nombres{" "}
-                <span
-                  style={{
-                    color: columnaOrden === "nombre" ? "#fff" : "#fff",
-                  }}
-                >
-                  {columnaOrden === "nombre" ? (ascendente ? "↑" : "↓") : "↕"}
-                </span>
-              </th>
-              <th
-                onClick={() => ordenarPor("apellido")}
-                style={{ cursor: "pointer" }}
-              >
-                Apellidos{" "}
-                <span
-                  style={{
-                    color: columnaOrden === "apellido" ? "#fff" : "#fff",
-                  }}
-                >
-                  {columnaOrden === "apellido" ? (ascendente ? "↑" : "↓") : "↕"}
-                </span>
-              </th>
-              <th>Correo</th>
-              <th>Carrera</th>
-              <th
-                onClick={() => ordenarPor("nivel")}
-                style={{ cursor: "pointer" }}
-              >
-                Nivel{" "}
-                <span
-                  style={{
-                    color: columnaOrden === "nivel" ? "#fff" : "#fff",
-                  }}
-                >
-                  {columnaOrden === "nivel" ? (ascendente ? "↑" : "↓") : "↕"}
-                </span>
-              </th>
-              <th>Pais</th>
-              <th>Ciudad</th>
-              <th>Dirección</th>
-              <th>Teléfono</th>
-            </tr>
-          </thead>
-          <tbody className="celda">
-            {estudiantesFiltrados.length > 0 ? (
-              estudiantesFiltrados.map((est, index) => (
-                <tr key={index}>
-                  <td>{est.cedula}</td>
-                  <td>{est.nombre}</td>
-                  <td>{est.apellido}</td>
-                  <td>{est.correo}</td>
-                  <td>{est.carrera}</td>
-                  <td>{est.nivel}</td>
-                  <td>{est.pais}</td>
-                  <td>{est.ciudad}</td>
-                  <td>{est.direccion}</td>
-                  <td>{est.telefono}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={10} align="center">
-                  No se encontraron estudiantes.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+        modo="solo-info"
+        onVerInfo={(e) => abrirModalDeCredencial(e)}
+        onEditar={(estudiante) => {
+          console.log("Editar estudiante:", estudiante);
+        }}
+      />
 
-      {/* Gráfico de barras */}
-      <h2 style={{ marginTop: "40px" }}>Estudiantes por Carrera</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={datosGrafico}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="carrera" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="cantidad" fill="#FAA4BD" />
-        </BarChart>
-      </ResponsiveContainer>
+      {/* Gráfico por carrera */}
+      <div style={{ width: "100%", height: 300, marginTop: "40px" }}>
+        <ResponsiveContainer>
+          <BarChart data={datosGrafico}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="carrera" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="cantidad" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
-};
+}
 
 export default Reportes;
