@@ -8,7 +8,7 @@ function Estadisticas({ total, porCarrera }: Props) {
     <div className="row mb-4">
       {/* Columna 1: Total */}
       <div className="col-md-6">
-        <div className="alert alert-info text-center">
+        <div className="estadistica-total text-center">
         Total estudiantes: <strong>{total}</strong>
         </div>
       </div>
@@ -20,7 +20,7 @@ function Estadisticas({ total, porCarrera }: Props) {
           {Object.entries(porCarrera).map(([carrera, cantidad]) => (
             <li
               key={carrera}
-              className="list-group-item d-flex justify-content-between"
+              className="estadistica-item d-flex justify-content-between align-items-center"
             >
               <span>{carrera}</span>
               <span className="badge bg-primary rounded-pill">{cantidad}</span>

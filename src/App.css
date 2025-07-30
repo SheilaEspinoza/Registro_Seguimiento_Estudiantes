@@ -197,7 +197,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   font-weight: bold;
 }
 
-                                                /*-- CalendarioInicio-- */
+                                     /*-- Estilos para CalendarioInicio-- */
 .calendario-container {
   margin-top: 24px;
   width: 100%;
@@ -270,7 +270,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   font-size: 0.9rem;
 }
 
-                                        /* --Recordatorios.tsx*/
+                                        /* --Estilos para Recordatorios.tsx*/
 /* Contenedor principal */
 .recordatorios-contenedor {
   margin-top: 24px;
@@ -352,7 +352,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   color: white;
 }
 
-/*boton morado para agregar*/
+                                       /* -- boton morado -- */
 .btn-morado {
   background-color: var(--color-primary);
   color: var(--color-text-inverse);
@@ -374,6 +374,88 @@ body.sb-sidenav-toggled #layoutSidenav_content {
 .btn-morado:disabled {
   background-color: #aaa;
   cursor: not-allowed;
+}
+
+                                     /* -- Estilo para Estadisticas.tsx -- */
+.estadistica-item {
+  background-color: var(--color-primary-subtle); /* Fondo suave */
+  color: var(--color-text);
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 2px solid var(--color-primary); /* Borde completo */
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.estadistica-item:last-child {
+  margin-bottom: 0;
+}
+
+.estadistica-total {
+  background-color: var(--color-secondary); 
+  color: var(--color-text-on-secondary);
+  padding: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid var(--color-primary); 
+
+}
+
+.estadistica-item:hover {
+  background-color: var(--color-primary-subtle-hover);
+}
+
+.estadistica-badge {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  padding: 5px 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 999px;
+}
+
+                              /*-- Estilos para TablaEstudiantes.tsx -- */
+.table-estudiantes {
+  width: 90%;
+  table-layout: fixed;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(201, 201, 201, 0.1);
+}
+
+/* encabezados */
+.table-estudiantes thead th {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Celdas normales */
+.table-estudiantes td {
+  padding: 10px;
+  text-align: center;
+  background-color: var(--color-bg-soft);
+  transition: background-color 0.3s ease;
+}
+
+/* Hover */
+.table-estudiantes tbody tr:hover td {
+  background-color: var(--color-primary-subtle);
+}
+
+.table-estudiantes th:nth-child(4),
+.table-estudiantes td:nth-child(4) {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /*Otro*/
