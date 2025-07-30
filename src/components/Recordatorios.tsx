@@ -59,48 +59,40 @@ interface RecordatoriosProps {
   };
 
   return (
-  <div className="d-flex justify-content-center" style={{ marginTop: "24px", width: "100%" }}>
+  <div className="recordatorios-contenedor">
     <motion.div
       style={{ minHeight: "400px", width: "100%" }}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="card">
+      <div className="recordatorios-card">
       <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="mb-0">Recordatorios</h5>
-        <button
-          type="button"
-          className="btn btn-outline-success btn-sm"
-          onClick={() => setMostrarModal(true)}
-          title="Agregar Recordatorio"
-        >
-        <i className="bi bi-plus-square me-1"></i> Agregar
-        </button>
+          <button
+            type="button"
+            className="btn-morado"
+            onClick={() => setMostrarModal(true)}
+            title="Agregar Recordatorio"
+          >
+            <i className="bi bi-plus-square me-1"></i> Agregar
+          </button>
       </div>
 
-      <div className="card-body" style={{ maxHeight: "300px", overflowY: "auto" }}>
+      <div className="recordatorios-body">
         {recordatorios.length === 0 ? (
           <p className="text-muted">Sin recordatorios pendientes.</p>
         ) : (
           recordatorios.map((tarea) => (
             <div
               key={tarea.id}
-              className={`d-flex justify-content-between align-items-center mb-2 border rounded p-2 ${
-                tarea.estado === "completo" ? "bg-light text-muted text-decoration-line-through" : ""
-              }`}
+              className={`tarea-item ${tarea.estado === "completo" ? "text-muted text-decoration-line-through" : ""}`}
             >
             <div>
                 <strong>{tarea.texto}</strong> 
-                <span className={`badge rounded-pill ${
-                    tarea.prioridad === "alta"
-                    ? "text-bg-danger"
-                    : tarea.prioridad === "media"
-                    ? "text-bg-info"
-                    : "text-bg-success"
-                    }`}>
-                      {tarea.prioridad}
-               </span>
+                <span className={`badge rounded-pill prioridad-${tarea.prioridad}`}>
+                  {tarea.prioridad}
+                </span>
               </div>
 
               <div className="d-flex gap-2">
@@ -172,7 +164,7 @@ interface RecordatoriosProps {
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setMostrarModal(false)}>Cancelar</Button>
-              <Button variant="primary" onClick={agregarTarea} disabled={!nuevaTarea.trim()}>Agregar</Button>
+              <Button className="btn-morado" onClick={agregarTarea} disabled={!nuevaTarea.trim()}>Agregar</Button>
             </Modal.Footer>
         </Modal>
        </div>

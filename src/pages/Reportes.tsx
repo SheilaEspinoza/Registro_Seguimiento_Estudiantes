@@ -117,9 +117,6 @@ const Reportes = () => {
     })
   );
 
-  // Estado para la vista de reportes o estadísticas
-  const [vista, setVista] = useState<"reportes" | "estadisticas">("reportes");
-
   return (
     <div
       style={{
@@ -145,11 +142,11 @@ const Reportes = () => {
 
           <h1
             style={{
+              padding: "10px",
               fontFamily: "sans-serif",
               fontWeight: "bold",
-              color: "#962F33",
+              color: "#533B4D",
               textAlign: "center",
-              marginBottom: "20px",
               marginTop: "20px",
             }}
           >
@@ -159,7 +156,7 @@ const Reportes = () => {
       </div>
 
       {/* Barra buscar por cédula */}
-      <div className="col-md-10 mx-auto">
+      <div className="col-md-5 mx-auto mb-2">
         <div className="input-group shadow-sm rounded-3">
           <span
             className="input-group-text bg-white border-end-0"
@@ -202,7 +199,6 @@ const Reportes = () => {
           <thead>
             <tr>
               <th>Cédula</th>
-              <th>Foto</th>
               <th
                 onClick={() => ordenarPor("nombre")}
                 style={{ cursor: "pointer" }}
@@ -255,7 +251,6 @@ const Reportes = () => {
               estudiantesFiltrados.map((est, index) => (
                 <tr key={index}>
                   <td>{est.cedula}</td>
-                  <td>{est.foto}</td>
                   <td>{est.nombre}</td>
                   <td>{est.apellido}</td>
                   <td>{est.correo}</td>
@@ -286,7 +281,7 @@ const Reportes = () => {
           <XAxis dataKey="carrera" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="cantidad" fill="#6e1d21ff" />
+          <Bar dataKey="cantidad" fill="#FAA4BD" />
         </BarChart>
       </ResponsiveContainer>
     </div>
