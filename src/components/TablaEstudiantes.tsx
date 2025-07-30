@@ -54,22 +54,49 @@ function TablaEstudiantes({
         <thead>
           <tr>
             <th style={{ width: "30%" }}>Cédula</th>
-            <th style={{ width: "40%" }} onClick={() => onOrdenar?.("nombre")}>
-              Nombre
+
+            <th
+              style={{ width: "40%" }}
+              onClick={() => onOrdenar?.("nombre")}
+              role="button"
+              tabIndex={0}
+            >
+              Nombre{" "}
+              <span>
+                {columnaOrden === "nombre" ? (ascendente ? "↑" : "↓") : "↕"}
+              </span>
             </th>
+
             <th
               style={{ width: "40%" }}
               onClick={() => onOrdenar?.("apellido")}
+              role="button"
+              tabIndex={0}
             >
-              Apellido
+              Apellido{" "}
+              <span>
+                {columnaOrden === "apellido" ? (ascendente ? "↑" : "↓") : "↕"}
+              </span>
             </th>
+
             <th style={{ width: "40%" }}>Carrera</th>
-            <th style={{ width: "20%" }} onClick={() => onOrdenar?.("nivel")}>
-              Nivel
+
+            <th
+              style={{ width: "20%" }}
+              onClick={() => onOrdenar?.("nivel")}
+              role="button"
+              tabIndex={0}
+            >
+              Nivel{" "}
+              <span>
+                {columnaOrden === "nivel" ? (ascendente ? "↑" : "↓") : "↕"}
+              </span>
             </th>
+
             <th style={{ width: "50%" }}>Acciones</th>
           </tr>
         </thead>
+
         <tbody>
           {estudiantesOrdenados.map((e) => (
             <tr key={e.cedula}>
