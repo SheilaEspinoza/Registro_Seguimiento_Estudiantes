@@ -453,7 +453,7 @@ body.sb-sidenav-toggled .toggle-btn {
 
 thead th{
   font-size: 14px;
-  background-color: #8a0d0dd7 !important;
+  background-color: #3B1C32 !important;
   color: white  !important;
   padding: 10px  !important;
   text-align: center  !important;
@@ -466,3 +466,6 @@ th, td{
   white-space: normal;
 }
 
+td:nth-child(4) , th:nth-child(4) {
+  width: 13%;
+}
