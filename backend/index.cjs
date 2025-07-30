@@ -10,17 +10,18 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql2");
 const cors = require("cors");
-
-app.use(cors());
-app.use(express.json());
-
-app.use("/uploads", require("express").static("uploads"));
-const multer = require("multer"); //npm install multer
+const multer = require("multer");
 const path = require("path");
 
+// Middlewares
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+
+// Configuración de Multer para subir imágenes
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // carpeta donde se guardarán las imágenes
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
@@ -28,18 +29,17 @@ const storage = multer.diskStorage({
     cb(null, uniqueName);
   },
 });
+const upload = multer({ storage });
 
-const upload = multer({ storage: storage });
-
-// Conexion a MySQL
+// Conexión a MySQL
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",    
-  database: "registros"
+  password: "",
+  database: "registros",
 });
 
-// verifico conexion
+// Verificar conexión
 db.connect((err) => {
   if (err) {
     console.error("Error al conectar a la base de datos:", err);
@@ -48,62 +48,88 @@ db.connect((err) => {
   }
 });
 
+// Ruta para registrar estudiante
 app.post("/registro", upload.single("foto"), (req, res) => {
-     const { cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono } = req.body;
-     const foto = req.file ? `/uploads/${req.file.filename}` : null;
+  const { cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono } = req.body;
+  const foto = req.file ? req.file.filename : null;
 
-     const sql = `INSERT INTO estudiantes 
-                (cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-     const values = [cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto];
-     console.log("BODY:", req.body);
-     console.log("FILE:", req.file);
+  const sql = `
+    INSERT INTO estudiantes 
+    (cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  const values = [cedula, nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono, foto];
 
-    db.query(sql, values, (err, result) => {
-        if(err){
-            console.error("Error al insertar en la base:", err);
-            return res.status(500).send("Error del servidor");
-        }else{
-            res.send("Estudiante registrado correctamente");
-        }
-    });
-  });
-
-  app.get('/api/estudiantes', async (req, res) => {
-  try {
-      db.query('SELECT * FROM estudiantes', (err, results) => {
-        if (err) {
-         console.error("Error al obtener estudiantes:", err);
-         res.status(500).json({ mensaje: "Error al obtener estudiantes" });
-        } else {
-          res.json(results);
-         }
-      });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: "Error al obtener estudiantes" });
-  }
-});
-
-//Para eliminar registro
-app.delete("/estudiantes/:cedula", async (req, res) => {
-  const { cedula } = req.params;
-  try {
-    const result = await pool.query("DELETE FROM estudiantes WHERE cedula = $1", [cedula]);
-
-    if (result.rowCount > 0) {
-      res.status(200).json({ mensaje: "Estudiante eliminado correctamente" });
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error("Error al insertar en la base:", err);
+      return res.status(500).send("Error del servidor");
     } else {
-      res.status(404).json({ mensaje: "Estudiante no encontrado" });
+      res.send("Estudiante registrado correctamente");
     }
-  } catch (error) {
-    console.error("Error al eliminar:", error);
-    res.status(500).json({ error: "Error al eliminar estudiante" });
-  }
+  });
 });
 
+// Obtener todos los estudiantes
+app.get("/api/estudiantes", (req, res) => {
+  db.query("SELECT * FROM estudiantes", (err, results) => {
+    if (err) {
+      console.error("Error al obtener estudiantes:", err);
+      return res.status(500).json({ mensaje: "Error al obtener estudiantes" });
+    }
+    res.json(results);
+  });
+});
 
-// para iniciar servidor
+// Eliminar estudiante por cédula
+app.delete("/api/estudiantes/:cedula", (req, res) => {
+  const { cedula } = req.params;
+  db.query("DELETE FROM estudiantes WHERE cedula = ?", [cedula], (err, result) => {
+    if (err) {
+      console.error("Error al eliminar estudiante:", err);
+      return res.status(500).json({ error: "Error al eliminar estudiante" });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ mensaje: "Estudiante no encontrado" });
+    }
+    res.status(200).json({ mensaje: "Estudiante eliminado correctamente" });
+  });
+});
+
+// Actualizar estudiante
+app.put("/api/estudiantes/:cedula", upload.single("foto"), (req, res) => {
+  const { cedula } = req.params;
+  const { nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono } = req.body;
+  const foto = req.file ? req.file.filename : null;
+
+  let sql = `
+    UPDATE estudiantes 
+    SET nombre = ?, apellido = ?, correo = ?, carrera = ?, nivel = ?, 
+        pais = ?, ciudad = ?, direccion = ?, telefono = ?
+  `;
+  const values = [nombre, apellido, correo, carrera, nivel, pais, ciudad, direccion, telefono];
+
+  if (foto) {
+    sql += `, foto = ?`;
+    values.push(foto);
+  }
+
+  sql += ` WHERE cedula = ?`;
+  values.push(cedula);
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error("Error al actualizar estudiante:", err);
+      return res.status(500).send("Error del servidor");
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).send("Estudiante no encontrado");
+    }
+    res.send("Estudiante actualizado correctamente");
+  });
+});
+
+// Iniciar servidor
 app.listen(3001, () => {
   console.log("Servidor corriendo en http://localhost:3001");
 });

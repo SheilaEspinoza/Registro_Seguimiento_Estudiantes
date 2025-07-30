@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import type { Estudiante } from "../types/Estudiante";
 import * as bootstrap from "bootstrap";
 
@@ -6,9 +6,11 @@ interface Props {
   cedula: string;
   onEliminar: (cedula: string) => void;
   estudiante: Estudiante;
+  onEditar: (estudiante: Estudiante) => void;   // Para abrir edición
+  onVerInfo: (estudiante: Estudiante) => void;  // Para mostrar info
 }
 
-const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante }) => {
+const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante, onEditar, onVerInfo }) => {
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
 
   useEffect(() => {
@@ -16,7 +18,24 @@ const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante }) => {
     triggers.forEach(el => new bootstrap.Tooltip(el as HTMLElement, { container: "body" }));
   }, []);
 
-  const eliminarEstudiante = async () => { /* ... */ };
+  const eliminarEstudiante = async () => {
+    try {
+      const resp = await fetch(`http://localhost:3001/estudiantes/${cedula}`, {
+  method: "DELETE",
+});
+
+
+      if (resp.ok) {
+        onEliminar(cedula);
+      } else {
+        alert("Error al eliminar estudiante");
+      }
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+      alert("Error al eliminar estudiante");
+    }
+  };
+
   const confirmarEliminacion = () => {
     eliminarEstudiante();
     setMostrarConfirmacion(false);
@@ -26,26 +45,30 @@ const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante }) => {
     <div>
       <button
         type="button"
-        className="btn btn-outline-success btn-sm mx-3 me-1 d-inline-flex align-items-center justify-content-center"
+        className="btn btn-outline-success btn-sm mx-1"
         data-bs-toggle="tooltip"
         title="Editar"
+        onClick={() => onEditar(estudiante)}
       >
         <i className="bi bi-pencil-square"></i>
       </button>
+
       <button
         type="button"
-        className="btn btn-outline-danger btn-sm mx-3 me-1 d-inline-flex align-items-center justify-content-center"
+        className="btn btn-outline-danger btn-sm mx-1"
         data-bs-toggle="tooltip"
         title="Eliminar"
         onClick={() => setMostrarConfirmacion(true)}
       >
         <i className="bi bi-trash"></i>
       </button>
+
       <button
         type="button"
-        className="btn btn-outline-warning btn-sm mx-3 d-inline-flex align-items-center justify-content-center"
+        className="btn btn-outline-warning btn-sm mx-1"
         data-bs-toggle="tooltip"
         title="Ver información"
+        onClick={() => onVerInfo(estudiante)}
       >
         <i className="bi bi-person-vcard"></i>
       </button>
@@ -59,7 +82,6 @@ const Acciones: React.FC<Props> = ({ cedula, onEliminar, estudiante }) => {
       )}
     </div>
   );
-}
+};
 
 export default Acciones;
-

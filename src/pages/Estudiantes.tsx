@@ -15,21 +15,38 @@ declare global {
 function Estudiantes() {
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
   const [filtroCedula, setFiltroCedula] = useState("");
-  const modalRef = useRef<HTMLDivElement>(null);
-  const [modalInstance, setModalInstance] = useState<any>(null);
+  const modalNuevoRef = useRef<HTMLDivElement>(null);
+  const modalEditarRef = useRef<HTMLDivElement>(null);
+  const modalInfoRef = useRef<HTMLDivElement>(null);
+
+  const [modalNuevoInstance, setModalNuevoInstance] = useState<any>(null);
+  const [modalEditarInstance, setModalEditarInstance] = useState<any>(null);
+  const [modalInfoInstance, setModalInfoInstance] = useState<any>(null);
+
+  const [estudianteEditar, setEstudianteEditar] = useState<Estudiante | null>(null);
+  const [estudianteInfo, setEstudianteInfo] = useState<Estudiante | null>(null);
 
   useEffect(() => {
-    if (modalRef.current) {
-      const instance = new window.bootstrap.Modal(modalRef.current, {
+    if (modalNuevoRef.current) {
+      const instance = new window.bootstrap.Modal(modalNuevoRef.current, {
         backdrop: "static",
         keyboard: false,
       });
-      modalRef.current.addEventListener("hidden.bs.modal", () => {
-        document.querySelector(".modal-backdrop")?.remove();
-        document.body.classList.remove("modal-open");
-        document.body.style.removeProperty("padding-right");
+      setModalNuevoInstance(instance);
+    }
+    if (modalEditarRef.current) {
+      const instance = new window.bootstrap.Modal(modalEditarRef.current, {
+        backdrop: "static",
+        keyboard: false,
       });
-      setModalInstance(instance);
+      setModalEditarInstance(instance);
+    }
+    if (modalInfoRef.current) {
+      const instance = new window.bootstrap.Modal(modalInfoRef.current, {
+        backdrop: "static",
+        keyboard: false,
+      });
+      setModalInfoInstance(instance);
     }
   }, []);
 
@@ -42,16 +59,27 @@ function Estudiantes() {
     }
   };
 
-  const handleDelete = (cedula: string) => {
-    setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
-  };
-
   useEffect(() => {
     fetchEstudiantes();
   }, []);
 
-  const total = estudiantes.length;
+  const handleDelete = (cedula: string) => {
+    setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
+  };
 
+  // Abrir modal de edición con datos cargados
+  const handleEditar = (estudiante: Estudiante) => {
+    setEstudianteEditar(estudiante);
+    modalEditarInstance?.show();
+  };
+
+  // Abrir modal de información
+  const handleVerInfo = (estudiante: Estudiante) => {
+    setEstudianteInfo(estudiante);
+    modalInfoInstance?.show();
+  };
+
+  const total = estudiantes.length;
   const porCarrera: Record<string, number> = {};
   estudiantes.forEach((e) => {
     porCarrera[e.carrera] = (porCarrera[e.carrera] || 0) + 1;
@@ -86,7 +114,7 @@ function Estudiantes() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => modalInstance?.show()}
+              onClick={() => modalNuevoInstance?.show()}
             >
               <i className="bi bi-person-plus me-2"></i>
               Crear nuevo registro
@@ -104,17 +132,19 @@ function Estudiantes() {
           <TablaEstudiantes
             estudiantes={estudiantesFiltrados}
             onEliminar={handleDelete}
+            onEditar={handleEditar}
+            onVerInfo={handleVerInfo}
           />
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal Nuevo */}
       <div
         className="modal fade"
         id="modalNuevoRegistro"
         tabIndex={-1}
         aria-hidden="true"
-        ref={modalRef}
+        ref={modalNuevoRef}
       >
         <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
@@ -123,16 +153,120 @@ function Estudiantes() {
               <button
                 type="button"
                 className="btn-close"
-                onClick={() => modalInstance?.hide()}
+                onClick={() => modalNuevoInstance?.hide()}
               ></button>
             </div>
             <div className="modal-body">
               <FormularioEstudiante
                 onRegistroExitoso={() => {
                   fetchEstudiantes();
-                  modalInstance?.hide();
+                  modalNuevoInstance?.hide();
                 }}
               />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal Editar */}
+      <div
+        className="modal fade"
+        id="modalEditarRegistro"
+        tabIndex={-1}
+        aria-hidden="true"
+        ref={modalEditarRef}
+      >
+        <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Editar Estudiante</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => modalEditarInstance?.hide()}
+              ></button>
+            </div>
+            <div className="modal-body">
+              {estudianteEditar && (
+                <FormularioEstudiante
+                  modoEdicion={true}
+                  estudianteEditar={estudianteEditar}
+                  onRegistroExitoso={() => {
+                    fetchEstudiantes();
+                    modalEditarInstance?.hide();
+                    setEstudianteEditar(null);
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal Información */}
+      <div
+        className="modal fade"
+        id="modalInfoEstudiante"
+        tabIndex={-1}
+        aria-hidden="true"
+        ref={modalInfoRef}
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Información del Estudiante</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => modalInfoInstance?.hide()}
+              ></button>
+            </div>
+            <div className="modal-body">
+              {estudianteInfo ? (
+                <>
+                  {estudianteInfo.foto ? (
+                    <div className="text-center mb-3">
+                      <img
+                        src={`http://localhost:3001/uploads/${estudianteInfo.foto}`}
+                        alt="Foto Estudiante"
+                        style={{ maxWidth: "200px", maxHeight: "200px", borderRadius: "8px" }}
+                      />
+                    </div>
+                  ) : null}
+
+                  <ul className="list-group">
+                    <li className="list-group-item">
+                      <strong>Cédula:</strong> {estudianteInfo.cedula}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Nombre:</strong> {estudianteInfo.nombre} {estudianteInfo.apellido}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Correo:</strong> {estudianteInfo.correo}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Carrera:</strong> {estudianteInfo.carrera}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Nivel:</strong> {estudianteInfo.nivel}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>País:</strong> {estudianteInfo.pais}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Ciudad:</strong> {estudianteInfo.ciudad}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Dirección:</strong> {estudianteInfo.direccion}
+                    </li>
+                    <li className="list-group-item">
+                      <strong>Teléfono:</strong> {estudianteInfo.telefono}
+                    </li>
+                  </ul>
+                </>
+              ) : (
+                <p>No hay información para mostrar</p>
+              )}
             </div>
           </div>
         </div>
