@@ -57,3 +57,4 @@ function TablaEstudiantes({ estudiantes, onEliminar, onEditar, onVerInfo }: Prop
 }
 
 export default TablaEstudiantes;
+
