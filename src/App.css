@@ -2,17 +2,17 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   height: 100%;
 }
 
-/*Paletas*/
+                                       /* -- Paletas -- */
 :root {
   /* Paleta en modo claro - por defecto*/
   --color-bg: #F5F5F5;
   --color-surface: #FFFFFF;
 
   /* Colores base */
-  --color-primary: #291041;        /* Sidebar y botones principales */
-  --color-primary-hover: #230e37;  /* Hover */
-  --color-secondary: #f5d166;      /* Botones/acento */
-  --color-accent: #cfbec9;         /* Tarjetas/tablas */
+  --color-primary: #291041;        /* Aplica en sidebar y botones principales */
+  --color-primary-hover: #230e37;  /* para Hover (sombra al pasar mouse sobre componente) */
+  --color-secondary: #f5d166;      /* Aplica a botones y acento */
+  --color-accent: #cfbec9;         /* para tarjetas y tablas */
 
   /* Textos */
   --color-text: #333333;
@@ -27,8 +27,8 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   /* Colores base */
   --color-primary: #746484;        /* Sidebar */
   --color-primary-hover: #5d506a;
-  --color-secondary: #f9e19c;      /* Botones/acento */
-  --color-accent: #9f93aa;         /* Tarjetas/tablas */
+  --color-secondary: #f9e19c;      /* Botones y acento */
+  --color-accent: #9f93aa;         /* Tarjetas y tablas */
 
   /* Textos */
   --color-text: #E0E0E0;
@@ -77,7 +77,7 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
   transition: margin-left 0.3s ease;
 }
 
-/*Aqui empieza clases para estilos en Layout.tsx*/
+                                      /* -- Estilos en Layout.tsx --*/
 #layoutSidenav_nav {
   width: 250px;
   transition: margin-left 0.3s ease;
@@ -106,7 +106,7 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
   flex-direction: column;
 }
 
-/*Aqui empieza clases para estilos en Header.tsx*/
+                                       /*-- Estilos para Header.tsx --*/
 .app-header {
   background-color: var(--color-primary); /* Morado oscuro en claro */
   color: var(--color-text-inverse);
@@ -131,7 +131,7 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
   opacity: 0.7;
 }
 
-/*Aqui empiezan los estilos para Sidebar.tsx*/
+                                          /* -- Estilos para Sidebar.tsx --*/
 /* Para iconos */
 .custom-sidenav .sb-nav-link-icon i {
   color: var(--color-text-inverse);
@@ -141,6 +141,223 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
 
 .custom-sidenav .nav-link:hover .sb-nav-link-icon i {
   opacity: 0.8;
+}
+
+                                          /*-- Estilos para Inicio.tsx-- */
+/* Contenedor de bienvenida */
+.bienvenida-container {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1100px;
+}
+
+/* Card del inicio */
+.bienvenida-card {
+  background-color: var(--color-surface);
+  border: 4px solid var(--color-accent);
+  border-radius: 12px;
+  box-shadow: 0 0 12px var(--color-accent), 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* para img de bienvenida en la Card */
+.bienvenida-img {
+  border-radius: 12px 0 0 12px;
+  border-right: 6px solid var(--color-secondary);
+  border-bottom: 6px solid var(--color-secondary);
+  object-fit: cover;
+  box-shadow: 0 0 12px var(--color-secondary);
+}
+
+                                                /* -- Texto -- */
+.saludo-text {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+}
+
+.hora-grande {
+  color: var(--color-primary);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+                                                /*-- CalendarioInicio-- */
+.calendario-container {
+  margin-top: 24px;
+  width: 100%;
+}
+
+/* Card del calendario */
+.calendario-card {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  padding: 20px;
+  width: 95%; 
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Titulo */
+.titulo-calendario {
+  color: var(--color-primary);
+  font-weight: bold;
+  background-color: var(--color-secondary) !important;
+  border-radius: 6px;
+  padding: 6px;
+
+}
+
+/* Estilos del calendario (react-calendar) */
+.calendario-bonito {
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+}
+
+.calendario-bonito .react-calendar__tile {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  transform: scale(1);
+}
+
+/* Color de fondo al pasar mouse (hover) y de seleccion */
+.calendario-bonito .react-calendar__tile:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-text-inverse);
+  transform: scale(1.08);
+}
+
+.calendario-bonito .react-calendar__tile--active {
+  background-color: var(--color-secondary) !important;
+  color: var(--color-text) !important;
+  font-weight: bold;
+}
+
+/*Contenedor c/d dia de la sem*/
+.calendario-bonito .react-calendar__month-view__weekdays {
+  display: flex;
+  justify-content: space-between;
+}
+
+/*cada dia de la semana*/
+.calendario-bonito .react-calendar__month-view__weekdays__weekday {
+  background-color: var(--color-accent); 
+  color: var(--color-text);
+  padding: 10px 0;
+  border-radius: 50px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+                                        /* --Recordatorios.tsx*/
+/* Contenedor principal */
+.recordatorios-contenedor {
+  margin-top: 24px;
+  width: 100%;
+}
+
+/* Card general */
+.recordatorios-card {
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Body con scroll */
+.recordatorios-body {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 12px;
+}
+
+/* Item de tarea */
+.recordatorios-card .tarea-item {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.recordatorios-card .tarea-item:hover {
+  background-color: var(--color-accent);
+}
+
+/* Prioridad */
+.badge.prioridad-alta {
+  background-color: #e57373;
+  color: white;
+}
+
+.badge.prioridad-media {
+  background-color: #f5d166;
+  color: #000;
+}
+
+.badge.prioridad-baja {
+  background-color: #81c784;
+  color: #000;
+}
+
+/* Botones */
+.recordatorios-card .btn {
+  border-radius: 6px;
+}
+
+.recordatorios-card .btn-outline-warning {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.recordatorios-card .btn-outline-warning:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.recordatorios-card .btn-outline-danger {
+  border-color: #e57373;
+  color: #e57373;
+}
+
+.recordatorios-card .btn-outline-danger:hover {
+  background-color: #e57373;
+  color: white;
+}
+
+/*boton morado para agregar*/
+.btn-morado {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn-morado:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-text-inverse);
+  transform: scale(1.03);
+}
+
+.btn-morado:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
 }
 
 /*Otro*/
@@ -170,18 +387,9 @@ body.sb-sidenav-toggled .toggle-btn {
   flex-direction: column;
 }
 
-/*  COMPONENTES */
-.bienvenida-card, .card {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-}
 
 .espaciado-superior {
   margin-top: 30px; 
-}
-.calendario-pequeno {
-  transform: scale(0.8);
-  transform-origin: top left;
 }
 
 /*Notes Panel*/

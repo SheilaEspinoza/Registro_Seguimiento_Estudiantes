@@ -55,42 +55,31 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
 
   return (
     <>
-      <div
-        style={{
-          margin: "0 auto",
-          padding: "20px",
-          backgroundColor: "#fff",
-          borderRadius: "10px",
-          boxShadow: "0 0 10px rgba(201, 201, 201, 0.1)",
-        }}
-      >
+      <div className="bienvenida-container">
+        <div className="card bienvenida-card espaciado-superior">
+          <div className="row g-0">
+           <div className="col-md-4">
+             <img src={obtenerImagen()} className="card-img bienvenida-img" alt="Imagen_hora" />
+           </div>
 
-      <div className="card mb-3 bienvenida-card espaciado-superior">
-        <div className="row g-0">
-          <div className="col-md-4">
-            <img src={obtenerImagen()} className="card-img" alt="Imagen_hora" />
-          </div>
+            <div className="col-md-8 d-flex flex-column justify-content-between">
+              <div className="card-body d-flex justify-content-between align-items-start">
+                <div>
+                  <h3 className="card-title">
+                   ¡Bienvenido al Sistema de Registro de Estudiantes!
+                  </h3>
+                  <p className="card-text saludo-text">{saludo}</p>
+                </div>
 
-          <div className="col-md-8 d-flex flex-column justify-content-between">
-            <div className="card-body d-flex justify-content-between align-items-start">
-              <div>
-                <h3 className="card-title">
-                  ¡Bienvenido al Sistema de Registro de Estudiantes!
-                </h3>
-                <p className="card-text">{saludo}</p>
-              </div>
-
-              <div className="text-end">
-                <h2>
+                <div className="text-end">
                   <p className="hora-grande">{formatoHora}</p>
-                </h2>
-              </div>
-            </div>
-          </div>
+                </div>
+             </div>
+           </div>
+         </div>
         </div>
-      </div>
 
-      <div className="row">
+       <div className="row">
         <div className="col-md-6">
           <CalendarioInicio />
         </div>
@@ -101,7 +90,7 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
         />
         </div>
       </div>
-   </div>
+     </div>
     </>
   );
 };
