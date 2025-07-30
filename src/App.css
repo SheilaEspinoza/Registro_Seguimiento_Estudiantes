@@ -35,6 +35,12 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   --color-text-inverse: #000000;
 }
 
+.contenido-principal {
+  padding: 24px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
 .logo {
   height: 6em;
@@ -72,10 +78,6 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   color: #888;
 }
 
-body.sb-sidenav-toggled #layoutSidenav_nav {
-  margin-left: -250px;
-  transition: margin-left 0.3s ease;
-}
 
                                       /* -- Estilos en Layout.tsx --*/
 #layoutSidenav_nav {
@@ -102,9 +104,21 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
 
 
 #layoutSidenav_content {
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  transition: all 0.3s ease;
+  padding: 1rem;
+  margin-left: 250px;
 }
+
+body.sb-sidenav-toggled #layoutSidenav_nav {
+  margin-left: -250px;
+  transition: margin-left 0.3s ease;
+}
+
+body.sb-sidenav-toggled #layoutSidenav_content {
+  margin-left: 0;
+}
+
 
                                        /*-- Estilos para Header.tsx --*/
 .app-header {
@@ -144,13 +158,6 @@ body.sb-sidenav-toggled #layoutSidenav_nav {
 }
 
                                           /*-- Estilos para Inicio.tsx-- */
-/* Contenedor de bienvenida */
-.bienvenida-container {
-  margin: 0 auto;
-  padding: 20px;
-  max-width: 1100px;
-}
-
 /* Card del inicio */
 .bienvenida-card {
   background-color: var(--color-surface);
@@ -465,4 +472,6 @@ th, td{
   overflow-wrap: break-word;
   white-space: normal;
 }
+
+
 

@@ -54,8 +54,16 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
   });
 
   return (
-    <>
-      <div className="bienvenida-container">
+
+  <div
+      style={{
+        margin: "0 auto",
+        padding: "20px",
+        backgroundColor: "#fff",
+        borderRadius: "10px",
+        boxShadow: "0 0 10px rgba(255, 255, 255, 1)",
+      }}
+    >
         <div className="card bienvenida-card espaciado-superior">
           <div className="row g-0">
            <div className="col-md-4">
@@ -90,8 +98,8 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
         />
         </div>
       </div>
-     </div>
-    </>
+</div>
+
   );
 };
 
