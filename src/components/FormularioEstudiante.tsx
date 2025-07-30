@@ -20,9 +20,6 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
 
   const [errores, setErrores] = useState<{ [key: string]: string }>({});
 
-  // Estado para mostrar modal de error general
-  const [mostrarModalError, setMostrarModalError] = useState(false);
-
   const limpiarCampos = () => {
     setNombre("");
     setApellido("");
@@ -36,12 +33,11 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
     setCarrera("");
     setNivel(1);
     setErrores({});
-    setMostrarModalError(false);
   };
 
   const validarCampos = () => {
     const nuevosErrores: { [key: string]: string } = {};
-     // Cédula: solo números y exactamente 10 dígitos
+
     if (!cedula) {
       nuevosErrores.cedula = "La cédula es obligatoria";
     } else if (!/^\d+$/.test(cedula)) {
@@ -50,24 +46,12 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
       nuevosErrores.cedula = "La cédula debe tener exactamente 10 dígitos";
     }
 
-    // Teléfono: solo números y exactamente 10 dígitos
     if (!telefono) {
       nuevosErrores.telefono = "El teléfono es obligatorio";
     } else if (!/^\d+$/.test(telefono)) {
       nuevosErrores.telefono = "El teléfono debe contener solo números";
     } else if (telefono.length !== 10) {
       nuevosErrores.telefono = "El teléfono debe tener exactamente 10 dígitos";
-    }
-    if (!cedula) {
-      nuevosErrores.cedula = "La cédula es obligatoria";
-    } else if (!/^\d+$/.test(cedula)) {
-      nuevosErrores.cedula = "La cédula debe contener solo números";
-    }
-
-    if (!telefono) {
-      nuevosErrores.telefono = "El teléfono es obligatorio";
-    } else if (!/^\d+$/.test(telefono)) {
-      nuevosErrores.telefono = "El teléfono debe contener solo números";
     }
 
     if (!nivel || nivel <= 0) {
@@ -92,8 +76,11 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
     setErrores(validacion);
 
     if (Object.keys(validacion).length > 0) {
-      // Mostrar modal general de error
-      setMostrarModalError(true);
+      const modalElement = document.getElementById("modalError");
+      if (modalElement) {
+        const modal = new window.bootstrap.Modal(modalElement);
+        modal.show();
+      }
       return;
     }
 
@@ -115,34 +102,18 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      onRegistroExitoso();
       alert("Estudiante ha sido agregado");
       limpiarCampos();
-
-      const modalElement = document.getElementById("modalNuevoRegistro");
-      if (modalElement) {
-        const modal = window.bootstrap?.Modal.getInstance(modalElement);
-        modal?.hide();
-      }
+      onRegistroExitoso(); // Cierra el modal desde el padre
     } catch (error) {
-      console.error("Error al realizar registro en Base de datos:", error);
+      console.error("Error al registrar:", error);
       alert("Error al registrar estudiante");
     }
   };
 
-  // Opcional: ocultar modal automáticamente después de 3 segundos
-  /*useEffect(() => {
-    if (mostrarModalError) {
-      const timer = setTimeout(() => {
-        setMostrarModalError(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [mostrarModalError]);
-*/
   return (
     <>
-      <div className="card p-4 mb-4" style={{ minHeight: "400px" }}>
+      <div className="card p-4 mb-4">
         <h5 className="card-title">Registrar estudiante</h5>
 
         <ul className="nav nav-tabs mb-3">
@@ -154,7 +125,6 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
               Datos personales
             </button>
           </li>
-
           <li className="nav-item">
             <button
               className={`nav-link ${activeTab === "academicos" ? "active" : ""}`}
@@ -163,7 +133,6 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
               Datos académicos
             </button>
           </li>
-
           <li className="nav-item">
             <button
               className={`nav-link ${activeTab === "ubicacion" ? "active" : ""}`}
@@ -269,7 +238,6 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
                   onChange={(e) => setCiudad(e.target.value)}
                 />
               </div>
-
               <div className="col-md-6 mb-3">
                 <label className="form-label">Dirección</label>
                 <input
@@ -292,8 +260,6 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
                 <button type="submit" className="btn btn-success">
                   Agregar Registro
                 </button>
-
-
                 <button type="button" className="btn btn-secondary" onClick={limpiarCampos}>
                   Limpiar
                 </button>
@@ -303,42 +269,33 @@ function FormularioEstudiante({ onRegistroExitoso }: { onRegistroExitoso: () => 
         </form>
       </div>
 
-      {/* Modal para error general */}
-      {mostrarModalError && (
-        <div
-          className="modal fade show"
-          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
-          tabIndex={-1}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content border-danger">
-              <div className="modal-header bg-danger text-white">
-                <h5 className="modal-title">Error en el formulario</h5>
-                <button
-                  type="button"
-                  className="btn-close btn-close-white"
-                  aria-label="Close"
-                  onClick={() => setMostrarModalError(false)}
-                />
-              </div>
-              <div className="modal-body">
-                <p>Hay errores en el formulario, por favor corrígelos antes de continuar.</p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={() => setMostrarModalError(false)}
-                >
-                  Cerrar
-                </button>
-              </div>
+      {/* Modal de error */}
+      <div
+        className="modal fade"
+        id="modalError"
+        tabIndex={-1}
+        aria-labelledby="modalErrorLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content border-danger">
+            <div className="modal-header bg-danger text-white">
+              <h5 className="modal-title" id="modalErrorLabel">
+                Error en el formulario
+              </h5>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              />
+            </div>
+            <div className="modal-body">
+              <p>Hay errores en el formulario, por favor corrígelos antes de continuar.</p>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

@@ -1,28 +1,50 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FormularioEstudiante from "../components/FormularioEstudiante";
 import TablaEstudiantes from "../components/TablaEstudiantes";
 import Estadisticas from "../components/Estadisticas";
 import type { Estudiante } from "../types/Estudiante";
-import '../App.css';
+import "../App.css";
 
+declare global {
+  interface Window {
+    bootstrap: any;
+  }
+}
 
 function Estudiantes() {
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
   const [filtroCedula, setFiltroCedula] = useState("");
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [modalInstance, setModalInstance] = useState<any>(null);
 
-    async function fetchEstudiantes() {
-      try {
-      const resp = await axios.get("http://localhost:3001/api/estudiantes"); 
-      setEstudiantes(resp.data); //si no presento resp - no sale tabla
-      } catch (error) {
-      console.error("No pude traer la lista:", error);
-      }
+  useEffect(() => {
+    if (modalRef.current) {
+      const instance = new window.bootstrap.Modal(modalRef.current, {
+        backdrop: "static",
+        keyboard: false,
+      });
+      modalRef.current.addEventListener("hidden.bs.modal", () => {
+        document.querySelector(".modal-backdrop")?.remove();
+        document.body.classList.remove("modal-open");
+        document.body.style.removeProperty("padding-right");
+      });
+      setModalInstance(instance);
     }
+  }, []);
 
-     const handleDelete = (cedula: string) => {
-     setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
-    };
+  const fetchEstudiantes = async () => {
+    try {
+      const resp = await axios.get("http://localhost:3001/api/estudiantes");
+      setEstudiantes(resp.data);
+    } catch (error) {
+      console.error("No pude traer la lista:", error);
+    }
+  };
+
+  const handleDelete = (cedula: string) => {
+    setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
+  };
 
   useEffect(() => {
     fetchEstudiantes();
@@ -32,102 +54,89 @@ function Estudiantes() {
 
   const porCarrera: Record<string, number> = {};
   estudiantes.forEach((e) => {
-  porCarrera[e.carrera] = (porCarrera[e.carrera] || 0) + 1;
+    porCarrera[e.carrera] = (porCarrera[e.carrera] || 0) + 1;
   });
+
   const estudiantesFiltrados = filtroCedula
-  ? estudiantes.filter((e) => e.cedula === filtroCedula) : estudiantes;
+    ? estudiantes.filter((e) => e.cedula === filtroCedula)
+    : estudiantes;
 
   return (
     <>
-      <div
-        style={{
-          margin: "0 auto",
-          padding: "20px",
-          backgroundColor: "#fff",
-          borderRadius: "10px",
-          boxShadow: "0 0 10px rgba(201, 201, 201, 0.1)",
-        }}
-      >
+      <div className="container my-4 p-4 bg-white rounded shadow">
+        <h1 className="mb-4">Seguimiento de Estudiantes</h1>
 
-      <h1 className="mb-4">Seguimiento de Estudiantes</h1>
-      <div className="row align-items-center mb-4">
-       {/* Barra buscar por cedula */}
-         <div className="col-md-8">
+        <div className="row align-items-center mb-4">
+          <div className="col-md-8">
             <div className="input-group">
-              <span className="input-group-text" id="buscar-addon">
-                 <i className="bi bi-search"></i>
+              <span className="input-group-text">
+                <i className="bi bi-search"></i>
               </span>
               <input
                 type="search"
                 className="form-control"
                 placeholder="Buscar por cédula..."
-                aria-label="Buscar"
-                aria-describedby="buscar-addon"
                 value={filtroCedula}
                 onChange={(e) => setFiltroCedula(e.target.value)}
               />
-           </div>
-         </div>
+            </div>
+          </div>
 
-       {/* Boton derecho para mostrar modal */}
-        <div className="col-md-4 text-end mt-2 mt-md-0">
-          <button
-          type="button"
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#modalNuevoRegistro"
-          >
-          <i className="bi bi-person-plus me-2"></i>
-          Crear nuevo registro
-          </button>
+          <div className="col-md-4 text-end mt-2 mt-md-0">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => modalInstance?.show()}
+            >
+              <i className="bi bi-person-plus me-2"></i>
+              Crear nuevo registro
+            </button>
+          </div>
         </div>
-     </div>
 
-      {/* Modal abierto */}
+        <div className="row mt-4">
+          <div className="col-md-6">
+            <Estadisticas total={total} porCarrera={porCarrera} />
+          </div>
+        </div>
+
+        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+          <TablaEstudiantes
+            estudiantes={estudiantesFiltrados}
+            onEliminar={handleDelete}
+          />
+        </div>
+      </div>
+
+      {/* Modal */}
       <div
         className="modal fade"
         id="modalNuevoRegistro"
         tabIndex={-1}
-        aria-labelledby="modalNuevoRegistroLabel"
         aria-hidden="true"
+        ref={modalRef}
       >
-        <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable mt-5">
+        <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="modalNuevoRegistroLabel">
-                Nuevo Estudiante
-              </h5>
+              <h5 className="modal-title">Nuevo Estudiante</h5>
               <button
                 type="button"
                 className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                onClick={() => modalInstance?.hide()}
               ></button>
             </div>
-
             <div className="modal-body">
-              <FormularioEstudiante onRegistroExitoso={fetchEstudiantes} />
+              <FormularioEstudiante
+                onRegistroExitoso={() => {
+                  fetchEstudiantes();
+                  modalInstance?.hide();
+                }}
+              />
             </div>
           </div>
         </div>
       </div>
-
-      {/*Seccion "total estudiantes" y "por carrera" */}
-      <div className="row mt-4">
-        <div className="col-md-6">
-          <Estadisticas total={total} porCarrera={porCarrera} />
-        </div>
-      </div>
-
-      {/*Seccion tabla con registros creados */}
-      <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-       <TablaEstudiantes
-          estudiantes={estudiantesFiltrados}
-          onEliminar={handleDelete}
-/>
-      </div>
-
-    </div>
     </>
   );
 }
