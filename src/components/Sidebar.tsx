@@ -5,16 +5,15 @@ import { Link } from "react-router-dom";
 function Sidebar() {
   return (
     <div id="layoutSidenav_nav">
-      <nav
-        className="sb-sidenav accordion custom-sidenav"
-        id="sidenavAccordion"
-      >
+      <div className="sidebar-logo text-center py-3">
+        <img src="/img/logo.png" alt="Logo" className="img-fluid logo-img" />
+      </div>
+      
         <div className="sb-sidenav-menu">
           <div
-            className="sb-sidenav-menu-heading mt-4"
-            style={{
-              textAlign: "center",
-            }}
+            className="sb-sidenav-menu-heading"
+            style={{ textAlign: "center",
+            marginTop: "8px"}}
           >
             Menú
           </div>
@@ -58,7 +57,7 @@ function Sidebar() {
             </Link>
           </div>
         </div>
-      </nav>
+
     </div>
   );
 }

@@ -166,6 +166,29 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   opacity: 0.8;
 }
 
+/*Para logo*/
+.sidebar-logo {
+  padding-top: 130px !important; /*tam logo*/
+  margin-bottom: 10px;
+  margin-bottom: 16px;
+  padding: 10px 0;
+}
+
+
+.logo-img {
+  max-width: 100px !important;
+  margin-top: 70px !important;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+
                                           /*-- Estilos para Inicio.tsx-- */
 /* Card del inicio */
 .bienvenida-card {
@@ -594,5 +617,105 @@ th, td{
   white-space: normal;
 }
 
+.configuracion-pagina {
+  padding: 2rem;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.configuracion-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.configuracion-marco {
+  width: 200px;           /* antes 180px */
+  height: 260px;          /* antes 240px */
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
+.configuracion-imagen {
+  width: 115px;       /* Fijo, no depende del marco */
+  height: 155px;
+  object-fit: cover;
+  border-radius: 0px; /* Rectangular */
+}
+
+
+.configuracion-opciones {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.configuracion-nombre input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.btn-cambiar-foto {
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  user-select: none;
+}
+
+.btn-cambiar-foto:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.configuracion-modo-oscuro {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+/* ---------------------------
+   Modo Oscuro (no afecta barra morada)
+---------------------------- */
+
+[data-theme="dark"] .configuracion-pagina {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] input[type="text"] {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+[data-theme="dark"] .btn-cambiar-foto {
+  background-color: #333;
+  color: #fff;
+}
+
+[data-theme="dark"] .btn-cambiar-foto:hover {
+  background-color: #444;
+}
+
+[data-theme="dark"] body {
+  background-color: #121212 !important;
+}
