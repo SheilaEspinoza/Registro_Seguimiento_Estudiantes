@@ -92,7 +92,7 @@ function Estudiantes() {
   return (
     <>
       <div className="expandir-components">
-        <h1 className="mb-4">Seguimiento de Estudiantes</h1>
+        <h1 className="mb-4">Registro y Seguimiento de Estudiantes</h1>
 
         <div className="row align-items-center mb-4">
           <div className="col-md-8">
