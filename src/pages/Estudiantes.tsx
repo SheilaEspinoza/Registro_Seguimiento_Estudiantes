@@ -89,7 +89,6 @@ function Estudiantes() {
     ? estudiantes.filter((e) => e.cedula.includes(filtroCedula))
     : estudiantes;
 
-
   return (
     <>
       <div className="expandir-components">
@@ -200,78 +199,6 @@ function Estudiantes() {
                     setEstudianteEditar(null);
                   }}
                 />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal Información */}
-      <div
-        className="modal fade"
-        id="modalInfoEstudiante"
-        tabIndex={-1}
-        aria-hidden="true"
-        ref={modalInfoRef}
-      >
-        <div className="modal-dialog modal-lg modal-dialog-scrollable modal-ajustado">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Información del Estudiante</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => modalInfoInstance?.hide()}
-              ></button>
-            </div>
-            <div className="modal-body">
-              {estudianteInfo ? (
-                <>
-                  <div className="text-center mb-3">
-                    <img
-                      src={
-                        estudianteInfo.foto
-                          ? `http://localhost:3001/uploads/${estudianteInfo.foto}`
-                          : "/img/null.jpg"
-                      }
-                      alt="Foto Estudiante"
-                      style={{ maxWidth: "200px", maxHeight: "200px", borderRadius: "8px" }}
-                    />
-                  </div>
-
-                  <ul className="list-group">
-                    <li className="list-group-item">
-                      <strong>Cédula:</strong> {estudianteInfo.cedula}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Nombre:</strong> {estudianteInfo.nombre}{" "}
-                      {estudianteInfo.apellido}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Correo:</strong> {estudianteInfo.correo}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Carrera:</strong> {estudianteInfo.carrera}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Nivel:</strong> {estudianteInfo.nivel}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>País:</strong> {estudianteInfo.pais}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Ciudad:</strong> {estudianteInfo.ciudad}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Dirección:</strong> {estudianteInfo.direccion}
-                    </li>
-                    <li className="list-group-item">
-                      <strong>Teléfono:</strong> {estudianteInfo.telefono}
-                    </li>
-                  </ul>
-                </>
-              ) : (
-                <p>No hay información para mostrar</p>
               )}
             </div>
           </div>
