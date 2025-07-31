@@ -6,7 +6,7 @@ interface Props {
   cedula: string;
   onEliminar: (cedula: string) => void;
   estudiante: Estudiante;
-  onEditar: (estudiante: Estudiante) => void;
+  onEditar?: (estudiante: Estudiante) => void;
   modo?: "completo" | "solo-info";
   modoReporte?: "completo" | "basicos";
 }
