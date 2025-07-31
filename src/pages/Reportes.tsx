@@ -13,10 +13,8 @@ import {
 } from "recharts";
 
 function Reportes() {
-  // Estado para la lista de estudiantes (desde la base de datos)
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([]);
 
-  // Estados para búsqueda, ordenamiento y filtros
   const [busqueda, setBusqueda] = useState<string>("");
   const [columnaOrden, setColumnaOrden] = useState<keyof Estudiante | null>(
     null
@@ -31,7 +29,6 @@ function Reportes() {
       .catch((error) => console.error("Error al cargar estudiantes:", error));
   }, []);
 
-  // Ordenar y filtrar estudiantes
   const estudiantesFiltrados = [...estudiantes]
     .filter(
       (est) =>
@@ -49,7 +46,6 @@ function Reportes() {
       return ascendente ? valA.localeCompare(valB) : valB.localeCompare(valA);
     });
 
-  // Función para manejar el cambio de orden
   const ordenarPor = (col: keyof Estudiante) => {
     if (col === columnaOrden) {
       setAscendente(!ascendente);
@@ -99,7 +95,7 @@ function Reportes() {
   return (
     <div className="expandir-components">
       <div className="container mt-3">
-        <h2 className="text-center mb-4">Reporte de Estudiantes</h2>
+        <h2 className="text-center mb-8">Reporte de Estudiantes</h2>
         <div className="d-flex justify-content-center">
           <div className="col-md-5" style={{ padding: "15px" }}>
             <div className="input-group search-estilo rounded">
