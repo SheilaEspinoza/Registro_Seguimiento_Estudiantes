@@ -166,6 +166,29 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   opacity: 0.8;
 }
 
+/*Para logo*/
+.sidebar-logo {
+  padding-top: 130px !important; /*tam logo*/
+  margin-bottom: 10px;
+  margin-bottom: 16px;
+  padding: 10px 0;
+}
+
+
+.logo-img {
+  max-width: 100px !important;
+  margin-top: 70px !important;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+
                                           /*-- Estilos para Inicio.tsx-- */
 /* Card del inicio */
 .bienvenida-card {
