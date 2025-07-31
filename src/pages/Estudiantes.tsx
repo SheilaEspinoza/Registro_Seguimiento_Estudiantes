@@ -128,7 +128,7 @@ function Estudiantes() {
           </div>
         </div>
 
-        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+        
           <TablaEstudiantes
             estudiantes={estudiantesFiltrados}
             onEliminar={handleDelete}
@@ -138,8 +138,7 @@ function Estudiantes() {
             permitirOrden={false}
           />
         </div>
-      </div>
-
+      
       {/* Modal Nuevo */}
       <div
         className="modal fade"

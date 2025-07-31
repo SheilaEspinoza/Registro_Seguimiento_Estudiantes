@@ -151,7 +151,7 @@ function TablaEstudiantes({
                   cedula={e.cedula}
                   onEliminar={onEliminar}
                   onEditar={onEditar}
-                  onVerInfo={onVerInfo}
+                  
                   modo={modo}
                 />
               </td>
