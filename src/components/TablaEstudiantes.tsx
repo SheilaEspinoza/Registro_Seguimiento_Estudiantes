@@ -49,7 +49,7 @@ function TablaEstudiantes({
   return (
     <div className="d-flex justify-content-center">
       <table
-        className="table table-bordered"
+        className="table-estudiantes"
         style={{ tableLayout: "fixed", width: "90%" }}
       >
         <thead>

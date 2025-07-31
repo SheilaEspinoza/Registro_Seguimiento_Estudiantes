@@ -432,7 +432,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
 
 /* encabezados */
 .table-estudiantes thead th {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary)!important;
   color: var(--color-text-inverse);
   padding: 12px;
   text-align: center;
