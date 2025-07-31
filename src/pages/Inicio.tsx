@@ -62,8 +62,8 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
              <img src={obtenerImagen()} className="card-img bienvenida-img" alt="Imagen_hora" />
            </div>
 
-            <div className="col-md-8 d-flex flex-column justify-content-between">
-              <div className="card-body d-flex justify-content-between align-items-start">
+            <div className="col-md-8 d-flex">
+              <div className="card-body d-flex justify-content-between align-items-center w-100">
                 <div>
                   <h3 className="card-title">
                    ¡Bienvenido al Sistema de Registro de Estudiantes!
