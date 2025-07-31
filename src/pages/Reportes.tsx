@@ -24,7 +24,6 @@ function Reportes() {
   const [ascendente, setAscendente] = useState<boolean>(true);
   const [filtroCedula, setFiltroCedula] = useState("");
 
-  // Cargar estudiantes desde la API al montar
   useEffect(() => {
     fetch("http://localhost:3001/api/estudiantes")
       .then((res) => res.json())
@@ -135,7 +134,6 @@ function Reportes() {
           }}
         />
 
-        {/* Gráfico por carrera */}
         <div
           style={{
             display: "grid",
