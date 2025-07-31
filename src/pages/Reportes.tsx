@@ -89,7 +89,7 @@ function Reportes() {
 
   return (
     <div className="expandir-components">
-      <div className="container mt-3">
+      <div className="container mt-3" style={{ maxWidth: "150%" }}>
         <h2 className="text-center mb-8">Reporte de Estudiantes</h2>
         <div className="d-flex justify-content-center">
           <div className="col-md-5" style={{ padding: "15px" }}>
