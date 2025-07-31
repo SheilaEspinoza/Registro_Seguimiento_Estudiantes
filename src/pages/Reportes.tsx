@@ -59,6 +59,23 @@ function Reportes() {
       setAscendente(true);
     }
   };
+
+  const resumenPorNivel = estudiantes.reduce(
+    (acc: { [key: string]: number }, est) => {
+      const nivelStr = est.nivel.toString();
+      acc[nivelStr] = (acc[nivelStr] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
+  const datosGraficoNivel = Object.entries(resumenPorNivel).map(
+    ([nivel, cantidad]) => ({
+      nivel,
+      cantidad,
+    })
+  );
+
   const abrirModalDeCredencial = (est: Estudiante) => {
     console.log("Ver info:", est); // temporalmente para pruebas
     // Aquí puedes abrir un modal o navegar a otra vista
@@ -81,54 +98,80 @@ function Reportes() {
   );
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-center mb-4">Reporte de Estudiantes</h2>
+    <div className="expandir-components">
+      <div className="container mt-3">
+        <h2 className="text-center mb-4">Reporte de Estudiantes</h2>
 
-      {/* Inputs de búsqueda */}
-      <div className="mb-3 d-flex gap-2">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Buscar por nombre, apellido, etc."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
+        <div className="d-flex justify-content-center">
+          <div className="col-md-5" style={{ padding: "15px" }}>
+            <div className="input-group search-estilo rounded">
+              <span className="input-group-text">
+                <i className="bi bi-search"></i>
+              </span>
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Buscar por nombre, apellido, etc."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Tabla con datos */}
+        <TablaEstudiantes
+          estudiantes={estudiantesFiltrados}
+          onOrdenar={true ? ordenarPor : undefined}
+          columnaOrden={columnaOrden}
+          ascendente={ascendente}
+          onEliminar={(cedula) => {
+            setEstudiantes(estudiantes.filter((e) => e.cedula !== cedula));
+          }}
+          modo="solo-info"
+          onVerInfo={(e) => abrirModalDeCredencial(e)}
+          onEditar={(estudiante) => {
+            console.log("Editar estudiante:", estudiante);
+          }}
         />
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Filtrar por cédula"
-          value={filtroCedula}
-          onChange={(e) => setFiltroCedula(e.target.value)}
-        />
-      </div>
 
-      {/* Tabla con datos */}
-      <TablaEstudiantes
-        estudiantes={estudiantesFiltrados}
-        onOrdenar={true ? ordenarPor : undefined}
-        columnaOrden={columnaOrden}
-        ascendente={ascendente}
-        onEliminar={(cedula) => {
-          setEstudiantes(estudiantes.filter((e) => e.cedula !== cedula));
-        }}
-        modo="solo-info"
-        onVerInfo={(e) => abrirModalDeCredencial(e)}
-        onEditar={(estudiante) => {
-          console.log("Editar estudiante:", estudiante);
-        }}
-      />
+        {/* Gráfico por carrera */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "20px",
+            marginTop: "40px",
+          }}
+        >
+          {/* Gráfico por carrera */}
+          <div style={{ height: 300 }}>
+            <h5 className="text-center mb-3">Estudiantes por Carrera</h5>
+            <ResponsiveContainer>
+              <BarChart data={datosGrafico}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="carrera" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="cantidad" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-      {/* Gráfico por carrera */}
-      <div style={{ width: "100%", height: 300, marginTop: "40px" }}>
-        <ResponsiveContainer>
-          <BarChart data={datosGrafico}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="carrera" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="cantidad" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
+          {/* Gráfico por nivel */}
+          <div style={{ height: 300 }}>
+            <h5 className="text-center mb-3">Estudiantes por Nivel</h5>
+            <ResponsiveContainer>
+              <BarChart data={datosGraficoNivel}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="nivel" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="cantidad" fill="#d8e05bff" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );
