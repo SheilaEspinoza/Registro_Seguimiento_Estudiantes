@@ -128,17 +128,15 @@ function Estudiantes() {
           </div>
         </div>
 
-        
-          <TablaEstudiantes
-            estudiantes={estudiantesFiltrados}
-            onEliminar={handleDelete}
-            onEditar={handleEditar}
-           
-            modo="completo"
-            permitirOrden={false}
-          />
-        </div>
-      
+        <TablaEstudiantes
+          estudiantes={estudiantesFiltrados}
+          onEliminar={handleDelete}
+          onEditar={handleEditar}
+          modo="completo"
+          permitirOrden={false}
+        />
+      </div>
+
       {/* Modal Nuevo */}
       <div
         className="modal fade"
