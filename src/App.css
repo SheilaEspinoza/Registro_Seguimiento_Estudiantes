@@ -352,7 +352,7 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   color: white;
 }
 
-                                       /* -- boton morado -- */
+                                       /* -- Boton morado -- */
 .btn-morado {
   background-color: var(--color-primary);
   color: var(--color-text-inverse);
@@ -456,6 +456,31 @@ body.sb-sidenav-toggled #layoutSidenav_content {
 .table-estudiantes td:nth-child(4) {
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+                                     /* -- Estilos para Estudiantes.tsx --*/
+
+.search-estilo  {
+  background-color: var(--color-accent); 
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.search-estilo input {
+  background-color: transparent;
+  border: none;
+  color: var(--color-text);
+}
+
+.search-estilo input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-estilo .input-group-text {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary);
 }
 
 /*Otro*/

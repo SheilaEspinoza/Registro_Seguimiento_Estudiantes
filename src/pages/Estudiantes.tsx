@@ -91,12 +91,12 @@ function Estudiantes() {
 
   return (
     <>
-      <div className="container my-4 p-4 bg-white rounded shadow">
+      <div className="expandir-components">
         <h1 className="mb-4">Seguimiento de Estudiantes</h1>
 
         <div className="row align-items-center mb-4">
           <div className="col-md-8">
-            <div className="input-group">
+           <div className="input-group search-estilo rounded">
               <span className="input-group-text">
                 <i className="bi bi-search"></i>
               </span>
@@ -113,7 +113,7 @@ function Estudiantes() {
           <div className="col-md-4 text-end mt-2 mt-md-0">
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn-morado"
               onClick={() => modalNuevoInstance?.show()}
             >
               <i className="bi bi-person-plus me-2"></i>
