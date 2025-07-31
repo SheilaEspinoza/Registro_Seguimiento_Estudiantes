@@ -124,7 +124,7 @@ function FormularioEstudiante({
   };
 
   return (
-    <div className="card p-3">
+    <div className="card p-3 animate-fade-in">
       <form onSubmit={handleSubmit}>
         <ul className="nav nav-tabs mb-3">
           <li className="nav-item">

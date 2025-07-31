@@ -6,24 +6,24 @@ interface Props {
   estudiantes: Estudiante[];
   onEliminar: (cedula: string) => void;
   onEditar: (estudiante: Estudiante) => void;
-  onVerInfo: (estudiante: Estudiante) => void;
   onOrdenar?: (columna: keyof Estudiante) => void;
   columnaOrden?: keyof Estudiante | null;
   ascendente?: boolean;
   permitirOrden?: boolean;
   modo?: "completo" | "solo-info";
+  modoReporte?: "completo" | "basicos";
 }
 
 function TablaEstudiantes({
   estudiantes,
   onEliminar,
   onEditar,
-  onVerInfo,
   onOrdenar,
   columnaOrden,
   ascendente = false,
   permitirOrden = false,
   modo = "completo",
+  modoReporte = "basicos",
 }: Props) {
   // Ordenar estudiantes si se permite
   const estudiantesOrdenados =
@@ -110,7 +110,7 @@ function TablaEstudiantes({
 
             <th
               style={{
-                width: "20%",
+                width: "25%",
                 cursor: onOrdenar ? "pointer" : "default",
               }}
               onClick={() => onOrdenar && onOrdenar("nivel")}
@@ -133,6 +133,13 @@ function TablaEstudiantes({
               )}
             </th>
 
+            {modoReporte === "completo" && (
+              <>
+                <th style={{ width: "25%" }}>Ciudad</th>
+                <th style={{ width: "30%" }}>Telefono</th>
+              </>
+            )}
+
             <th style={{ width: "50%" }}>Acciones</th>
           </tr>
         </thead>
@@ -145,14 +152,22 @@ function TablaEstudiantes({
               <td>{e.apellido}</td>
               <td>{e.carrera}</td>
               <td className="text-center">{e.nivel}</td>
+              {modoReporte === "completo" && (
+                <>
+                  <td>{e.ciudad}</td>
+                  <td>{e.telefono}</td>
+                </>
+              )}
               <td className="text-center">
                 <Acciones
                   estudiante={e}
                   cedula={e.cedula}
                   onEliminar={onEliminar}
                   onEditar={onEditar}
-                  
+
+
                   modo={modo}
+                  modoReporte={modoReporte}
                 />
               </td>
             </tr>

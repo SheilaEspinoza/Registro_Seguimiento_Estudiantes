@@ -8,6 +8,7 @@ interface Props {
   estudiante: Estudiante;
   onEditar: (estudiante: Estudiante) => void;
   modo?: "completo" | "solo-info";
+  modoReporte?: "completo" | "basicos";
 }
 
 const Acciones: React.FC<Props> = ({
@@ -55,7 +56,7 @@ const Acciones: React.FC<Props> = ({
     setMostrarConfirmacion(false);
   };
 
-  const mostrarModalInfo = () => {
+  const onVerInfo = () => {
     if (modalRef.current) {
       modalInstanceRef.current = new bootstrap.Modal(modalRef.current);
       modalInstanceRef.current.show();
@@ -94,7 +95,7 @@ const Acciones: React.FC<Props> = ({
           className="btn btn-outline-warning btn-sm mx-1"
           data-bs-toggle="tooltip"
           title="Ver información"
-          onClick={mostrarModalInfo}
+          onClick={onVerInfo}
         >
           <i className="bi bi-person-vcard"></i>
         </button>
@@ -128,63 +129,65 @@ const Acciones: React.FC<Props> = ({
         aria-hidden="true"
         ref={modalRef}
       >
-        <div className="modal-dialog modal-lg modal-dialog-scrollable">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Información del Estudiante</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => modalInstanceRef.current?.hide()}
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div className="text-center mb-3">
-                <img
-                  src={
-                    estudiante.foto
-                      ? `http://localhost:3001/uploads/${estudiante.foto}`
-                      : "/img/null.jpg"
-                  }
-                  alt="Foto Estudiante"
-                  style={{
-                    maxWidth: "200px",
-                    maxHeight: "200px",
-                    borderRadius: "8px",
-                  }}
-                />
+        <div className="modal-dialog modal-dialog-centered animate-fade-in">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header text-black">
+                <h5 className="modal-title">Credencial del Estudiante</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => modalInstanceRef.current?.hide()}
+                ></button>
               </div>
-
-              <ul className="list-group">
-                <li className="list-group-item">
-                  <strong>Cédula:</strong> {estudiante.cedula}
-                </li>
-                <li className="list-group-item">
-                  <strong>Nombre:</strong> {estudiante.nombre}{" "}
-                  {estudiante.apellido}
-                </li>
-                <li className="list-group-item">
-                  <strong>Correo:</strong> {estudiante.correo}
-                </li>
-                <li className="list-group-item">
-                  <strong>Carrera:</strong> {estudiante.carrera}
-                </li>
-                <li className="list-group-item">
-                  <strong>Nivel:</strong> {estudiante.nivel}
-                </li>
-                <li className="list-group-item">
-                  <strong>País:</strong> {estudiante.pais}
-                </li>
-                <li className="list-group-item">
-                  <strong>Ciudad:</strong> {estudiante.ciudad}
-                </li>
-                <li className="list-group-item">
-                  <strong>Dirección:</strong> {estudiante.direccion}
-                </li>
-                <li className="list-group-item">
-                  <strong>Teléfono:</strong> {estudiante.telefono}
-                </li>
-              </ul>
+              <div className="modal-body">
+                <div
+                  className="card mx-auto shadow"
+                  style={{ maxWidth: "400px" }}
+                >
+                  <div className="card-body text-center">
+                    <img
+                      src={
+                        estudiante.foto
+                          ? `http://localhost:3001/uploads/${estudiante.foto}`
+                          : "/img/null.jpg"
+                      }
+                      alt="Foto Estudiante"
+                      className="img-fluid rounded-circle mb-3"
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <h5 className="card-title">
+                      {estudiante.nombre} {estudiante.apellido}
+                    </h5>
+                    <p className="text-muted">
+                      {estudiante.carrera} - Nivel {estudiante.nivel}
+                    </p>
+                    <hr />
+                    <div className="text-start">
+                      <p>
+                        <strong>Cédula:</strong> {estudiante.cedula}
+                      </p>
+                      <p>
+                        <strong>Correo:</strong> {estudiante.correo}
+                      </p>
+                      <p>
+                        <strong>Teléfono:</strong> {estudiante.telefono}
+                      </p>
+                      <p>
+                        <strong>Dirección:</strong> {estudiante.direccion}
+                      </p>
+                      <p>
+                        <strong>Ciudad:</strong> {estudiante.ciudad},{" "}
+                        {estudiante.pais}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
