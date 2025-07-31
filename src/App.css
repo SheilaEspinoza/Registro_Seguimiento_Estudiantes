@@ -2,6 +2,21 @@ html, body, #root, .sb-nav-fixed, #layoutSidenav, #layoutSidenav_content {
   height: 100%;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: system-ui, sans-serif;
+}
+
+#root, .configuracion-pagina, .container, .main-wrapper {
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
                                        /* -- Paletas -- */
 :root {
   /* Paleta en modo claro - por defecto*/
