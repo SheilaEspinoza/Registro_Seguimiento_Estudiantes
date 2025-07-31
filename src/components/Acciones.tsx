@@ -8,6 +8,7 @@ interface Props {
   estudiante: Estudiante;
   onEditar: (estudiante: Estudiante) => void;
   modo?: "completo" | "solo-info";
+  modoReporte?: "completo" | "basicos";
 }
 
 const Acciones: React.FC<Props> = ({
@@ -55,7 +56,7 @@ const Acciones: React.FC<Props> = ({
     setMostrarConfirmacion(false);
   };
 
-  const mostrarModalInfo = () => {
+  const onVerInfo = () => {
     if (modalRef.current) {
       modalInstanceRef.current = new bootstrap.Modal(modalRef.current);
       modalInstanceRef.current.show();
@@ -94,7 +95,7 @@ const Acciones: React.FC<Props> = ({
           className="btn btn-outline-warning btn-sm mx-1"
           data-bs-toggle="tooltip"
           title="Ver información"
-          onClick={mostrarModalInfo}
+          onClick={onVerInfo}
         >
           <i className="bi bi-person-vcard"></i>
         </button>

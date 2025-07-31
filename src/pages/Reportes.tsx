@@ -71,11 +71,6 @@ function Reportes() {
     })
   );
 
-  const abrirModalDeCredencial = (est: Estudiante) => {
-    console.log("Ver info:", est); // temporalmente para pruebas
-    // Aquí puedes abrir un modal o navegar a otra vista
-  };
-
   // Resumen para el gráfico
   const resumenPorCarrera = estudiantes.reduce(
     (acc: { [key: string]: number }, est) => {
@@ -123,7 +118,7 @@ function Reportes() {
             setEstudiantes(estudiantes.filter((e) => e.cedula !== cedula));
           }}
           modo="solo-info"
-          onVerInfo={(e) => abrirModalDeCredencial(e)}
+          modoReporte="completo"
           onEditar={(estudiante) => {
             console.log("Editar estudiante:", estudiante);
           }}
