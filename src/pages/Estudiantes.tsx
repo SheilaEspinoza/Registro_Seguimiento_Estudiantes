@@ -86,8 +86,9 @@ function Estudiantes() {
   });
 
   const estudiantesFiltrados = filtroCedula
-    ? estudiantes.filter((e) => e.cedula === filtroCedula)
+    ? estudiantes.filter((e) => e.cedula.includes(filtroCedula))
     : estudiantes;
+
 
   return (
     <>
@@ -96,7 +97,7 @@ function Estudiantes() {
 
         <div className="row align-items-center mb-4">
           <div className="col-md-8">
-           <div className="input-group search-estilo rounded">
+            <div className="input-group search-estilo rounded">
               <span className="input-group-text">
                 <i className="bi bi-search"></i>
               </span>
@@ -226,19 +227,17 @@ function Estudiantes() {
             <div className="modal-body">
               {estudianteInfo ? (
                 <>
-                  {estudianteInfo.foto ? (
-                    <div className="text-center mb-3">
-                      <img
-                        src={`http://localhost:3001/uploads/${estudianteInfo.foto}`}
-                        alt="Foto Estudiante"
-                        style={{
-                          maxWidth: "200px",
-                          maxHeight: "200px",
-                          borderRadius: "8px",
-                        }}
-                      />
-                    </div>
-                  ) : null}
+                  <div className="text-center mb-3">
+                    <img
+                      src={
+                        estudianteInfo.foto
+                          ? `http://localhost:3001/uploads/${estudianteInfo.foto}`
+                          : "/img/null.jpg"
+                      }
+                      alt="Foto Estudiante"
+                      style={{ maxWidth: "200px", maxHeight: "200px", borderRadius: "8px" }}
+                    />
+                  </div>
 
                   <ul className="list-group">
                     <li className="list-group-item">
