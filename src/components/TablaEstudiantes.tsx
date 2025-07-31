@@ -1,5 +1,6 @@
 import Acciones from "./Acciones";
 import type { Estudiante } from "../types/Estudiante";
+import { BsChevronUp, BsChevronDown, BsChevronExpand } from "react-icons/bs";
 
 interface Props {
   estudiantes: Estudiante[];
@@ -56,41 +57,80 @@ function TablaEstudiantes({
             <th style={{ width: "30%" }}>Cédula</th>
 
             <th
-              style={{ width: "40%" }}
-              onClick={() => onOrdenar?.("nombre")}
-              role="button"
-              tabIndex={0}
+              style={{
+                width: "40%",
+                cursor: onOrdenar ? "pointer" : "default",
+              }}
+              onClick={() => onOrdenar && onOrdenar("nombre")}
+              role={onOrdenar ? "button" : undefined}
+              tabIndex={onOrdenar ? 0 : undefined}
             >
               Nombre{" "}
-              <span>
-                {columnaOrden === "nombre" ? (ascendente ? "↑" : "↓") : "↕"}
-              </span>
+              {onOrdenar && (
+                <span>
+                  {columnaOrden === "nombre" ? (
+                    ascendente ? (
+                      <BsChevronUp />
+                    ) : (
+                      <BsChevronDown />
+                    )
+                  ) : (
+                    <BsChevronExpand />
+                  )}
+                </span>
+              )}
             </th>
 
             <th
-              style={{ width: "40%" }}
-              onClick={() => onOrdenar?.("apellido")}
-              role="button"
-              tabIndex={0}
+              style={{
+                width: "40%",
+                cursor: onOrdenar ? "pointer" : "default",
+              }}
+              onClick={() => onOrdenar && onOrdenar("apellido")}
+              role={onOrdenar ? "button" : undefined}
+              tabIndex={onOrdenar ? 0 : undefined}
             >
               Apellido{" "}
-              <span>
-                {columnaOrden === "apellido" ? (ascendente ? "↑" : "↓") : "↕"}
-              </span>
+              {onOrdenar && (
+                <span>
+                  {columnaOrden === "apellido" ? (
+                    ascendente ? (
+                      <BsChevronUp />
+                    ) : (
+                      <BsChevronDown />
+                    )
+                  ) : (
+                    <BsChevronExpand />
+                  )}
+                </span>
+              )}
             </th>
 
             <th style={{ width: "40%" }}>Carrera</th>
 
             <th
-              style={{ width: "20%" }}
-              onClick={() => onOrdenar?.("nivel")}
-              role="button"
-              tabIndex={0}
+              style={{
+                width: "20%",
+                cursor: onOrdenar ? "pointer" : "default",
+              }}
+              onClick={() => onOrdenar && onOrdenar("nivel")}
+              role={onOrdenar ? "button" : undefined}
+              tabIndex={onOrdenar ? 0 : undefined}
             >
               Nivel{" "}
-              <span>
-                {columnaOrden === "nivel" ? (ascendente ? "↑" : "↓") : "↕"}
-              </span>
+              {onOrdenar && (
+                <span>
+                  {columnaOrden === "nivel" ? (
+                    ascendente ? (
+                      <BsChevronUp />
+                    ) : (
+                      <BsChevronDown />
+                    )
+                  ) : (
+                    <BsChevronExpand />
+                  )}
+                </span>
+              )}
             </th>
 
             <th style={{ width: "50%" }}>Acciones</th>

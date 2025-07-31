@@ -23,7 +23,9 @@ function Estudiantes() {
   const [modalEditarInstance, setModalEditarInstance] = useState<any>(null);
   const [modalInfoInstance, setModalInfoInstance] = useState<any>(null);
 
-  const [estudianteEditar, setEstudianteEditar] = useState<Estudiante | null>(null);
+  const [estudianteEditar, setEstudianteEditar] = useState<Estudiante | null>(
+    null
+  );
   const [estudianteInfo, setEstudianteInfo] = useState<Estudiante | null>(null);
 
   useEffect(() => {
@@ -67,13 +69,11 @@ function Estudiantes() {
     setEstudiantes((prev) => prev.filter((e) => e.cedula !== cedula));
   };
 
-  
   const handleEditar = (estudiante: Estudiante) => {
     setEstudianteEditar(estudiante);
     modalEditarInstance?.show();
   };
 
-  
   const handleVerInfo = (estudiante: Estudiante) => {
     setEstudianteInfo(estudiante);
     modalInfoInstance?.show();
@@ -134,6 +134,8 @@ function Estudiantes() {
             onEliminar={handleDelete}
             onEditar={handleEditar}
             onVerInfo={handleVerInfo}
+            modo="completo"
+            permitirOrden={false}
           />
         </div>
       </div>
@@ -229,7 +231,11 @@ function Estudiantes() {
                       <img
                         src={`http://localhost:3001/uploads/${estudianteInfo.foto}`}
                         alt="Foto Estudiante"
-                        style={{ maxWidth: "200px", maxHeight: "200px", borderRadius: "8px" }}
+                        style={{
+                          maxWidth: "200px",
+                          maxHeight: "200px",
+                          borderRadius: "8px",
+                        }}
                       />
                     </div>
                   ) : null}
@@ -239,7 +245,8 @@ function Estudiantes() {
                       <strong>Cédula:</strong> {estudianteInfo.cedula}
                     </li>
                     <li className="list-group-item">
-                      <strong>Nombre:</strong> {estudianteInfo.nombre} {estudianteInfo.apellido}
+                      <strong>Nombre:</strong> {estudianteInfo.nombre}{" "}
+                      {estudianteInfo.apellido}
                     </li>
                     <li className="list-group-item">
                       <strong>Correo:</strong> {estudianteInfo.correo}
