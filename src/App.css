@@ -483,6 +483,11 @@ body.sb-sidenav-toggled #layoutSidenav_content {
   color: var(--color-primary);
 }
 
+/*Para ajuste en borde modal - ver informacion del estudiante*/
+.modal-ajustado {
+  margin-top: 70px !important;
+}
+
 /*Otro*/
 .sb-topnav {
   width: 100%;

@@ -214,7 +214,7 @@ function Estudiantes() {
         aria-hidden="true"
         ref={modalInfoRef}
       >
-        <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-dialog modal-lg modal-dialog-scrollable modal-ajustado">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Información del Estudiante</h5>
