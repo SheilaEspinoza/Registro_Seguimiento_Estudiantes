@@ -5,18 +5,46 @@ import "../App.css";
 import ConfRedes from "../components/ConfRedes";
 
 const Configuracion = () => {
-  const [nombre, setNombre] = useState("Usuario");
-  const [modoOscuro, setModoOscuro] = useState(false);
-  const [imagenUsuario, setImagenUsuario] = useState<string | null>(null);
+  /*CONSTANTES */
+  //nombre de usuario 
+  const [nombre, setNombre] = useState(() => {
+  return localStorage.getItem("nombreUsuario") || "Usuario";
+});
+  //modo oscuro
+  const [modoOscuro, setModoOscuro] = useState(() => {
+  const stored = localStorage.getItem("modoOscuro");
+  return stored === "true";
+});
 
-  useEffect(() => {
-    const root = document.documentElement;
-    if (modoOscuro) {
-      root.setAttribute("data-theme", "dark");
-    } else {
-      root.setAttribute("data-theme", "light");
-    }
-  }, [modoOscuro]);
+//imagen
+  const [imagenUsuario, setImagenUsuario] = useState<string | null>(() => {
+  return localStorage.getItem("imagenUsuario") || null;
+});
+
+/*UseEffect */
+//mantener nombre usuario
+useEffect(() => {
+  localStorage.setItem("nombreUsuario", nombre);
+}, [nombre]);
+
+//mantener modo oscuro
+ useEffect(() => {
+  const root = document.documentElement;
+  if (modoOscuro) {
+    root.setAttribute("data-theme", "dark");
+  } else {
+    root.setAttribute("data-theme", "light");
+  }
+  localStorage.setItem("modoOscuro", modoOscuro.toString());
+}, [modoOscuro]);
+
+//mantener img user
+useEffect(() => {
+  if (imagenUsuario) {
+    localStorage.setItem("imagenUsuario", imagenUsuario);
+  }
+}, [imagenUsuario]);
+
 
   const handleNombreChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNombre(e.target.value);
