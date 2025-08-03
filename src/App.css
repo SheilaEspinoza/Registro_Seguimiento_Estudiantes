@@ -634,10 +634,9 @@ th, td{
 
 .configuracion-pagina {
   padding: 2rem;
-  background-color: var(--color-bg);
+  background-color: var(--color-white);
   color: var(--color-text);
-  min-height: 100vh;
-  box-sizing: border-box;
+  min-height: 100%;
 }
 
 .configuracion-container {
@@ -759,7 +758,164 @@ th, td{
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/*Configuracion Redes*/
+
+.card-Redes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 40px 80px; 
+  width: 100%; 
+  box-sizing: border-box; 
+}
+
+.tarjeta {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  min-width: 260px;
+  max-width: 400px;
+  flex: 1;
+  transition: transform 0.3s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-5px);
 }
 
 
+.tarjeta h3 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  color: #230e37;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 0.8px;
+}
+.tarjeta h3::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 3px;
+  margin: 5px auto 0;
+  background-color: #7b5b99;
+  border-radius: 3px;
+}
+
+
+.Redes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.Redes h3 {
+  margin-bottom: 0px;
+  margin: 0px;
+}
+
+.boton-redes {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.Redes button {
+  display: inline-flex;
+}
+
+.Redes .boton-redes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Redes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Redes-buttons {
+  display: flex;
+  gap: 15px; 
+  justify-content: center;
+}
+
+.boton-redes {
+  background-color: transparent;
+  border: none;
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.icono-redes {
+  color: #5d506a;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.boton-redes:hover .icono-redes {
+  transform: scale(1.3) translateY(-3px);
+  color: #230e37; 
+}
+
+.Accesos {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.accesos-botones {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.boton-acceso {
+  background-color: #5d506a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.boton-acceso:hover {
+  background-color: #291041;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .card-Redes {
+    grid-template-columns: 1fr;
+  }
+
+  .Redes-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .accesos-botones {
+    width: 100%;
+  }
+
+  .boton-acceso {
+    width: 80%;
+    text-align: center;
+  }
+}

@@ -73,7 +73,7 @@ const Acciones: React.FC<Props> = ({
               className="btn btn-outline-success btn-sm mx-1"
               data-bs-toggle="tooltip"
               title="Editar"
-              onClick={() => onEditar(estudiante)}
+              onClick={() => onEditar?.(estudiante)}
             >
               <i className="bi bi-pencil-square"></i>
             </button>
@@ -133,7 +133,9 @@ const Acciones: React.FC<Props> = ({
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header text-black">
-                <h5 className="modal-title">Credencial del Estudiante</h5>
+                <h5 className="modal-title bi bi-person-badge me-2">
+                  Credencial del Estudiante
+                </h5>
                 <button
                   type="button"
                   className="btn-close"

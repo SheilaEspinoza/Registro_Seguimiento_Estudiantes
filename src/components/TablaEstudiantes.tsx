@@ -164,8 +164,6 @@ function TablaEstudiantes({
                   cedula={e.cedula}
                   onEliminar={onEliminar}
                   onEditar={onEditar}
-
-
                   modo={modo}
                   modoReporte={modoReporte}
                 />

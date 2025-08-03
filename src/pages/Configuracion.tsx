@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import marcoImg from "./marco.webp"; // ruta relativa válida
 import "../App.css";
+import ConfRedes from "../components/ConfRedes";
 
 const Configuracion = () => {
   const [nombre, setNombre] = useState("Usuario");
@@ -35,54 +36,65 @@ const Configuracion = () => {
   };
 
   return (
-    <div className="configuracion-pagina">
-      <h2>Configuración</h2>
-      <div className="configuracion-container">
-        <div
-          className="configuracion-marco"
-          style={{ backgroundImage: `url(${marcoImg})` }}
-        >
-          {imagenUsuario && (
-            <img src={imagenUsuario} alt="Usuario" className="configuracion-imagen" />
-          )}
+    <>
+      <div className="expandir-components">
+        <div className="configuracion-pagina">
+          <h3 style={{ alignItems: "center" }}>Configuración</h3>
+          <div className="configuracion-container">
+            <div
+              className="configuracion-marco"
+              style={{ backgroundImage: `url(${marcoImg})` }}
+            >
+              {imagenUsuario && (
+                <img
+                  src={imagenUsuario}
+                  alt="Usuario"
+                  className="configuracion-imagen"
+                />
+              )}
+            </div>
+
+            <div className="configuracion-opciones">
+              <div className="configuracion-nombre">
+                <label>Nombre de usuario:</label>
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={handleNombreChange}
+                  placeholder="Ingrese su nombre"
+                />
+              </div>
+
+              <div className="configuracion-modo-oscuro">
+                <input
+                  type="checkbox"
+                  id="modoOscuro"
+                  checked={modoOscuro}
+                  onChange={handleModoOscuroChange}
+                />
+                <label htmlFor="modoOscuro">Modo Oscuro</label>
+              </div>
+
+              <div>
+                <label htmlFor="cambiarFoto" className="btn-cambiar-foto">
+                  Cambiar Foto
+                </label>
+                <input
+                  type="file"
+                  id="cambiarFoto"
+                  accept="image/*"
+                  onChange={handleFotoChange}
+                  style={{ display: "none" }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="configuracion-opciones">
-          <div className="configuracion-nombre">
-            <label>Nombre de usuario:</label>
-            <input
-              type="text"
-              value={nombre}
-              onChange={handleNombreChange}
-              placeholder="Ingrese su nombre"
-            />
-          </div>
-
-          <div className="configuracion-modo-oscuro">
-            <input
-              type="checkbox"
-              id="modoOscuro"
-              checked={modoOscuro}
-              onChange={handleModoOscuroChange}
-            />
-            <label htmlFor="modoOscuro">Modo Oscuro</label>
-          </div>
-
-          <div>
-            <label htmlFor="cambiarFoto" className="btn-cambiar-foto">
-              Cambiar Foto
-            </label>
-            <input
-              type="file"
-              id="cambiarFoto"
-              accept="image/*"
-              onChange={handleFotoChange}
-              style={{ display: "none" }}
-            />
-          </div>
+        <div>
+          <ConfRedes></ConfRedes>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -17,16 +17,13 @@ function Estudiantes() {
   const [filtroCedula, setFiltroCedula] = useState("");
   const modalNuevoRef = useRef<HTMLDivElement>(null);
   const modalEditarRef = useRef<HTMLDivElement>(null);
-  const modalInfoRef = useRef<HTMLDivElement>(null);
 
   const [modalNuevoInstance, setModalNuevoInstance] = useState<any>(null);
   const [modalEditarInstance, setModalEditarInstance] = useState<any>(null);
-  const [modalInfoInstance, setModalInfoInstance] = useState<any>(null);
 
   const [estudianteEditar, setEstudianteEditar] = useState<Estudiante | null>(
     null
   );
-  const [estudianteInfo, setEstudianteInfo] = useState<Estudiante | null>(null);
 
   useEffect(() => {
     if (modalNuevoRef.current) {
@@ -42,13 +39,6 @@ function Estudiantes() {
         keyboard: false,
       });
       setModalEditarInstance(instance);
-    }
-    if (modalInfoRef.current) {
-      const instance = new window.bootstrap.Modal(modalInfoRef.current, {
-        backdrop: "static",
-        keyboard: false,
-      });
-      setModalInfoInstance(instance);
     }
   }, []);
 
@@ -72,11 +62,6 @@ function Estudiantes() {
   const handleEditar = (estudiante: Estudiante) => {
     setEstudianteEditar(estudiante);
     modalEditarInstance?.show();
-  };
-
-  const handleVerInfo = (estudiante: Estudiante) => {
-    setEstudianteInfo(estudiante);
-    modalInfoInstance?.show();
   };
 
   const total = estudiantes.length;
