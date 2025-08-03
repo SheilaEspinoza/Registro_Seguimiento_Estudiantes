@@ -1,5 +1,6 @@
-import { useState, ChangeEvent, useEffect } from "react";
-import marcoImg from "./marco.webp"; // ruta relativa válida
+import { useState, useEffect } from "react";
+import type { ChangeEvent } from "react";
+import marcoImg from "./marco.webp"; 
 import "../App.css";
 import ConfRedes from "../components/ConfRedes";
 
