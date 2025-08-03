@@ -54,7 +54,6 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
   });
 
   return (
-
     <div className="expandir-components">
         <div className="card bienvenida-card espaciado-superior">
           <div className="row g-0">

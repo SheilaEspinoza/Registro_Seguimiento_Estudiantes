@@ -3,6 +3,8 @@ import type { ChangeEvent } from "react";
 import marcoImg from "./marco.webp"; 
 import "../App.css";
 import ConfRedes from "../components/ConfRedes";
+import SplashCursor from "../Animations/SplashCursor/SplashCursor";
+
 
 const Configuracion = () => {
   /*CONSTANTES */
@@ -67,6 +69,7 @@ useEffect(() => {
   return (
     <>
       <div className="expandir-components">
+                  <SplashCursor/> 
         <div className="configuracion-pagina">
           <h3 style={{ alignItems: "center" }}>Configuración</h3>
           <div className="configuracion-container">

@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("recordatorios", JSON.stringify(recordatorios));
   }, [recordatorios]);
-  return (
+  return ( 
     <Router>
       <div className="sb-nav-fixed">
         <Header />
@@ -39,7 +39,7 @@ function App() {
                      setRecordatorios={setRecordatorios}
                     />
                   }
-/>
+                  />
                   <Route path="/estudiantes" element={<Estudiantes />} />
                   <Route path="/reportes" element={<Reportes />} />
                   <Route path="/configuracion" element={<Configuracion />} />
