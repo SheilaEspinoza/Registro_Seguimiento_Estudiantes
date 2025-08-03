@@ -2,7 +2,7 @@
 	Installed from https://reactbits.dev/ts/default/
 */
 
-import { motion, Transition } from 'framer-motion';
+import type { motion, Transition } from 'framer-motion';
 import { useEffect, useRef, useState, useMemo } from 'react';
 
 type BlurTextProps = {

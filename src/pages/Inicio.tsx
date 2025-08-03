@@ -65,7 +65,7 @@ const Inicio: React.FC<InicioProps> = ({ recordatorios, setRecordatorios }) => {
               <div className="card-body d-flex justify-content-between align-items-center w-100">
                 <div>
                   <h3 className="card-title">
-                   ¡Bienvenido al Sistema de Registro de Estudiantes!
+                   ¡Bienvenido al Sistema de Información Académico Universitario!
                   </h3>
                   <p className="card-text saludo-text">{saludo}</p>
                 </div>
