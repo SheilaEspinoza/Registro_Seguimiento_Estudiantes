@@ -5,8 +5,11 @@ import "../App.css";
 import ConfRedes from "../components/ConfRedes";
 import SplashCursor from "../Animations/SplashCursor/SplashCursor";
 
+interface ConfiguracionProps {
+  setUser: (user: string | null) => void;
+}
 
-const Configuracion = () => {
+const Configuracion: React.FC<ConfiguracionProps> = ({ setUser }) => {
   /*CONSTANTES */
   //nombre de usuario 
   const [nombre, setNombre] = useState(() => {
@@ -22,6 +25,14 @@ const Configuracion = () => {
   const [imagenUsuario, setImagenUsuario] = useState<string | null>(() => {
   return localStorage.getItem("imagenUsuario") || null;
 });
+
+//boton para cerras sesion
+const handleCerrarSesion = () => {
+  localStorage.removeItem("nombreUsuario");
+  localStorage.removeItem("imagenUsuario");
+  localStorage.removeItem("modoOscuro");
+  setUser(null);
+};
 
 /*UseEffect */
 //mantener nombre usuario
@@ -125,6 +136,11 @@ useEffect(() => {
         <div>
           <ConfRedes></ConfRedes>
         </div>
+        <div className="cerrar-sesion-container">
+  <button className="btn-cerrar-sesion" onClick={handleCerrarSesion}>
+    <i className="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+  </button>
+</div>
       </div>
     </>
   );
