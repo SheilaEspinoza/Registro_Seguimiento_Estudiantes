@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "../App.css";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 // }Importo el componente de tabla que muestra los estudiantes
 import TablaEstudiantes from "../components/TablaEstudiantes";
@@ -13,6 +15,7 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  LabelList,
 } from "recharts";
 
 //Estados del componente
@@ -30,6 +33,16 @@ function Reportes() {
   //Ordenar por manera ascendente o desc
   const [ascendente, setAscendente] = useState<boolean>(true);
 
+  //Filtro Niveles y Carrera
+  const [nivelSeleccionado, setNivelSeleccionado] = useState<string>("Todos");
+  const [carreraSeleccionada, setCarreraSeleccionada] =
+    useState<string>("Todas");
+
+  const [mostrarModalGrafico, setMostrarModalGrafico] = useState(false);
+  const [graficoSeleccionado, setGraficoSeleccionado] = useState<
+    "nivel" | "carrera" | null
+  >(null);
+
   //Cargamos datos de la base
   useEffect(() => {
     fetch("http://localhost:3001/api/estudiantes")
@@ -44,15 +57,21 @@ function Reportes() {
       Object.values(est).some(
         (valor) =>
           valor != null &&
-          valor.toString().toLowerCase().includes(busqueda.toLowerCase()) //Busqueda general
+          valor.toString().toLowerCase().includes(busqueda.toLowerCase())
       )
     )
-    //Ordena
+    .filter((est) =>
+      nivelSeleccionado === "Todos"
+        ? true
+        : est.nivel.toString() === nivelSeleccionado
+    )
+    .filter((est) =>
+      carreraSeleccionada === "Todas"
+        ? true
+        : est.carrera === carreraSeleccionada
+    )
     .sort((a, b) => {
-      // Si no hay columna seleccionada, no ordenar
       if (!columnaOrden) return 0;
-
-      // Comparación alfabética para ordenar
       const valA = a[columnaOrden]?.toString().toLowerCase() || "";
       const valB = b[columnaOrden]?.toString().toLowerCase() || "";
       return ascendente ? valA.localeCompare(valB) : valB.localeCompare(valA);
@@ -67,6 +86,14 @@ function Reportes() {
       setAscendente(true);
     }
   };
+
+  const nivelesDisponibles = Array.from(
+    new Set(estudiantes.map((est) => est.nivel.toString()))
+  ).sort((a, b) => parseInt(a) - parseInt(b));
+
+  const carrerasDisponibles = Array.from(
+    new Set(estudiantes.map((est) => est.carrera))
+  ).sort((a, b) => a.localeCompare(b));
 
   // Agrupo la cantidad de estudiantes por nivel
   const resumenPorNivel = estudiantes.reduce(
@@ -103,6 +130,51 @@ function Reportes() {
     })
   );
 
+  const imprimirGrafico = () => {
+    const contenido = document.getElementById("contenido-grafico");
+    if (contenido) {
+      const ventana = window.open("", "Imprimir", "width=800,height=600");
+      if (ventana) {
+        ventana.document.write("<html><head><title>Imprimir Gráfico</title>");
+        ventana.document.write("</head><body >");
+        ventana.document.write(contenido.innerHTML);
+        ventana.document.write("</body></html>");
+        ventana.document.close();
+        ventana.print();
+      }
+    }
+  };
+
+  const exportarComoPNG = async () => {
+    const elemento = document.getElementById("contenido-grafico");
+    if (elemento) {
+      const canvas = await html2canvas(elemento);
+      const dataURL = canvas.toDataURL("image/png");
+
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "grafico.png";
+      link.click();
+    }
+  };
+
+  const exportarComoPDF = async () => {
+    const elemento = document.getElementById("contenido-grafico");
+    if (elemento) {
+      const canvas = await html2canvas(elemento);
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+      });
+
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.save("grafico.pdf");
+    }
+  };
+
   return (
     <div className="expandir-components">
       <div className="container mt-3" style={{ maxWidth: "150%" }}>
@@ -110,7 +182,7 @@ function Reportes() {
 
         {/* Campo de búsqueda */}
         <div className="d-flex justify-content-center">
-          <div className="col-md-5" style={{ padding: "15px" }}>
+          <div className="col-md-4" style={{ padding: "15px" }}>
             <div className="input-group search-estilo rounded">
               <span className="input-group-text">
                 <i className="bi bi-search"></i>
@@ -122,6 +194,43 @@ function Reportes() {
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
               />
+            </div>
+          </div>
+          <div className="d-flex justify-content-center align-items-center mt-2 mb-3 gap-4 flex-wrap">
+            {/* Filtro por nivel */}
+            <div className="d-flex align-items-center gap-2">
+              <label className="form-label mb-0">Filtrar por nivel:</label>
+              <select
+                className="form-select"
+                style={{ width: "180px" }}
+                value={nivelSeleccionado}
+                onChange={(e) => setNivelSeleccionado(e.target.value)}
+              >
+                <option value="Todos">Todos los niveles</option>
+                {nivelesDisponibles.map((nivel) => (
+                  <option key={nivel} value={nivel}>
+                    Nivel {nivel}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Filtro por carrera */}
+            <div className="d-flex align-items-center gap-2">
+              <label className="form-label mb-0">Filtrar por carrera:</label>
+              <select
+                className="form-select"
+                style={{ width: "200px" }}
+                value={carreraSeleccionada}
+                onChange={(e) => setCarreraSeleccionada(e.target.value)}
+              >
+                <option value="Todas">Todas las carreras</option>
+                {carrerasDisponibles.map((carrera) => (
+                  <option key={carrera} value={carrera}>
+                    {carrera}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -155,6 +264,15 @@ function Reportes() {
         >
           {/* Gráfico por carrera */}
           <div style={{ height: 300 }}>
+            <button
+              className="btn btn-outline-primary btn-sm mt-2 d-block mx-auto"
+              onClick={() => {
+                setGraficoSeleccionado("carrera");
+                setMostrarModalGrafico(true);
+              }}
+            >
+              Ver Detalle
+            </button>
             <h5 className="text-center mb-3">Estudiantes por Carrera</h5>
             <ResponsiveContainer>
               <BarChart data={datosGrafico}>
@@ -169,6 +287,15 @@ function Reportes() {
 
           {/* Gráfico por nivel */}
           <div style={{ height: 300 }}>
+            <button
+              className="btn btn-outline-primary btn-sm mt-2 d-block mx-auto"
+              onClick={() => {
+                setGraficoSeleccionado("nivel");
+                setMostrarModalGrafico(true);
+              }}
+            >
+              Ver Detalle
+            </button>
             <h5 className="text-center mb-3">Estudiantes por Nivel</h5>
             <ResponsiveContainer>
               <BarChart data={datosGraficoNivel}>
@@ -182,6 +309,85 @@ function Reportes() {
           </div>
         </div>
       </div>
+      {mostrarModalGrafico && (
+        <div
+          className="modal fade show"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          tabIndex={-1}
+        >
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">
+                  Gráfico Detallado:{" "}
+                  {graficoSeleccionado === "carrera"
+                    ? "Estudiantes por Carrera"
+                    : "Estudiantes por Nivel"}
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setMostrarModalGrafico(false)}
+                ></button>
+              </div>
+              <div className="modal-body" id="contenido-grafico">
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart
+                    data={
+                      graficoSeleccionado === "carrera"
+                        ? datosGrafico
+                        : datosGraficoNivel
+                    }
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey={
+                        graficoSeleccionado === "carrera" ? "carrera" : "nivel"
+                      }
+                    />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar
+                      dataKey="cantidad"
+                      fill={
+                        graficoSeleccionado === "carrera"
+                          ? "#8884d8"
+                          : "#d8e05bff"
+                      }
+                    >
+                      <LabelList dataKey="cantidad" position="top" />
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  className="btn btn-outline-info"
+                  onClick={exportarComoPNG}
+                >
+                  <i className="bi bi-image me-2"></i> PNG
+                </button>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={exportarComoPDF}
+                >
+                  <i className="bi bi-file-earmark-pdf me-2"></i> PDF
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setMostrarModalGrafico(false)}
+                >
+                  Cerrar
+                </button>
+                <button className="btn btn-success" onClick={imprimirGrafico}>
+                  <i className="bi bi-printer me-2"></i> Imprimir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
